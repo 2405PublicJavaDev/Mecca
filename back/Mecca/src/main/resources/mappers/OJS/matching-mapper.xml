@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.JustDoIt.Mecca.OJS.mapper.MatchingMapper">
+    <insert id="insertMatching">
+        INSERT INTO MATCHING_TBL
+        VALUES(SEQ_MATCHING_NO.NEXTVAL,#{matchingCatagory},#{matchingGame},#{matchingId},#{memberId},#{matchingGrade},
+               #{matchingContent},#{matchingmaxCount},DEFAULT,DEFAULT,DEFAULT)
+    </insert>
+    <select id="getTotalCount" resultType="_int">
+        SELECT COUNT(*) FROM MATCHING_TBL
+    </select>
+
+    <select id="selectList">
+        SELECT * FROM MATCHING_TBL
+    </select>
+    <select id="selectOne">
+        SELECT * FROM MATCHING_TBL WHERE MATCHING_NO=${matchingNo}
+    </select>
+
+</mapper>

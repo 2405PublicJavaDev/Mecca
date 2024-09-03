@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+		<link rel="stylesheet" href="/css/main.css">
+	<style type="text/css">
+		body{
+			background-image: url("https://img.freepik.com/free-photo/gamification-3d-rendering-concept_23-2149484776.jpg?t=st=1724220249~exp=1724223849~hmac=89eb0f1c19327bf18a1c1611a91d74d7f7a15a14eb5ba294b373fe74638d7caf&w=740");
+			width:500px;
+			height:400px;
+			background-repeat: no-repeat;
+			background-size: cover;
+			
+		}
+		div{
+			width:100px;
+			
+			
+		}
+		
+	
+	</style>
+	</head>
+	<body>
+		<h1>매칭상대 등록</h1>
+<!--        method="post" action="register" name="write"-->
+		<form >
+			<div>카테&nbsp;&nbsp; 고리</div><input type="text" name="matchingCatagory" id="matchingCatagory"><br>
+			<div>게  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    임</div>				<input type="text" name="matchingGame" id="matchingGame"><br>
+			<div>게임닉네임</div>	 		<input type="text" name="matchingId" id="matchingId"><br>
+			<div>게임&nbsp;&nbsp; 등급</div>	 		<input type="text" name="matchingGrade" id="matchingGrade"><br>
+			<div>인&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;수</div>		<input type="number" name="matchingCount" id="matchingCount"><br>
+			<div>내  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    용</div>	<input name="matchingContent" id="matchingContent"><br>
+			<input type="hidden" name="memberId">
+<!--			<input type=hidden name=doclose value=1>-->
+
+
+            <button onclick="register();">등록</button>
+
+			<!--			if(isset($_POST['doclose']) && $_POST['doclose'] == 1)echo-->
+		</form>
+<!-- 		onsubmit="okwrite()" -->
+		<script >
+			function register(){
+				alert("레지스터들어왓음");
+				var matching=[document.querySelector("#matchingCatagory").value
+						,document.querySelector("#matchingGame").value
+					,document.querySelector("#matchingId").value
+					,document.querySelector("#matchingGrade").value
+					,document.querySelector("#matchingCount").value
+					,document.querySelector("#matchingContent").value]
+				$.ajax({
+					url:"/matching/register",
+					data:{"matching":matching},
+					dataType:"json",
+					type:"POST",
+					success : function() {
+						opener.parent.location.reload();
+						window.close();
+
+					},
+					error : function(){
+
+						opener.parent.location.reload();
+						window.close();
+					}
+				})
+
+
+			};
+
+
+
+			// function register(){
+			//     alert("야");
+			//     setTimeout(function register() {
+			//         self.close();
+			//     }, 2500);
+			// }
+
+			// setTimeout(() => {
+			// document.form_write.action="register";
+			//     document.form_write.method="post";
+			//     document.form_write.submit();
+			//
+			//
+
+			//
+			// }, "3000");
+
+		</script>
+	</body>
+
+</html>

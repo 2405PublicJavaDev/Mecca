@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Room</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style>
+        /* 채팅 UI 스타일 */
+    </style>
+</head>
+<body>
+<div id="chat-page">
+    <div id="chat-room" style="display: none;">
+        <div id="messageArea"></div>
+        <input type="text" id="message" placeholder="Enter your message" />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="name-page">
+        <input type="text" id="name" placeholder="Enter your name" th:value="${memberId}"/>
+        <input type="text" id="room-id" placeholder="Enter room ID" th:value="${memberId}" />
+        <button onclick="connect()">가입</button>
+    </div>
+</div>
+
+<script>
+    var stompClient = null;
+    var username = null;
+    var roomId = null;
+
+
+        username = document.getElementById("name").value.trim();
+        roomId = document.getElementById("room-id").value.trim();
+
+
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, onConnected, onError);
+
+
+    function onConnected() {
+        // 특정 채팅방에 가입
+        stompClient.subscribe('/topic/' + roomId, onMessageReceived);
+
+        // 사용자 등록
+        stompClient.send("/app/chat.addUser/" + roomId, {},
+            JSON.stringify({sender: username, type: 'JOIN', roomId: roomId})
+        )
+
+        document.getElementById("name-page").style.display = 'none';
+        document.getElementById("chat-room").style.display = 'block';
+    }
+
+    function onError(error) {
+        // 에러 처리
+    }
+
+    function sendMessage() {
+        var messageContent = document.getElementById("message").value.trim();
+
+        if(messageContent && stompClient) {
+            var chatMessage = {
+                sender: username,
+                content: messageContent,
+                type: 'CHAT',
+                roomId: roomId
+            };
+
+            stompClient.send("/app/chat.sendMessage/" + roomId, {}, JSON.stringify(chatMessage));
+            document.getElementById("message").value = '';
+        }
+    }
+
+    function onMessageReceived(payload) {
+        var message = JSON.parse(payload.body);
+        var messageElement = document.createElement('li');
+
+        if(message.type === 'JOIN') {
+            messageElement.classList.add('event-message');
+            message.content = message.sender + ' joined!';
+        } else if (message.type === 'CHAT') {
+            messageElement.classList.add('chat-message');
+
+            var usernameElement = document.createElement('strong');
+            usernameElement.classList.add('nickname');
+            var usernameText = document.createTextNode(message.sender);
+            usernameElement.appendChild(usernameText);
+            messageElement.appendChild(usernameElement);
+        }
+
+        var textElement = document.createElement('span');
+        var messageText = document.createTextNode(message.content);
+        textElement.appendChild(messageText);
+        messageElement.appendChild(textElement);
+
+        document.getElementById("messageArea").appendChild(messageElement);
+    }
+</script>
+</body>
+</html>
