@@ -1,28 +1,42 @@
 package com.JustDoIt.Mecca.KJH.service;
 
+import com.JustDoIt.Mecca.KJH.vo.General;
+
+import java.util.List;
+
 public interface GeneralService {
 
     /**
-     * 자유 작성 Service
-     * @return
+     * 게시글 작성 Service
+     * @param general 정보
+     * @return 성공 시 1, 실패 시 0
      */
-    int insertGeneral();
+    int insertGeneral(General general);
 
     /**
-     * 자유 조회 Service
-     * @return
+     * 게시글 상세 조회 Service
+     * @param generalNo 게시글 ID
+     * @return 게시글 정보
      */
-    int selectGeneral();
+    General selectGeneralOne(Integer generalNo);
 
     /**
-     * 자유 수정 Service
-     * @return
+     * 게시글 목록 조회 Service
+     * @return 게시글 목록
      */
-    int updateGeneral();
+    List<General> selectGeneralList();
 
     /**
-     * 자유 삭제 Service
-     * @return
+     * 게시글 수정 Service
+     * @param general 수정할 게시글 정보
+     * @return 성공 시 1, 실패 시 0
      */
-    int deleteGeneral();
+    int updateGeneral(General general);
+
+    /**
+     * 게시글 삭제 Service
+     * @param generalNo 삭제할 게시글 ID
+     * @return 성공 시 1, 실패 시 0
+     */
+    int deleteGeneral(Integer generalNo);
 }

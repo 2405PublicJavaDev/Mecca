@@ -2,39 +2,49 @@ package com.JustDoIt.Mecca.KJH.service.impl;
 
 import com.JustDoIt.Mecca.KJH.mapper.GeneralMapper;
 import com.JustDoIt.Mecca.KJH.service.GeneralService;
+import com.JustDoIt.Mecca.KJH.vo.General;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GeneralServiceImpl implements GeneralService {
 
-    private GeneralMapper mapper;
+    private final GeneralMapper mapper;
 
-    public GeneralServiceImpl() {}
     @Autowired
-    public GeneralServiceImpl(GeneralMapper mapper) { this.mapper = mapper; }
+    public GeneralServiceImpl(GeneralMapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
-    public int insertGeneral() {
-        int result = mapper.insertGeneral();
+    public int insertGeneral(General general) {
+        int result = mapper.insertGeneral(general);
         return result;
     }
 
     @Override
-    public int selectGeneral() {
-        int result = mapper.selectGeneral();
+    public General selectGeneralOne(Integer generalNo) {
+        General result = mapper.selectGeneral(generalNo);
         return result;
     }
 
     @Override
-    public int updateGeneral() {
-        int result = mapper.updateGeneral();
+    public int updateGeneral(General general) {
+        int result = mapper.updateGeneral(general);
         return result;
     }
 
     @Override
-    public int deleteGeneral() {
-        int result = mapper.deleteGeneral();
+    public int deleteGeneral(Integer generalNo) {
+        int result = mapper.deleteGeneral(generalNo);
+        return result;
+    }
+
+    @Override
+    public List<General> selectGeneralList() {
+        List<General> result = mapper.selectGeneralList();
         return result;
     }
 }
