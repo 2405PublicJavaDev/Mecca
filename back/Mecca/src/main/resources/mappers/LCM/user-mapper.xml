@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.JustDoIt.Mecca.LCM.mapper.UserMapper">
+    <insert id="insertUser">
+        INSERT INTO USER_TBL VALUES (#{uNickname}, #{uEmail}, #{uPassword})
+    </insert>
+    <delete id="deleteUser">
+        DELETE FROM USER_TBL WHERE U_EMAIL = #{uEmail}
+    </delete>
+</mapper>
