@@ -2,29 +2,28 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 
 const KakaoTest = () => {
-    const [user, setUser] = useState();
+    const [message, setMessage] = useState();
 
     useEffect(() => {
-        async function getUser() {
-            const response = await axios.get(`/kakao`);
-            const data = response.data;
+        const code = new URLSearchParams(window.location.search).get('code');
+        console.log(code);
 
-            setUser(data);
+        if (code) {
+            axios.post('/api/kakao', { code })
+                .then(response => {
+                    console.log(response)
+                    setMessage(`로그인 성공! ${JSON.stringify(response.data)}`);
+                })
+                .catch(error => {
+                    setMessage(`로그인 실패: ${error.message}`);
+                });
         }
-
-        getUser();
     }, []);
 
     return (
         <div>
             {
-                <h1>{user}</h1>
-                // users ? users.map((user) =>
-                //     <div key={user.id}>
-                //         <h3>{user.name} {user.age}</h3>
-                //         <p>{user.introduce}</p>
-                //     </div>
-                // ) : null
+                message
             }
         </div>
     )

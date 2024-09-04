@@ -5,11 +5,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '127.0.0.1',
+    host: 'localhost',
     port: 3000,
     proxy: {
-      '/signup': {
-        target: 'http://localhost:8888/kakao',
+      '/api': {
+        target: 'http://localhost:8888',
         changeOrigin: true,
       },
     },
