@@ -11,7 +11,6 @@ const KakaoTest = () => {
         if (code) {
             axios.post('/api/kakao', { code })
                 .then(response => {
-                    console.log(response)
                     setMessage(`로그인 성공! ${JSON.stringify(response.data)}`);
                 })
                 .catch(error => {

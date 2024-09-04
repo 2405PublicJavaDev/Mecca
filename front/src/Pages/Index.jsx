@@ -1,16 +1,17 @@
 import { useState, EventHandler, ReactNode } from 'react'
 
 const Index = () => {
-    const handleSignup = () => {
+
+    const indexPage = () => {
+        window.location.href = "/";
+    }
+
+    const signUpPage = () => {
         window.location.href = "/user/signup";
+    }
 
-        // const authorizationUri = "https://kauth.kakao.com/oauth/authorize";
-        // const client_id = "25431136bde1cd0a177ed0354aca3557";
-        // const redirectUri = "http://localhost:3000/kakao/callback";
-
-        // const url = `${authorizationUri}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`
-
-        // window.location.href = url;
+    const signInPage = () => {
+        window.location.href = "/user/signin";
     }
 
     return (<div className="relative w-[1440px] h-[1024px] bg-[#fff] overflow-hidden">
@@ -727,13 +728,10 @@ const Index = () => {
         <div className="absolute left-0 top-0 w-[1440px] h-[74px] flex">
             <div className="absolute left-0 top-0 w-[1440px] h-[74px] bg-[#fff] border-[solid] border-#00000080 border"></div>
             <div className="absolute left-[1145px] top-[13px] flex flex-row items-center justify-start gap-[20px]">
-                <div className="flex flex-row items-center justify-center py-[12px] px-[24px] border-[1px] border-solid border-[#00000080] rounded-[30px]">
+                <button onClick={signInPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] border-[1px] border-solid border-[#00000080] rounded-[30px]">
                     <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">로그인</div>
-                </div>
-                {/* 
-                    카카오로 회원 가입 임시
-                */}
-                <button onClick={handleSignup} className="flex flex-row items-center justify-center py-[12px] px-[24px] bg-[#0090f9] rounded-[30px]">
+                </button>
+                <button onClick={signUpPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] bg-[#0090f9] rounded-[30px]">
                     <div className="text-[16px] leading-[25px] font-['Roboto'] font-semibold text-[#fff] text-center whitespace-nowrap">회원가입</div>
                 </button>
             </div>
@@ -741,15 +739,13 @@ const Index = () => {
                 <img width="24" height="24" src="/assets/Index/Icon.png"></img>
                 <div className="flex-1 text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#00000040]">검색</div>
             </div>
-            <div className="absolute left-[305px] top-[25px] w-[265px] h-[25px] flex">
-                <div className="absolute left-0 top-0 flex flex-row items-center justify-start gap-[30px]">
-                    <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">자유</div>
-                    <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">매칭</div>
-                    <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">공지사항</div>
-                    <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">1:1 문의</div>
-                </div>
+            <div className="absolute left-[305px] top-[25px] flex flex-row items-center justify-start gap-[30px]">
+                <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">자유</div>
+                <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">매칭</div>
+                <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">공지사항</div>
+                <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">1:1 문의</div>
             </div>
-            <div className="absolute -translate-y-1/2 left-[75px] top-1/2 w-[110px] text-[32px] leading-[40px] font-['Roboto'] font-bold text-[#000] text-center">MeCCa</div>
+            <button onClick={indexPage} className="absolute -translate-y-1/2 left-[75px] top-1/2 w-[110px] text-[32px] leading-[40px] font-['Roboto'] font-bold text-[#000] text-center">MeCCa</button>
         </div>
     </div>)
 }
