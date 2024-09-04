@@ -41,7 +41,7 @@ const SignIn = () => {
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">이메일</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input placeholder='이메일을 입력해 주세요.' type='email' name='emailInfo' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input placeholder='이메일을 입력해 주세요.' type='email' name='uMail' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
                     <div hidden className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]">올바른 이메일 형식이 아닙니다.</div>
                 </div>
