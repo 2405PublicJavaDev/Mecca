@@ -16,17 +16,23 @@ public interface UserMapper {
      * 유저 로그인 Mapper
      * @return
      */
-    int selectUser();
+    int selectUser(User user);
 
     /**
      * 유저 수정(마이 페이지 정보 수정) Mapper
      * @return
      */
-    int updateUser();
+    int updateUser(User user);
 
     /**
      * 유저 삭제(회원 탈퇴) Mapper
      * @return
      */
     int deleteUser(String uEmail);
+
+    /**
+     * 회원 이메일 검색
+     * @return
+     */
+    User selectUserByEmail(String uEmail);
 }

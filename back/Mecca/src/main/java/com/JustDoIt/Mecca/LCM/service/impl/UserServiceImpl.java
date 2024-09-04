@@ -23,13 +23,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int selectUser(User user) {
-        int result = mapper.selectUser();
+        int result = mapper.selectUser(user);
         return result;
     }
 
     @Override
-    public int updateUser() {
-        int result = mapper.updateUser();
+    public int updateUser(User user) {
+        int result = mapper.updateUser(user);
         return result;
     }
 
@@ -37,5 +37,11 @@ public class UserServiceImpl implements UserService {
     public int deleteUser(String uEmail) {
         int result = mapper.deleteUser(uEmail);
         return result;
+    }
+
+    @Override
+    public User selectUserByEmail(String uEmail) {
+        User user = mapper.selectUserByEmail(uEmail);
+        return user;
     }
 }

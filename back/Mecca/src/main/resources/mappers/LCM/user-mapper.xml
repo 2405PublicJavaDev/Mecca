@@ -4,9 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JustDoIt.Mecca.LCM.mapper.UserMapper">
     <insert id="insertUser">
-        INSERT INTO USER_TBL VALUES (#{uNickname}, #{uEmail}, #{uPassword})
+        INSERT INTO USER_TBL VALUES (#{uMail}, #{uPassword}, #{uNickname}, '프로필 이미지', NULL, DEFAULT)
     </insert>
+    <update id="updateUser">
+        UPDATE USER_TBL
+        SET U_NICKNAME = #{uNickname}, U_INTRODUCE = #{uIntroduce}
+        WHERE U_MAIL = #{uMail}
+    </update>
     <delete id="deleteUser">
-        DELETE FROM USER_TBL WHERE U_EMAIL = #{uEmail}
+        DELETE FROM USER_TBL WHERE U_MAIL = #{uMail}
     </delete>
+    <select id="selectUser">
+        SELECT * FROM USER_TBL WHERE U_MAIL = #{uMail} AND U_PASSWORD = #{uPassword}
+    </select>
 </mapper>

@@ -20,11 +20,17 @@ public interface UserService {
      * 유저 수정 Service
      * @return
      */
-    int updateUser();
+    int updateUser(User user);
 
     /**
      * 유저 삭제 Service
      * @return
      */
     int deleteUser(String uEmail);
+
+    /**
+     * 회원 이메일 검색 Service
+     * @return
+     */
+     User selectUserByEmail(String uEmail);
 }
