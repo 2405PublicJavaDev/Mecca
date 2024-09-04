@@ -22,14 +22,14 @@ public class KakaoSignUpServiceImpl implements KakaoSignUpService {
 
     public KakaoSignUpServiceImpl() {}
 
+    @Autowired
     public KakaoSignUpServiceImpl(KakaoSignUpMapper mapper, RestTemplate restTemplate) {
         this.mapper = mapper;
         this.restTemplate = restTemplate;
     }
 
     private static final String clientId = "25431136bde1cd0a177ed0354aca3557";
-    private final String authorizationUri = "https://kauth.kakao.com/oauth/authorize";
-    private static final String redirectUri = "http://localhost:8888/kakao/signup";
+    private static final String redirectUri = "http://localhost:3000/kakao/callback";
     private static final String tokenUri = "https://kauth.kakao.com/oauth/token";
 
     @Override
@@ -52,7 +52,7 @@ public class KakaoSignUpServiceImpl implements KakaoSignUpService {
 
     @Override
     public HashMap<String, Object> getUserInfo(String accessToken) {
-        Map<String, Object> userInfo = new HashMap<>();
+        HashMap<String, Object> userInfo = new HashMap<>();
         String postURL = "https://kapi.kakao.com/v2/user/me";
 
         HttpHeaders headers = new HttpHeaders();
@@ -63,15 +63,15 @@ public class KakaoSignUpServiceImpl implements KakaoSignUpService {
 
         Map<String, Object> body = response.getBody();
         if (body != null) {
-            Map<String, Object> properties = (Map<String, Object>) body.get("properties");
+//            Map<String, Object> properties = (Map<String, Object>) body.get("properties");
             Map<String, Object> kakaoAccount = (Map<String, Object>) body.get("kakao_account");
 
-            String nickname = (String) properties.get("nickname");
+//            String nickname = (String) properties.get("nickname");
             String email = (String) kakaoAccount.get("email");
 
-            userInfo.put("nickname", nickname);
+//            userInfo.put("nickname", nickname);
             userInfo.put("email", email);
         }
-        return null;
+        return userInfo;
     }
 }
