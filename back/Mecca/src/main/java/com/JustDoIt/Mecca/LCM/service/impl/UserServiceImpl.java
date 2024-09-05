@@ -16,14 +16,14 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserMapper mapper) { this.mapper = mapper; }
 
     @Override
-    public int insertUser(User user) {
-        int result = mapper.insertUser(user);
+    public int signUpUser(User user) {
+        int result = mapper.signUpUser(user);
         return result;
     }
 
     @Override
-    public int selectUser(User user) {
-        int result = mapper.selectUser(user);
+    public User signInUser(User user) {
+        User result = mapper.signInUser(user);
         return result;
     }
 

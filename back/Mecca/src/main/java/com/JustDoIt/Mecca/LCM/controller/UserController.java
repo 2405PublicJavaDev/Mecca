@@ -4,11 +4,14 @@ import com.JustDoIt.Mecca.LCM.service.UserService;
 import com.JustDoIt.Mecca.LCM.vo.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/user")
@@ -20,43 +23,39 @@ public class UserController {
     @Autowired
     public UserController(UserService service) { this.service = service; }
 
-    @PostMapping("/insert")
-    public String insertUser(@RequestParam("uNickname") String uNickname, @RequestParam("uMail") String uMail, @RequestParam("uPassword") String uPassword) {
+    @PostMapping("/signup")
+    public String signUpUser(@RequestParam("uNickname") String uNickname, @RequestParam("uEmail") String uEmail, @RequestParam("uPassword") String uPassword) {
         User user = new User();
         user.setUNickname(uNickname);
-        user.setUMail(uMail);
+        user.setUEmail(uEmail);
         user.setUPassword(uPassword);
-        int result = service.insertUser(user);
-        if(result > 0) {
-            return "forward:/index.html";
-        } else {
-            return "";
-        }
+        service.signUpUser(user);
+        return "redirect:http://localhost:3000/user/signin";
     }
 
-    @GetMapping("/select")
-    public String selectUser(@RequestParam("uMail") String uMail, @RequestParam("uPassword") String uPassword, HttpSession session) {
+    @PostMapping("/signin")
+    public ResponseEntity<User> signInUser(@RequestParam("uEmail") String uEmail, @RequestParam("uPassword") String uPassword, HttpSession session) {
         User user = new User();
-        user.setUMail(uMail);
+        user.setUEmail(uEmail);
         user.setUPassword(uPassword);
-        int result = service.selectUser(user);
+        user = service.signInUser(user);
         if (user != null) {
-            session.setAttribute("uMail", user.getUMail());
+            session.setAttribute("uEmail", user.getUEmail());
             session.setAttribute("uNickname", user.getUNickname());
             session.setAttribute("uPassword", user.getUPassword());
-            return "";
+            return ResponseEntity.ok(user);
         } else {
-            return "";
+            return ResponseEntity.ok(null);
         }
     }
 
     @GetMapping("/update")
     public String showUpdateForm(HttpSession session) {
         // 세션에서 이메일을 가져옴
-        String uMail = (String) session.getAttribute("uMail");
-        if(uMail != null) {
+        String uEmail = (String) session.getAttribute("uEmail");
+        if(uEmail != null) {
             // 이메일로 사용자 정보 조회
-            User user = service.selectUserByEmail(uMail);
+            User user = service.selectUserByEmail(uEmail);
             if(user != null) {
                 return "/update";
             }else {
@@ -71,10 +70,10 @@ public class UserController {
     public String updateUser(HttpSession session, @RequestParam("uNickname") String uNickname,
                             @RequestParam("uIntroduce") String uIntroduce) {
         // 세션에서 이메일을 가져옴
-        String uMail = (String) session.getAttribute("uMail");
-        if(uMail != null) {
+        String uEmail = (String) session.getAttribute("uEmail");
+        if(uEmail != null) {
             // 사용자 정보 조회
-            User user = service.selectUserByEmail(uMail);
+            User user = service.selectUserByEmail(uEmail);
             if(user != null) {
                 // 업데이트 할 정보 설정
                 user.setUNickname(uNickname);
@@ -94,27 +93,11 @@ public class UserController {
         }
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public String deleteUser(HttpSession session) {
-        String uMail = (String) session.getAttribute("uMail");
-        if(uMail != null) {
-            // 이메일 사용자 조회
-            User user = service.selectUserByEmail(uMail);
-            if (user != null) {
-                // 사용자 존재하면 삭제
-                int result = service.deleteUser(uMail);
-                if (result > 0) {
-                    // 삭제 성공 시 세션 무효화
-                    session.invalidate();
-                    return ""; // 성공 시
-                }else {
-                    return ""; // 삭제 실패 시 에러 페이지
-                }
-            } else {
-                return ""; // 사용자 존재하지 않을 경우 에러페이지
-            }
-        } else {
-            return ""; // 이메일이 없을 경우 에러페이지
-        }
+        String uEmail = (String) session.getAttribute("uEmail");
+        service.deleteUser(uEmail);
+        session.invalidate();
+        return "redirect:http://localhost:3000/";
     }
 }

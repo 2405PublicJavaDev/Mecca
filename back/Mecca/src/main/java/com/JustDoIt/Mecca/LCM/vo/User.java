@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class User {
-    private String uMail;
+    private String uEmail;
     private String uPassword;
     private String uNickname;
     private String uImage;

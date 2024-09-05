@@ -8,13 +8,13 @@ public interface UserService {
      * 유저 가입 Service
      * @return
      */
-    int insertUser(User user);
+    int signUpUser(User user);
 
     /**
      * 유저 로그인 Service
      * @return
      */
-    int selectUser(User user);
+    User signInUser(User user);
 
     /**
      * 유저 수정 Service
