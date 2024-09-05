@@ -107,4 +107,11 @@ public class UserController {
         session.invalidate();
         return "redirect:http://localhost:3000/";
     }
+
+    @GetMapping("/signout")
+    public String signOutUser(HttpSession session) {
+        String uEmail = (String) session.getAttribute("uEmail");
+        session.invalidate();
+        return "redirect:http://localhost:3000/";
+    }
 }
