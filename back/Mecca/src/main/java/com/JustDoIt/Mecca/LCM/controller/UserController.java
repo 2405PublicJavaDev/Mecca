@@ -26,7 +26,7 @@ public class UserController {
         String uEmail = requestBody.get("uEmail");
         String uPassword = requestBody.get("uPassword");
 
-        User getUser = service.getUser(uEmail);
+        User getUser = service.getUser(uEmail, uNickname);
         if (getUser != null) {
             if (getUser.getUEmail() != null || getUser.getUNickname() != null) {
                 return ResponseEntity.ok(getUser);

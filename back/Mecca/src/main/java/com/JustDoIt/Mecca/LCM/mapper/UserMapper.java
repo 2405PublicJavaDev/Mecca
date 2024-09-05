@@ -18,8 +18,8 @@ public interface UserMapper {
      * @param uEmail
      * @return
      */
-    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail}")
-    User getUser(String uEmail);
+    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}")
+    User getUser(String uEmail, String uNickname);
 
     /**
      * 유저 로그인 Mapper

@@ -14,7 +14,7 @@ public interface UserService {
      * 유저 존재 여부 확인 Service
      * @return
      */
-    User getUser(String uEmail);
+    User getUser(String uEmail, String uNickname);
 
     /**
      * 유저 로그인 Service
