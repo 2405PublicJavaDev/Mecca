@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 상세보기</title>
+</head>
+<body>
+<div class="container">
+  <h1>게시글 상세보기</h1>
+  <div class="post-details">
+    <p><strong>제목:</strong> <span th:text="${general.gTitle}">제목</span></p>
+    <p><strong>내용:</strong> <span th:text="${general.gContent}">내용</span></p>
+    <p><strong>작성자 이메일:</strong> <span th:text="${general.gWriterEmail}">이메일</span></p>
+  </div>
+  <form action="#" th:action="@{/general/delete/{generalNo}(generalNo=${general.gNo})}" method="post" style="display:inline;">
+    <input type="hidden" name="gNo" th:value="${general.gNo}">
+    <button type="submit">삭제</button>
+  </form>
+  <a th:href="@{/general/update/{generalNo}(generalNo=${general.gNo})}">수정</a>
+  <a href="/general/list">목록으로 돌아가기</a>
+</div>
+</body>
+</html>

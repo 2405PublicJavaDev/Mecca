@@ -4,6 +4,7 @@ import com.JustDoIt.Mecca.KJH.service.GeneralService;
 import com.JustDoIt.Mecca.KJH.vo.General;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class GeneralController {
 
     @GetMapping("/insert")
     public String viewInsertForm() {
-        return "general/insert";
+        return "insert";
     }
 
     @PostMapping("/insert")
@@ -32,31 +33,33 @@ public class GeneralController {
         general.setGNickname("Test"); // 테스트용 닉네임 삽입
         System.out.println(general);
         int result = service.insertGeneral(general);
-        return "";
+        return "redirect:/general/list"; // 입력 후 목록으로 리다이렉트
     }
 
     @GetMapping("/detail/{generalNo}")
-    public String selectGeneralOne(@PathVariable("generalNo") Integer generalNo) {
+    public String selectGeneralOne(@PathVariable("generalNo") Integer generalNo, Model model) {
         General general = service.selectGeneralOne(generalNo);
         if (general != null) {
-            System.out.println("");
-            return "";
+            model.addAttribute("general", general);
+            return "detail"; // 상세보기 페이지
         } else {
-            System.out.println("");
-            return "";
+            return "redirect:/general/list"; // 상세정보를 찾을 수 없는 경우 목록으로 리다이렉트
         }
     }
 
+
     @GetMapping("/list")
-    public String selectGeneralList() {
+    public String selectGeneralList(Model model) {
         List<General> general = service.selectGeneralList();
-        if (general != null) {
-            System.out.println("");
-            return "";
-        } else {
-            System.out.println("");
-            return "";
-        }
+        model.addAttribute("generalList", general);
+        return "list"; // 게시글 목로 페이지
+    }
+
+    @GetMapping("/update/{generalNo}")
+    public String updateGeneral (@PathVariable("generalNo") Integer generalNo, Model model){
+        General general = service.selectGeneralOne(generalNo);
+        model.addAttribute("general", general);
+        return "update";
     }
 
     @PostMapping("/update")
@@ -64,11 +67,10 @@ public class GeneralController {
         int result = service.updateGeneral(general);
         if (result > 0) {
             System.out.println("수정 성공 ");
-            return "";
         } else {
             System.out.println("수정 실패 ");;
-            return "";
         }
+        return "redirect:/general/detail/" + general.getGNo(); // 수정 후 상세페이지로 리다이렉트
     }
 
     @PostMapping("/delete/{id}")
@@ -79,7 +81,7 @@ public class GeneralController {
         } else {
             System.out.println("삭제 실패");
         }
-        return "";
+        return "redirect:/general/list";
     }
 }
 

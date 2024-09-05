@@ -43,4 +43,5 @@ public interface GeneralMapper {
      */
     int deleteGeneral(Integer generalNo);
 
+    General selectGeneralOne(Integer generalNo);
 }

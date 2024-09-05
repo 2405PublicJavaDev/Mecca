@@ -26,7 +26,7 @@ public class GeneralServiceImpl implements GeneralService {
 
     @Override
     public General selectGeneralOne(Integer generalNo) {
-        General result = mapper.selectGeneral(generalNo);
+        General result = mapper.selectGeneralOne(generalNo);
         return result;
     }
 

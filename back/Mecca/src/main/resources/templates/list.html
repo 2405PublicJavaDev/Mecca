@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 목록</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<div class="container">
+  <h1>게시글 목록</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>제목</th>
+      <th>작성자 이메일</th>
+      <th>상세 보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="general : ${generalList}">
+      <td th:text="${general.gTitle}">제목</td>
+      <td th:text="${general.gWriterEmail}">이메일</td>
+      <td><a th:href="@{/general/detail/{generalNo}(generalNo=${general.gNo})}">상세 보기</a></td>
+    </tr>
+    </tbody>
+  </table>
+  <a href="/general/insert">게시글 작성</a>
+</div>
+</body>
+</html>

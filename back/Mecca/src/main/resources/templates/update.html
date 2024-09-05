@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 수정</title>
+</head>
+<body>
+<div class="container">
+  <h1>게시글 수정</h1>
+  <form th:action="@{/general/update}" method="post">
+    <input type="hidden" name="gNo" th:value="${general.gNo}">
+    <div class="form-group">
+      <label for="title">글 제목:</label>
+      <input type="text" id="title" name="gTitle" th:value="${general.gTitle}" required>
+    </div>
+    <div class="form-group">
+      <label for="content">내용:</label>
+      <textarea id="content" name="gContent" required th:text="${general.gContent}"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="email">이메일:</label>
+      <input type="email" id="email" name="gWriterEmail" th:value="${general.gWriterEmail}" required>
+    </div>
+    <div class="form-group">
+      <button type="submit">수정</button>
+    </div>
+  </form>
+  <a href="/general/list">목록으로 돌아가기</a>
+</div>
+</body>
+</html>
