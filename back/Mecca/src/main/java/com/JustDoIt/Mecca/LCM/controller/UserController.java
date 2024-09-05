@@ -21,13 +21,24 @@ public class UserController {
     public UserController(UserService service) { this.service = service; }
 
     @PostMapping("/signup")
-    public String signUpUser(@RequestParam("uNickname") String uNickname, @RequestParam("uEmail") String uEmail, @RequestParam("uPassword") String uPassword) {
+    public ResponseEntity<User> signUpUser(@RequestBody Map<String, String> requestBody) {
+        String uNickname = requestBody.get("uNickname");
+        String uEmail = requestBody.get("uEmail");
+        String uPassword = requestBody.get("uPassword");
+
+        User getUser = service.getUser(uEmail);
+        if (getUser != null) {
+            if (getUser.getUEmail() != null || getUser.getUNickname() != null) {
+                return ResponseEntity.ok(getUser);
+            }
+        }
+
         User user = new User();
         user.setUNickname(uNickname);
         user.setUEmail(uEmail);
         user.setUPassword(uPassword);
         service.signUpUser(user);
-        return "redirect:http://localhost:3000/user/signin";
+        return null;
     }
 
     @PostMapping("/signin")
@@ -62,7 +73,6 @@ public class UserController {
             return ""; // 세션에 이메일 없을 경우 에러
         }
     }
-
     @PostMapping("/update")
     public String updateUser(HttpSession session, @RequestParam("uNickname") String uNickname,
                             @RequestParam("uIntroduce") String uIntroduce) {

@@ -1,4 +1,5 @@
 import { useState, EventHandler, ReactNode } from 'react'
+import axios from "axios"
 
 let checkNickname = false;
 let checkEmail = false;
@@ -6,6 +7,11 @@ let checkPassword = false;
 let checkPasswordConfirm = false;
 
 const SignUp = () => {
+    const [status, setStatus] = useState({
+        uNickname: '',
+        uEmail: '',
+        uPassword: '',
+    });
 
     const indexPage = () => {
         window.location.href = "/";
@@ -27,6 +33,28 @@ const SignUp = () => {
         const url = `${authorizationUri}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`
 
         window.location.href = url;
+    }
+
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+        const response = await axios.post('/api/user/signup', {
+            uNickname: status.uNickname,
+            uEmail: status.uEmail,
+            uPassword: status.uPassword,
+        });
+        if (response.data == '') {
+            window.location.href = '/user/signin';
+        } else {
+            document.querySelector("#signUp").disabled = true;
+            if (response.data.unickname == document.querySelector("#nickname").value) {
+                document.querySelector("#nicknameError").textContent = "이미 존재하는 닉네임입니다."
+                checkNickname = false;
+            }
+            if (response.data.uemail == document.querySelector("#email").value) {
+                document.querySelector("#emailError").textContent = "이미 존재하는 이메일입니다."
+                checkEmail = false;
+            }
+        }
     }
 
 
@@ -96,6 +124,7 @@ const SignUp = () => {
             passwordError.textContent = '알파벳, 숫자, 특수문자를 모두 입력하세요.';
         } else {
             passwordError.textContent = ''; // 통과
+            validatePasswordConfirm();
             checkPassword = true
         }
 
@@ -142,32 +171,32 @@ const SignUp = () => {
             {/* 
                 회원가입 폼
             */}
-            <form action='/api/user/signup' method='post' id='form' className="self-stretch flex flex-col items-center justify-center gap-[30px]">
+            <form onSubmit={handleSignUp} id='form' autoComplete='off' className="self-stretch flex flex-col items-center justify-center gap-[30px]">
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">닉네임</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input onInput={validateNickname} id='nickname' autoComplete='false' placeholder='닉네임을 입력해 주세요.' type='text' name='uNickname' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validateNickname} id='nickname' placeholder='닉네임을 입력해 주세요.' type='text' name='uNickname' onChange={(e) => setStatus({ ...status, uNickname: e.target.value })} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
                     <div id='nicknameError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">이메일</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input onInput={validateEmail} id='email' autoComplete='false' placeholder='이메일을 입력해 주세요.' type='email' name='uEmail' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validateEmail} id='email' placeholder='이메일을 입력해 주세요.' type='email' name='uEmail' onChange={(e) => setStatus({ ...status, uEmail: e.target.value })} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
                     <div id='emailError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">비밀번호</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input onInput={validatePassword} id='password' autoComplete='false' placeholder='비밀번호를 입력해주세요.' type='password' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validatePassword} id='password' placeholder='비밀번호를 입력해주세요.' type='password' name='uPassword' onChange={(e) => setStatus({ ...status, uPassword: e.target.value })} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
                     <div id='passwordError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">비밀번호 확인</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input onInput={validatePasswordConfirm} id='passwordConfirm' autoComplete='false' placeholder='비밀번호를 다시 입력해주세요.' type='password' name='uPassword' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validatePasswordConfirm} id='passwordConfirm' placeholder='비밀번호를 다시 입력해주세요.' type='password' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
                     <div id='passwordConfirmError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
@@ -186,13 +215,13 @@ const SignUp = () => {
                     <img width="466" height="40" src="/assets/User/Kakao.png"></img>
                 </button>
             </div>
-        </div>
+        </div >
 
         {/* 
             헤더
          */}
-        <div className="absolute left-0 top-0 w-[1440px] h-[74px] flex">
-            <div className="absolute left-0 top-0 w-[1440px] h-[74px] bg-[#fff] border-[solid] border-#00000080 border"></div>
+        <div className="absolute left-0 top-0 w-[1440px] h-[74px] flex" >
+            <div className="absolute left-0 top-0 w-[1440px] h-[74px] bg-[#fff] border-[solid] border"></div>
             <div className="absolute left-[1145px] top-[13px] flex flex-row items-center justify-start gap-[20px]">
                 <button onClick={signInPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] border-[1px] border-solid border-[#00000080] rounded-[30px]">
                     <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">로그인</div>
@@ -203,7 +232,7 @@ const SignUp = () => {
             </div>
             <button onClick={indexPage} className="absolute -translate-y-1/2 left-[75px] top-1/2 w-[110px] text-[32px] leading-[40px] font-['Roboto'] font-bold text-[#000] text-center">MeCCa</button>
         </div>
-    </div>)
+    </div >)
 }
 
 export default SignUp

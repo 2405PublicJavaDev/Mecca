@@ -1,4 +1,4 @@
-import React, { useState, EventHandler, ReactNode } from 'react'
+import { useState, EventHandler, ReactNode } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 
@@ -47,9 +47,7 @@ const SignIn = ({ onSignIn }) => {
             nav("/");
             // window.location.href = '/';
         } else {
-            const error = document.querySelector("#passwordError");
-            error.innerHTML = "이메일 또는 비밀번호가 일치하지 않습니다.";
-            error.removeAttribute('hidden');
+            document.querySelector("#passwordError").textContent = "이메일 또는 비밀번호가 일치하지 않습니다.";
         }
     }
 
@@ -119,18 +117,18 @@ const SignIn = ({ onSignIn }) => {
             {/* 
                 로그인 폼
             */}
-            <form onSubmit={handleSignIn} id='form' className="self-stretch flex flex-col items-start justify-start gap-[30px]">
+            <form onSubmit={handleSignIn} id='form' autoComplete='off' className="self-stretch flex flex-col items-start justify-start gap-[30px]">
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">이메일</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input onInput={validateEmail} id='email' autoComplete='false' placeholder='이메일을 입력해 주세요.' type='email' name='uEmail' onChange={(e) => setUEmail(e.target.value)} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validateEmail} id='email' placeholder='이메일을 입력해 주세요.' type='email' name='uEmail' onChange={(e) => setUEmail(e.target.value)} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
                     <div id='emailError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">비밀번호</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input onInput={validatePassword} id='password' autoComplete='false' placeholder='비밀번호를 입력해주세요.' type='password' name='uPassword' onChange={(e) => setUPassword(e.target.value)} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validatePassword} id='password' placeholder='비밀번호를 입력해주세요.' type='password' name='uPassword' onChange={(e) => setUPassword(e.target.value)} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
                     <div id='passwordError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
@@ -161,7 +159,7 @@ const SignIn = ({ onSignIn }) => {
             헤더
          */}
         <div className="absolute left-0 top-0 w-[1440px] h-[74px] flex">
-            <div className="absolute left-0 top-0 w-[1440px] h-[74px] bg-[#fff] border-[solid] border-#00000080 border"></div>
+            <div className="absolute left-0 top-0 w-[1440px] h-[74px] bg-[#fff] border-[solid] border"></div>
             <div className="absolute left-[1145px] top-[13px] flex flex-row items-center justify-start gap-[20px]">
                 <button onClick={signInPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] border-[1px] border-solid border-[#00000080] rounded-[30px]">
                     <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">로그인</div>

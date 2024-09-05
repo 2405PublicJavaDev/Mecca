@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
         int result = mapper.signUpUser(user);
         return result;
     }
+    @Override
+    public User getUser(String uEmail) {
+        User getUser = mapper.getUser(uEmail);
+        return getUser;
+    }
 
     @Override
     public User signInUser(User user) {

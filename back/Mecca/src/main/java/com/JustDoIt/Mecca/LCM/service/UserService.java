@@ -11,6 +11,12 @@ public interface UserService {
     int signUpUser(User user);
 
     /**
+     * 유저 존재 여부 확인 Service
+     * @return
+     */
+    User getUser(String uEmail);
+
+    /**
      * 유저 로그인 Service
      * @return
      */
@@ -33,4 +39,6 @@ public interface UserService {
      * @return
      */
      User selectUserByEmail(String uEmail);
+
+
 }
