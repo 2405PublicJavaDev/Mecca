@@ -1,6 +1,6 @@
 import { useState, EventHandler, ReactNode } from 'react'
 
-const Index = () => {
+const Index = ({ email, password }) => {
 
     const indexPage = () => {
         window.location.href = "/";
@@ -13,6 +13,9 @@ const Index = () => {
     const signInPage = () => {
         window.location.href = "/user/signin";
     }
+
+    console.log(email);
+    console.log(password);
 
     return (<div className="relative w-[1440px] h-[1024px] bg-[#fff] overflow-hidden">
         <div className="absolute left-[305px] top-[214px] w-[830px] flex flex-wrap items-start justify-start gap-[30px]">

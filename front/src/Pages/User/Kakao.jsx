@@ -6,8 +6,6 @@ const KakaoTest = () => {
 
     useEffect(() => {
         const code = new URLSearchParams(window.location.search).get('code');
-        console.log(code);
-
         if (code) {
             axios.post('/api/kakao', { code })
                 .then(response => {

@@ -1,5 +1,10 @@
 import { useState, EventHandler, ReactNode } from 'react'
 
+let checkNickname = false;
+let checkEmail = false;
+let checkPassword = false;
+let checkPasswordConfirm = false;
+
 const SignUp = () => {
 
     const indexPage = () => {
@@ -14,10 +19,6 @@ const SignUp = () => {
         window.location.href = "/user/signin";
     }
 
-    const handleSignup = () => {
-
-    }
-
     const handleKakao = () => {
         const authorizationUri = "https://kauth.kakao.com/oauth/authorize";
         const client_id = "25431136bde1cd0a177ed0354aca3557";
@@ -26,6 +27,110 @@ const SignUp = () => {
         const url = `${authorizationUri}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`
 
         window.location.href = url;
+    }
+
+
+
+    // 닉네임 유효성 검사 함수
+    const validateNickname = () => {
+        checkNickname = false;
+
+        const nickname = document.getElementById('nickname').value.trim();
+        const nicknameError = document.getElementById('nicknameError');
+
+        // (형식: 한글, 영문, 숫자 포함 10글자 이하, 특수문자 사용 안 됨)
+        const nicknamePattern = /^[a-zA-Z0-9가-힣]{1,10}$/;
+
+        if (!nickname) {
+            nicknameError.textContent = '닉네임을 입력해주세요.';
+        } else if (nickname.length < 3) {
+            nicknameError.textContent = '최소 3자 이상 입력하세요.';
+        } else if (nickname.length > 10) {
+            nicknameError.textContent = '10자를 넘지 않게 입력하세요.';
+        } else if (!nicknamePattern.test(nickname)) {
+            nicknameError.textContent = '영문만 입력해주세요.';
+        } else {
+            nicknameError.textContent = ''; // 통과
+            checkNickname = true;
+        }
+
+        formButtonCheck();
+    }
+
+    // 이메일 유효성 검사 함수
+    const validateEmail = () => {
+        checkEmail = false;
+
+        const email = document.getElementById('email').value.trim();
+        const emailError = document.getElementById('emailError');
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email) {
+            emailError.textContent = '이메일을 입력해주세요.';
+        } else if (!emailPattern.test(email)) {
+            emailError.textContent = '이메일 형식을 맞춰주세요.';
+        } else {
+            emailError.textContent = ''; // 통과
+            checkEmail = true
+        }
+
+        formButtonCheck();
+    }
+
+    // 비밀번호 유효성 검사 함수
+    const validatePassword = () => {
+        checkPassword = false;
+
+        const password = document.getElementById('password').value;
+        const passwordError = document.getElementById('passwordError');
+
+        // (형식: 한글 안 되고, 영문, 숫자, 특수문자 포함)
+        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+        if (!password) {
+            passwordError.textContent = '비밀번호를 입력하세요.';
+        } else if (password.length < 8) {
+            passwordError.textContent = '최소 8자 이상 입력하세요.';
+        } else if (!passwordPattern.test(password)) {
+            passwordError.textContent = '알파벳, 숫자, 특수문자를 모두 입력하세요.';
+        } else {
+            passwordError.textContent = ''; // 통과
+            checkPassword = true
+        }
+
+        formButtonCheck();
+    }
+
+    // 비밀번호 확인 유효성 검사 함수
+    const validatePasswordConfirm = () => {
+        checkPasswordConfirm = false;
+
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+        const passwordConfirmError = document.getElementById('passwordConfirmError');
+
+        if (!passwordConfirm) {
+            passwordConfirmError.textContent = '비밀번호 확인을 입력하세요.';
+        } else if (password !== passwordConfirm) {
+            passwordConfirmError.textContent = '비밀번호를 일치하게 입력하세요.';
+        } else {
+            passwordConfirmError.textContent = ''; // 통과
+            checkPasswordConfirm = true
+        }
+
+        formButtonCheck();
+    }
+
+    function formButtonCheck() {
+        const signUp = document.querySelector("#signUp");
+
+        if (checkNickname === true && checkEmail === true && checkPassword === true && checkPasswordConfirm === true) {
+            signUp.disabled = false;
+        } else {
+            signUp.disabled = true;
+        }
     }
 
     return (<div className="relative w-[1440px] h-[1024px] bg-[#fff] overflow-hidden">
@@ -37,45 +142,45 @@ const SignUp = () => {
             {/* 
                 회원가입 폼
             */}
-            <form action='/api/user/insert' method='post' id='signup' className="self-stretch flex flex-col items-center justify-center gap-[30px]">
+            <form action='/api/user/signup' method='post' id='form' className="self-stretch flex flex-col items-center justify-center gap-[30px]">
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">닉네임</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input placeholder='닉네임을 입력해 주세요.' type='text' name='uNickname' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validateNickname} id='nickname' autoComplete='false' placeholder='닉네임을 입력해 주세요.' type='text' name='uNickname' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
-                    <div hidden className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]">이미 존재하는 닉네임입니다.</div>
+                    <div id='nicknameError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">이메일</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input placeholder='이메일을 입력해 주세요.' type='email' name='uUEmail' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validateEmail} id='email' autoComplete='false' placeholder='이메일을 입력해 주세요.' type='email' name='uEmail' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
-                    <div hidden className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]">올바른 이메일 형식이 아닙니다.</div>
+                    <div id='emailError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">비밀번호</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input placeholder='비밀번호를 입력해주세요.' type='password' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validatePassword} id='password' autoComplete='false' placeholder='비밀번호를 입력해주세요.' type='password' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
-                    <div hidden className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]">최소 8자리 이상이어야 합니다.</div>
+                    <div id='passwordError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
                 <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                     <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">비밀번호 확인</div>
                     <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <input placeholder='비밀번호를 다시 입력해주세요.' type='password' name='uPassword' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                        <input onInput={validatePasswordConfirm} id='passwordConfirm' autoComplete='false' placeholder='비밀번호를 다시 입력해주세요.' type='password' name='uPassword' className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                     </div>
-                    <div hidden className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]">비밀번호가 일치하지 않습니다.</div>
+                    <div id='passwordConfirmError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                 </div>
             </form>
-            {/* 
-                버튼
-            */}
             <div className="self-stretch h-[93px] shrink-0 flex flex-col items-start justify-start gap-[13px]">
-                <button type='submit' form='signup' className="self-stretch flex flex-row items-center justify-center p-[10px] bg-[#0090f9] rounded-[10px]">
+                {/* 
+                    일반 회원가입
+                */}
+                <button disabled id='signUp' type='submit' form='form' className="self-stretch flex flex-row items-center justify-center p-[10px] bg-[#0090f9] rounded-[10px]">
                     <div className="text-[20px] leading-[20px] font-['Roboto'] font-bold text-[#fff] text-center whitespace-nowrap">회원가입</div>
                 </button>
                 {/* 
-                    카카오 로그인
+                    카카오 회원가입
                 */}
                 <button onClick={handleKakao} className="self-stretch flex-1 flex flex-col items-start justify-start">
                     <img width="466" height="40" src="/assets/User/Kakao.png"></img>
