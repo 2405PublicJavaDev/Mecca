@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -34,10 +31,10 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<User> signInUser(@RequestParam("uEmail") String uEmail, @RequestParam("uPassword") String uPassword, HttpSession session) {
+    public ResponseEntity<User> signInUser(@RequestBody Map<String, String> requestBody, HttpSession session) {
         User user = new User();
-        user.setUEmail(uEmail);
-        user.setUPassword(uPassword);
+        user.setUEmail(requestBody.get("uEmail"));
+        user.setUPassword(requestBody.get("uPassword"));
         user = service.signInUser(user);
         if (user != null) {
             session.setAttribute("uEmail", user.getUEmail());
