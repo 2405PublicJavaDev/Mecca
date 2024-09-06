@@ -14,7 +14,7 @@
          	}
 			#dibody{
 /* 				background-color: green; */
-				
+                text-align: center;
 				
 			}
 			table{
@@ -25,14 +25,79 @@
 			body{
 				background-color: aliceblue;
 			}
+            button {
+                border-radius: 20px;
+                border: 1px solid deepskyblue;
+                background-color: deepskyblue;
+                color: #FFFFFF;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 12px 45px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                transition: transform 80ms ease-in;
+            }
+
+            button:active {
+                transform: scale(0.95);
+            }
+
+            button:focus {
+                outline: none;
+            }
+
+            button.ghost {
+                background-color: transparent;
+                border-color: #FFFFFF;
+            }
+            #main{
+                display: inline-block;
+                width: 60%;
+
+            }
+            #di1{
+                float: left;
+
+            }
+            #di2{
+                float: left;
+            }
+            #count{
+                float: right;
+            }
         </style>
         
         
     </head>
     <body>
     <div id="dibody">
+        <div>
+            <h1>매칭</h1>
+            함께즐기수록 재밌는게임
+        </div>
+        <div><button th:onclick="register();">작성하기</button>
+            <button th:onclick="situation([[${memberId}]]);">매칭상황</button>
+        </div>
+        <div id="main" th:each="matching,a:${mList}">
+            <div id="di1">[[${matching.mNickname}]] [[${matching.mCreatedDate}]]</div>
+            <br>
+            <div id="di2"><a href="javascript:void(0)" th:onclick="showdetail([[${matching.mNo}]]);">[게임] [[${matching.mTag}]] ([[${matching.mTierOrLevel}]]) [[${matching.mContent}]]</a></div>
+            <div id="count">인원 [[${matching.mCurrentParty}]]/[[${matching.mMaxParty}]]</div>
+            <br>
+            <hr>
+        </div>
+
+        <div th:if="${pn.endNavi}==0">
+            <a th:href="@{/api/matching/list(cp=${p})}" th:text="1"></a>
+        </div>
+        <div th:if="${pn.endNavi}!=0" th:each="p : ${#numbers.sequence(pn.startNavi, pn.endNavi)}">
+            <a th:href="@{/api/matching/list(cp=${p})}" th:text="${p}"></a>
+        </div>
+
+
     <table>
         <tr>
+            <th>아이디</th>
         	<th>카테고리</th>
             <th>게임</th>
             <th>아이디</th>
@@ -40,38 +105,38 @@
             <th>내용</th>
             <th>인원</th>
             <th>등록일시</th>
-            <th> <button th:onclick="register();">등록</button></th>
-           
-            
+
+
         </tr>
         <tr th:each="matching,a:${mList}" varStatus="status">
+            <td>[[${matching.mWriterEmail}]]</td>
+            <td>[[${matching.mGenre}]]</td>
+            <td>[[${matching.mTag}]]</td>
+            <td>[[${matching.mNickname}]]</td>
+            <td>[[${matching.mTierOrLevel}]]</td>
 
-            <td>[[${matching.matchingCatagory}]]</td>
-            <td>[[${matching.matchingGame}]]</td>
-            <td>[[${matching.matchingId}]]</td>
-            <td>[[${matching.matchingGrade}]]</td>
+			<td><a href="javascript:void(0)" th:onclick="showdetail([[${matching.mNo}]]);">[[${matching.mContent}]]</a></td>
 
-<!-- 			<td><a th:href="@{/matching/detail/{matchingNo}(matchingNo=${matching.matchingNo})}">[[${matching.matchingContent}]]</a></td> -->
-			<td><a href="javascript:void(0)" th:onclick="showdetail([[${matching.matchingNo}]]);">[[${matching.matchingContent}]]</a></td>
-			
-			<td th:id="'count'+${a.index}">[[${matching.matchingminCount}]]/[[${matching.matchingmaxCount}]]</td>
-			<td>[[${matching.matchingDate}]]</td>
-			<td><button th:onclick="together([[${a.index}]],[[${matching.matchingminCount}]],[[${matching.matchingmaxCount}]],[[${matching.matchingNo}]]);">같이게임하기</button></td>
-		
-<!-- <a th:href="@{/notice/detail/{noticeNo}(noticeNo=${notice.noticeNo})}"></a> -->
+			<td th:id="'count'+${a.index}">[[${matching.mCurrentParty}]]/[[${matching.mMaxParty}]]</td>
+			<td>[[${matching.mCreatedDate}]]</td>
+
+
         </tr>
 
 			<tr align="center">
 				<td colspan="8">
-					<th:block th:each="p : ${#numbers.sequence(pn.startNavi, pn.endNavi)}">
-						<a th:href="@{/matching/list(cp=${p})}" th:text="${p}"></a>
+                    <th:block th:if="${pn.endNavi}==0" >
+                        <a th:href="@{/api/matching/list(cp=${p})}" th:text="1"></a>
+                    </th:block>
+					<th:block th:if="${pn.endNavi}!=0" th:each="p : ${#numbers.sequence(pn.startNavi, pn.endNavi)}">
+                        <a th:href="@{/api/matching/list(cp=${p})}" th:text="${p}"></a>
 					</th:block>
 				</td>
 			</tr>
 
         <tr>
             <td colspan="8" style="text-align: center">
-                <form action="/matching/search" method="post">
+                <form action="/api/matching/search" method="post">
                     <select name="searchCondition">
                         <option value="all">전체</option>
                         <option value="catagory">게임</option>
@@ -94,45 +159,30 @@
     	
     	function showdetail(a){
     		var popupW = 500;
-    		var popupH = 600;
+    		var popupH = 750;
     		var left = Math.ceil((window.screen.width - popupW)/2);
     		var top = Math.ceil((window.screen.height - popupH)/2);
-    		myWindow=window.open("/matching/detail/"+a,"pop","width=500,height=500,left="+left+",top="+top+"");
+    		myWindow=window.open("/api/matching/detail/"+a,"pop","width=500,height=750,left="+left+",top="+top+"");
     		
     	}
     	function register(){
-    		var popupW = 500;
-    		var popupH = 600;
+    		var popupW = 600;
+    		var popupH = 750;
     		var left = Math.ceil((window.screen.width - popupW)/2);
     		var top = Math.ceil((window.screen.height - popupH)/2);
-    		writeWindow=window.open("/matching/register","pop","width=500,height=500,left="+left+",top="+top+"");
+    		writeWindow=window.open("/api/matching/register","pop","width=600,height=750,left="+left+",top="+top+"");
     		console.log(writeWindow);
     	}
-    	
-		
-    	
-    	
-    	
-    	
+        function situation(a){
+            var popupW = 500;
+            var popupH = 600;
+            var left = Math.ceil((window.screen.width - popupW)/2);
+            var top = Math.ceil((window.screen.height - popupH)/2);
+            myWindow=window.open("/api/matching/requestlist?MemberId="+a,"pop","width=500,height=700,left="+left+",top="+top+"");
 
-
-    	
-    	let counter = new Array();
-    	
-    	function together(a,b,c,d) {
-            let co = document.querySelector("#count" + a)
-            console.log(b);
-            b++;
-            if (b > c) {
-                alert("인원이 꽉찼습니다.")
-            } else {
-                co.innerText = `${b}/${c} `;
-                var mes=window.prompt('좋아하는 숫자를 입력하세요.');
-                console.log("mes");
-                location.href="/matching/application?matchingNo="+d+"&message="+mes;
-
-            }
         }
+    	
+
 
     </script>
     </body  >

@@ -15,14 +15,22 @@ public interface MatchingMapper {
 
     List<Matching> selectList(Integer currentPage, RowBounds rowBounds);
 
-    Matching selectOne(Integer matchingNo);
+    Matching selectOne(Integer mNo);
 
 
     List<Matching> searchList(RowBounds rowBounds,Map<String, String> paramMap);
 
     int getsearchTotalCount(Map<String, String> paramMap);
 
-    int minplus(Integer matchingNo, int matchingminCount);
+    int minplus(Integer mrMNo);
 
-    int minsub(Integer matchingNo);
+    int minsub(Integer mrMNo);
+
+    int gamestart(Integer mNo);
+
+    int gameend(Integer mNo);
+
+    int checkgame(String memberId);
+
+    List<Matching> searchOne(String memberId);
 }

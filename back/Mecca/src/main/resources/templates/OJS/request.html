@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>신청현황</title>
+  </head>
+  <body>
+    <h1>등록게임</h1>
+    <table>
+        <tr>
+            <th>게임</th>
+            <th>내용</th>
+            <th></th>
+        </tr>
+        <tr th:each="match:${mList}">
+            <td th:if="${match.mTag}!=null">a</td>
+            <td th:if="${match.mContent}!=null">[[${match.mContent}]]</td>
+            <td><button th:onclick="gameend([[${match.mNo}]]);">등록취소</button></td>
+        </tr>
+    </table>
+    <h1>접수현황</h1>
+    <table>
+        <tr>
+            <th><a>신청자</a></th>
+            <th>게임상태</th>
+            <th>인원</th>
+            <th>수락/거절</th>
+        </tr>
+        <tr th:each="signal,a:${rList}">
+            <td>[[${signal.mrRequesterEmail}]]</td>
+            <th>[[${signal.mStatus}]]</th>
+            <td>[[${signal.mCurrentParty}]]/[[${signal.mMaxParty}]]</td>
+
+            <td th:if="${signal.mrStatus}==ACCEPT">수락</td>
+            <td th:if="${signal.mrStatus}==REJECT">거절</td>
+            <td th:if="${signal.mrStatus}==CANCEL">취소</td>
+            <td th:if="${signal.mrStatus}==REQUEST"><button th:onclick="accep([[${signal.mrNo}]],[[${signal.mrMNo}]]);">수락</button><button th:onclick="refusal([[${signal.mrNo}]],[[${signal.mrMNo}]]);">거절</button></td>
+            <td th:if="${signal.mCurrentParty}==${signal.mMaxParty} and ${a.index}==0">
+
+                <button th:if="${signal.mStatus}==USE" th:onclick="gamestart([[${signal.mrMNo}]]);">게임 시작</button>
+                <button th:if="${signal.mStatus}==START" th:onclick="gameend([[${signal.mrMNo}]]);">게임 종료</button>
+                <button th:if="${signal.mStatus}==USE or ${signal.mStatus}==START" th:onclick="chatopen([[${signal.mrWriterEmail}]]);">채팅 하기</button>
+                <button th:if="${signal.mStatus}==END" th:onclick="">별점주기</button>
+            </td>
+        </tr>
+    </table>
+    <h1>신청현황</h1>
+    <table>
+        <tr >
+            <th>신청게임</th>
+            <th>게임상태</th>
+            <th>수락상태</th>
+            <th>인원</th>
+            <th></th>
+        </tr>
+        <tr th:each="signal:${aList}">
+            <td>[[${signal.mrMNo}]]</td>
+            <td>[[${signal.mStatus}]]</td>
+            <td th:if="${signal.mrStatus}==ACCEPT">수락</td>
+            <td th:if="${signal.mrStatus}==REQUEST ">보류<button th:onclick="gamecancel([[${signal.mrNo}]]);">취소</button></td>
+            <td th:if="${signal.mrStatus}==REJECT">거절</td>
+            <td th:if="${signal.mrStatus}==CANCEL">취소</td>
+            <td>[[${signal.mCurrentParty}]]/[[${signal.mMaxParty}]]</td>
+            <td th:if="${signal.mCurrentParty}==${signal.mMaxParty}">
+                <button th:if="${signal.mStatus}!=END" th:onclick="chatopen([[${signal.mrWriterEmail}]]);">채팅참여</button>
+                <button th:if="${signal.mStatus}==END" th:onclick="">별점주기</button>
+            </td>
+        </tr>
+
+    </table>
+  <script>
+      function accep(a,b){
+          location.href="/api/matching/accep?mrNo="+a+"&mrMNo="+b;
+
+      }
+      function refusal(a,b){
+          location.href="/api/matching/refusal?mrNo="+a+"&mrMNo="+b;
+
+      }
+      function chatopen(a){
+          var popupW = 500;
+          var popupH = 600;
+          var left = Math.ceil((window.screen.width - popupW)/2);
+          var top = Math.ceil((window.screen.height - popupH)/2);
+          myWindow=window.open("/chat?chatid="+a,"pop","width=500,height=500,left="+left+",top="+top+"");
+
+      }
+      function gamestart(a){
+          location.href="/api/matching/gamestart?mNo="+a
+      }
+      function gameend(a){
+          location.href="/api/matching/gameend?mNo="+a
+      }
+      function gamecancel(a){
+          location.href="/api/matching/gamecancel?mNo="+a
+      }
+
+  </script>
+
+
+
+
+  </body>
+</html>

@@ -7,18 +7,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <style>
         /* 채팅 UI 스타일 */
+        #messageArea{
+            width:300px;
+            height:400px;
+        }
     </style>
 </head>
 <body>
 <div id="chat-page">
     <div id="chat-room" style="display: none;">
         <div id="messageArea"></div>
-        <input type="text" id="message" placeholder="Enter your message" />
-        <button onclick="sendMessage()">Send</button>
+        <input type="text" id="message" onkeyup="ent(this)" placeholder="메세지를 입력하세요" />
+        <button onclick="sendMessage()" >보내기</button>
     </div>
     <div id="name-page">
         <input type="text" id="name" placeholder="Enter your name" th:value="${memberId}"/>
-        <input type="text" id="room-id" placeholder="Enter room ID" th:value="${memberId}" />
+        <input type="text" id="room-id" placeholder="Enter room ID" th:value="${chatid}" />
         <button onclick="connect()">가입</button>
     </div>
 </div>
@@ -37,6 +41,14 @@
             stompClient = Stomp.over(socket);
 
             stompClient.connect({}, onConnected, onError);
+
+
+    function ent(){
+        var keycode=event.keyCode;
+        if(keycode==13){
+            sendMessage();
+        }
+    }
 
 
     function onConnected() {

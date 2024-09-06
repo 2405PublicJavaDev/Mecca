@@ -6,11 +6,9 @@ import java.util.Map;
 import com.JustDoIt.Mecca.OJS.mapper.MatchingMapper;
 import com.JustDoIt.Mecca.OJS.service.MatchingService;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
-import com.JustDoIt.Mecca.OJS.vo.Signal;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.exceptions.TemplateInputException;
 
 @Service
 public class MatchingServiceImpl implements MatchingService {
@@ -39,8 +37,8 @@ public class MatchingServiceImpl implements MatchingService {
         return mList;
     }
     @Override
-    public Matching selectOne(Integer matchingNo) {
-        Matching match=mapper.selectOne(matchingNo);
+    public Matching selectOne(Integer mNo) {
+        Matching match=mapper.selectOne(mNo);
         return match;
     }
 
@@ -59,15 +57,39 @@ public class MatchingServiceImpl implements MatchingService {
     }
 
     @Override
-    public int minplus(Integer matchingNo, int matchingminCount) {
+    public int minplus(Integer mrMNo) {
 
-        int result=mapper.minplus(matchingNo,matchingminCount);
+        int result=mapper.minplus(mrMNo);
         return result;
     }
 
     @Override
-    public int minsub(Integer matchingNo) {
-        int result=mapper.minsub(matchingNo);
+    public int minsub(Integer mrMNo) {
+        int result=mapper.minsub(mrMNo);
         return result;
+    }
+
+    @Override
+    public int gamestart(Integer mNo) {
+        int result=mapper.gamestart(mNo);
+        return result;
+    }
+
+    @Override
+    public int gameend(Integer mNo) {
+        int result=mapper.gameend(mNo);
+        return result;
+    }
+
+    @Override
+    public int checkgame(String memberId) {
+        int result=mapper.checkgame(memberId);
+        return result;
+    }
+
+    @Override
+    public List<Matching> searchOne(String memberId) {
+        List<Matching> mList=mapper.searchOne(memberId);
+        return mList;
     }
 }

@@ -50,11 +50,35 @@ public interface MatchingService {
      * matchingNo,minCount
      * return int
      */
-    int minplus(Integer matchingNo, int matchingminCount);
+    int minplus(Integer mrMNo);
     /**
      * 최소인원수 -
      * matchingNo,minCount
      * return int
      */
-    int minsub(Integer matchingNo);
+    int minsub(Integer mrMNo);
+    /**
+     * 게임시작 -
+     * mNo
+     * return int
+     */
+    int gamestart(Integer mNo);
+    /**
+     * 게임종료 -
+     * mNo
+     * return int
+     */
+    int gameend(Integer mNo);
+    /**
+     * 매칭등록전 게임상태 검사
+     * memberId
+     * return int
+     */
+    int checkgame(String memberId);
+    /**
+     * 매칭등록상태
+     * memberId
+     * matching
+     */
+    List<Matching> searchOne(String memberId);
 }
