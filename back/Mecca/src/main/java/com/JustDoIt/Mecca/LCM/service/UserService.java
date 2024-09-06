@@ -11,7 +11,7 @@ public interface UserService {
     int signUpUser(User user);
 
     /**
-     * 유저 존재 여부 확인 Service
+     * 유저 존재 확인 Service
      * @return
      */
     User getUser(String uEmail, String uNickname);
@@ -29,16 +29,14 @@ public interface UserService {
     int updateUser(User user);
 
     /**
-     * 유저 삭제 Service
+     * 유저 탈퇴 Service
      * @return
      */
     int deleteUser(String uEmail);
 
     /**
-     * 회원 이메일 검색 Service
+     * 유저 정보 조회 Service
      * @return
      */
      User selectUserByEmail(String uEmail);
-
-
 }

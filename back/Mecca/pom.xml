@@ -77,6 +77,7 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -89,12 +90,19 @@
 			<artifactId>spring-boot-starter-rsocket</artifactId>
 		</dependency>
 
-<!--		<dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!--		<dependency>-->
 <!--			<groupId>io.projectreactor</groupId>-->
 <!--			<artifactId>reactor-test</artifactId>-->
 <!--			<scope>test</scope>-->
 <!--		</dependency>-->
 	</dependencies>
+
+
 
 
 

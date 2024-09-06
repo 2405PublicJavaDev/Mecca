@@ -40,10 +40,8 @@ public interface UserMapper {
     int deleteUser(String uEmail);
 
     /**
-     * 회원 이메일 검색
+     * 유저 정보 조회 Mapper
      * @return
      */
     User selectUserByEmail(String uEmail);
-
-
 }
