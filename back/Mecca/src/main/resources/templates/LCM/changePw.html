@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 변경</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        input[type="password"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>비밀번호 변경</h1>
+    <form id="passwordChangeForm">
+        <label for="currentPassword">현재 비밀번호:</label>
+        <input type="password" id="currentPassword" name="currentPassword" required>
+
+        <label for="newPassword">신규 비밀번호:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+
+        <label for="confirmNewPassword">신규 비밀번호 확인:</label>
+        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+
+        <button type="submit">변경</button>
+    </form>
+</div>
+<script>
+    document.getElementById('passwordChangeForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+        fetch('/changePw', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                currentPassword: currentPassword,
+                newPassword: newPassword,
+                newPasswordConfirm: confirmNewPassword,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "1") {
+                    alert(data.message);
+                    // 성공 시 추가 처리 (예: 페이지 리디렉션)
+                } else {
+                    alert(data.message);
+                    // 실패 시 추가 처리
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>

@@ -5,10 +5,14 @@ import com.JustDoIt.Mecca.LCM.vo.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
 
+
+//@Controller // 테스트용 껄껄
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -73,10 +77,11 @@ public class UserController {
         }
     }
     @PostMapping("/update")
-    public String updateUser(HttpSession session, @RequestParam("uNickname") String uNickname,
-                            @RequestParam("uIntroduce") String uIntroduce) {
+    public String updateUser(HttpSession session, @RequestBody Map<String, String> requestBody) {
         // 세션에서 이메일을 가져옴
         String uEmail = (String) session.getAttribute("uEmail");
+        String uNickname= requestBody.get("uNickname");
+        String uIntroduce = requestBody.get("uIntroduce");
         if(uEmail != null) {
             // 사용자 정보 조회
             User user = service.selectUserByEmail(uEmail);
@@ -113,4 +118,62 @@ public class UserController {
         session.invalidate();
         return "redirect:http://localhost:3000/";
     }
+
+    @PostMapping("/changePw")
+    public ResponseEntity<String> changePassword(HttpSession session, @RequestBody Map<String, String> requestBody) {
+        // 세션에서 이메일을 가져옴
+        String uEmail = (String) session.getAttribute("uEmail");
+        String currentPassword = requestBody.get("currentPassword");
+        String newPassword = requestBody.get("newPassword");
+        String newPasswordConfirm = requestBody.get("newPasswordConfirm");
+        if (uEmail == null) {
+            return ResponseEntity.badRequest().body("세션에 이메일이 없습니다.");
+        }
+        // 현재 비밀번호와 새 비밀번호 확인
+        User user = service.selectUserByEmail(uEmail);
+        if (user == null || !user.getUPassword().equals(currentPassword)) {
+            return ResponseEntity.badRequest().body("현재 비밀번호가 일치하지 않습니다."); // 이거 필요 없죠져져죠져죠?? ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ 
+        }
+        if (!newPassword.equals(newPasswordConfirm)) {
+            return ResponseEntity.badRequest().body("새 비밀번호 확인이 일치하지 않습니다."); // 어차피 지워질 얘들 
+        }
+        // 비밀번호 업데이트
+        user.setUPassword(newPassword);
+        int result = service.updatePassword(user);
+        if (result > 0) {
+            return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다."); // 가여워라 ㅋ ㅋ ㅋ ㅋ  사실은
+        } else {
+            return ResponseEntity.status(500).body("비밀번호 변경에 실패했습니다."); // 하나도 안 가여움 ㅋ ㅋ ㅋ ㅋㅋ  내가 제일 가여움 ㅋ  ㅋ ㅋㅋ  ㅋㅋ
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

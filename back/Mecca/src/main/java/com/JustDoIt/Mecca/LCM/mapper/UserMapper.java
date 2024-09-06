@@ -44,4 +44,12 @@ public interface UserMapper {
      * @return
      */
     User selectUserByEmail(String uEmail);
+
+    /**
+     * 유저 비밀번호 변경 Mapper
+     * @param user
+     * @return
+     */
+    int updatePassword(User user);
+
 }

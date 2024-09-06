@@ -11,6 +11,11 @@
         SET U_NICKNAME = #{uNickname}, U_INTRODUCE = #{uIntroduce}
         WHERE U_EMAIL = #{uEmail}
     </update>
+    <update id="updatePassword">
+        UPDATE USER_TBL
+        SET U_PASSWORD = #{uPassword}
+        WHERE U_EMAIL = #{uEmail}
+    </update>
     <delete id="deleteUser">
         DELETE FROM USER_TBL WHERE U_EMAIL = #{uEmail}
     </delete>
