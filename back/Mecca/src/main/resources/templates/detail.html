@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>게시글 상세보기</title>
@@ -16,8 +16,12 @@
     <input type="hidden" name="gNo" th:value="${general.gNo}">
     <button type="submit">삭제</button>
   </form>
-  <a th:href="@{/general/update/{generalNo}(generalNo=${general.gNo})}">수정</a>
-  <a href="/general/list">목록으로 돌아가기</a>
+  <form action="#" th:action="@{/general/update/{generalNo}(generalNo=${general.gNo})}" method="get" style="display:inline;">
+    <button type="submit">수정하기</button>
+  </form>
+  <form action="#" th:action="@{/general/list}" method="get" style="display:inline;">
+    <button type="submit">목록으로 돌아가기</button>
+  </form>
 </div>
 </body>
 </html>

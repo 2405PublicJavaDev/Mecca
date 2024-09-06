@@ -2,6 +2,10 @@ package com.JustDoIt.Mecca.KJH.controller;
 
 import com.JustDoIt.Mecca.KJH.service.GeneralService;
 import com.JustDoIt.Mecca.KJH.vo.General;
+import com.JustDoIt.Mecca.OJS.service.MatchingService;
+import com.JustDoIt.Mecca.OJS.vo.Matching;
+import com.JustDoIt.Mecca.OJS.vo.Pagination;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +17,8 @@ import java.util.List;
 @RequestMapping("/general")
 public class GeneralController {
 
+    private PagingService pService;
     private GeneralService service;
-
-    public GeneralController() {
-    }
 
     @Autowired
     public GeneralController(GeneralService service) {
@@ -30,10 +32,9 @@ public class GeneralController {
 
     @PostMapping("/insert")
     public String insertGeneral(General general) {
-        general.setGNickname("Test"); // 테스트용 닉네임 삽입
-        System.out.println(general);
-        int result = service.insertGeneral(general);
-        return "redirect:/general/list"; // 입력 후 목록으로 리다이렉트
+        general.setGNickname("test");
+        service.insertGeneral(general);
+        return "redirect:/general/list";
     }
 
     @GetMapping("/detail/{generalNo}")
@@ -41,47 +42,52 @@ public class GeneralController {
         General general = service.selectGeneralOne(generalNo);
         if (general != null) {
             model.addAttribute("general", general);
-            return "detail"; // 상세보기 페이지
+            return "detail";
         } else {
-            return "redirect:/general/list"; // 상세정보를 찾을 수 없는 경우 목록으로 리다이렉트
+            return "redirect:/general/list";
         }
     }
-
 
     @GetMapping("/list")
     public String selectGeneralList(Model model) {
-        List<General> general = service.selectGeneralList();
-        model.addAttribute("generalList", general);
-        return "list"; // 게시글 목로 페이지
+        List<General> generalList = service.selectGeneralList();
+        model.addAttribute("generalList", generalList);
+        int totalCount=pService.getTotalCount();
+        Pagination pn = new Pagination(totalCount,currentPage);
+        int limit=pn.getBoardLimit();
+        int offset=(currentPage-1)*limit;
+        RowBounds rowBounds=new RowBounds(offset,limit);
+        List<Matching> mList=pService.selectList(currentPage, rowBounds);
+
+
+
+        model.addAttribute("mList",mList);
+        model.addAttribute("pn",pn);
+        return "list";
     }
 
     @GetMapping("/update/{generalNo}")
-    public String updateGeneral (@PathVariable("generalNo") Integer generalNo, Model model){
+    public String viewUpdateForm(@PathVariable("generalNo") Integer generalNo, Model model) {
         General general = service.selectGeneralOne(generalNo);
-        model.addAttribute("general", general);
-        return "update";
+        if (general != null) {
+            model.addAttribute("general", general);
+            return "update";
+        } else {
+            return "redirect:/general/list";
+        }
     }
 
     @PostMapping("/update")
-    public String updateGeneral (@ModelAttribute General general){
+    public String updateGeneral(@ModelAttribute General general) {
+        general.setGNickname("test");
         int result = service.updateGeneral(general);
-        if (result > 0) {
-            System.out.println("수정 성공 ");
-        } else {
-            System.out.println("수정 실패 ");;
-        }
-        return "redirect:/general/detail/" + general.getGNo(); // 수정 후 상세페이지로 리다이렉트
+        // 수정이 성공하면 목록 페이지로 리디렉션
+        return result > 0 ? "redirect:/general/list" : "redirect:/general/detail/" + general.getGNo();
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteGeneral ( @PathVariable("id") int id){
+    public String deleteGeneral(@PathVariable("id") int id) {
         int result = service.deleteGeneral(id);
-        if (result > 0) {
-            System.out.println("삭제 성공 ");
-        } else {
-            System.out.println("삭제 실패");
-        }
-        return "redirect:/general/list";
+        return result > 0 ? "redirect:/general/list" : "redirect:/general/list";
     }
 }
-

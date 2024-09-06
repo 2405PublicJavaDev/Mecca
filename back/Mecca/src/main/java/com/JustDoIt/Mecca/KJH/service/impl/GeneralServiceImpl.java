@@ -5,6 +5,7 @@ import com.JustDoIt.Mecca.KJH.service.GeneralService;
 import com.JustDoIt.Mecca.KJH.vo.General;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,33 +19,29 @@ public class GeneralServiceImpl implements GeneralService {
         this.mapper = mapper;
     }
 
+    @Transactional
     @Override
     public int insertGeneral(General general) {
-        int result = mapper.insertGeneral(general);
-        return result;
+        return mapper.insertGeneral(general);
     }
 
     @Override
     public General selectGeneralOne(Integer generalNo) {
-        General result = mapper.selectGeneralOne(generalNo);
-        return result;
-    }
-
-    @Override
-    public int updateGeneral(General general) {
-        int result = mapper.updateGeneral(general);
-        return result;
-    }
-
-    @Override
-    public int deleteGeneral(Integer generalNo) {
-        int result = mapper.deleteGeneral(generalNo);
-        return result;
+        return mapper.selectGeneral(generalNo);
     }
 
     @Override
     public List<General> selectGeneralList() {
-        List<General> result = mapper.selectGeneralList();
-        return result;
+        return mapper.selectGeneralList();
+    }
+
+    @Override
+    public int updateGeneral(General general) {
+        return mapper.updateGeneral(general);
+    }
+
+    @Override
+    public int deleteGeneral(Integer generalNo) {
+        return mapper.deleteGeneral(generalNo);
     }
 }
