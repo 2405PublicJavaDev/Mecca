@@ -29,4 +29,22 @@ public interface MailService {
      * @throws MessagingException
      */
     String sendSimpleMessage(String sendEmail) throws MessagingException;
+
+    /**
+     * 임시 비밀번호 생성
+     * @return 임시 비밀번호
+     */
+    String generateTemporaryPassword();
+
+    /**
+     * 임시 비밀번호를 생성하여 메일 발송
+     * @param email 수신자의 이메일
+     * @param temporaryPassword 임시 비밀번호
+     * @return 임시 비밀번호
+     * @throws MessagingException
+     */
+    String sendTemporaryPassword(String email, String temporaryPassword) throws MessagingException;
+
+    // DB에서 비밀번호 업데이트
+    void updatePassword(String email, String password);
 }

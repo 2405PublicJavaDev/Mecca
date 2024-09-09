@@ -2,6 +2,7 @@ package com.JustDoIt.Mecca.LCM.mapper;
 
 import com.JustDoIt.Mecca.LCM.vo.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
@@ -43,6 +44,13 @@ public interface UserMapper {
      * @param uEmail
      * @return
      */
-    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}")
+//    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}")
     User getUser(String uEmail, String uNickname);
+
+    /**
+     * 유저 비밀번호 업데이트
+     * @param email 유저 이메일
+     * @param password 새 비밀번호
+     */
+    void updatePassword(@Param("uEmail") String email, @Param("uPassword") String password);
 }

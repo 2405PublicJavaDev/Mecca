@@ -1,5 +1,6 @@
 package com.JustDoIt.Mecca.LCM.service.impl;
 
+import com.JustDoIt.Mecca.LCM.mapper.UserMapper;
 import com.JustDoIt.Mecca.LCM.service.MailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -13,12 +14,14 @@ import java.util.Random;
 public class MailServiceImpl implements MailService {
 
     private JavaMailSender javaMailSender;
-    private static final String senderEmail= "chaemin.office@gmail.com";
+    private static final String senderEmail = "chaemin.office@gmail.com";
 
-    public MailServiceImpl() {}
+    private final UserMapper userMapper;
+
     @Autowired
-    public MailServiceImpl(JavaMailSender javaMailSender) {
+    public MailServiceImpl(JavaMailSender javaMailSender, UserMapper userMapper) {
         this.javaMailSender = javaMailSender;
+        this.userMapper = userMapper;
     }
 
     // 랜덤 숫자 생성
@@ -27,8 +30,8 @@ public class MailServiceImpl implements MailService {
         Random random = new Random();
         StringBuilder key = new StringBuilder();
 
-        for (int i = 0; i < 8; i++) { // 인증 코드 8자리
-            int index = random.nextInt(3); // 0~2까지 랜덤, 랜덤값으로 switch문 실행
+        for (int i = 0; i < 8; i++) {
+            int index = random.nextInt(3);
 
             switch (index) {
                 case 0 -> key.append((char) (random.nextInt(26) + 97)); // 소문자
@@ -59,9 +62,49 @@ public class MailServiceImpl implements MailService {
     // 메일 발송
     @Override
     public String sendSimpleMessage(String sendEmail) throws MessagingException {
-        String number = createNumber(); // 랜덤 인증번호 생성
-        MimeMessage message = createMail(sendEmail, number); // 메일 생성
-        javaMailSender.send(message); // 메일 발송
-        return number; // 생성된 인증번호 반환
+        String number = createNumber();
+        MimeMessage message = createMail(sendEmail, number);
+        javaMailSender.send(message);
+        return number;
+    }
+
+    // 임시 비밀번호 생성
+    @Override
+    public String generateTemporaryPassword() {
+        Random random = new Random();
+        StringBuilder tempPassword = new StringBuilder();
+
+        for (int i = 0; i < 8; i++) {
+            int index = random.nextInt(3);
+
+            switch (index) {
+                case 0 -> tempPassword.append((char) (random.nextInt(26) + 97)); // 소문자
+                case 1 -> tempPassword.append((char) (random.nextInt(26) + 65)); // 대문자
+                case 2 -> tempPassword.append(random.nextInt(10)); // 숫자
+            }
+        }
+        return tempPassword.toString();
+    }
+
+    // 임시 비밀번호를 생성하여 메일 발송
+    @Override
+    public String sendTemporaryPassword(String mail, String tempPassword) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        message.setFrom(senderEmail);
+        message.setRecipients(MimeMessage.RecipientType.TO, mail);
+        message.setSubject("임시 비밀번호");
+        String body = "<h3>귀하의 임시 비밀번호입니다.</h3>";
+        body += "<h1>" + tempPassword + "</h1>";
+        body += "<h3>비밀번호를 로그인 후 변경해 주세요.</h3>";
+        message.setText(body, "UTF-8", "html");
+
+        javaMailSender.send(message);
+        return tempPassword;
+    }
+
+    // DB에서 비밀번호 업데이트
+    @Override
+    public void updatePassword(String email, String password) {
+        userMapper.updatePassword(email, password);
     }
 }

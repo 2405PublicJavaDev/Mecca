@@ -21,4 +21,17 @@ public class MailController {
         String authCode = mailService.sendSimpleMessage(mail);
         return authCode;
     }
+
+    // 임시 비밀번호 발급
+    @PostMapping("/temp-password")
+    public String sendTemporaryPassword(@RequestBody Map<String, String> requestBody) throws MessagingException {
+        String mail = requestBody.get("uEmail");
+        String tempPassword = mailService.generateTemporaryPassword();
+
+        // DB에 임시 비밀번호 저장
+        mailService.updatePassword(mail, tempPassword);
+
+        String sentPassword = mailService.sendTemporaryPassword(mail, tempPassword);
+        return sentPassword;
+    }
 }

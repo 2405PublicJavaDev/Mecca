@@ -22,4 +22,7 @@
     <select id="signInUser">
         SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} AND U_PASSWORD = #{uPassword}
     </select>
+    <select id="getUser">
+        SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}
+    </select>
 </mapper>
