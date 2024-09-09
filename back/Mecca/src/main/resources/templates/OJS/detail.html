@@ -60,10 +60,12 @@
 		<hr>
 		<button th:onclick="together([[${match.mCurrentParty}]],[[${match.mMaxParty}]],[[${match.mNo}]],[[${match.mWriterEmail}]],[[${mainId}]],[[${sum}]]);">같이게임하기</button>
 		<input type="hidden" id="endcheck" th:value="${match.mStatus}">
+
 	<script>
 
 		window.onload = function() {
 			var a=document.querySelector("#endcheck").value
+			var b=document.querySelector("#endcheck").value
 			console.log(a);
 			if(a=='END') {
 				alert("종료된 게임입니다.");
@@ -72,7 +74,10 @@
 		}
 
 		function together(a,b,c,d,e,f) {
-			if(d==e){
+			if(e==null){
+				alert("로그인을 해주세요");
+			}
+			else if(d==e){
 				alert("자기글에 신청할수 없습니다.");
 			}else if(f>0){
 				alert("진행중인게임이있습니다");

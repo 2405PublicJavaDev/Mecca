@@ -65,6 +65,12 @@
             #count{
                 float: right;
             }
+            a{
+                text-decoration: none;
+                color: black;
+            }
+
+
         </style>
         
         
@@ -94,61 +100,22 @@
             <a th:href="@{/api/matching/list(cp=${p})}" th:text="${p}"></a>
         </div>
 
-
-    <table>
-        <tr>
-            <th>아이디</th>
-        	<th>카테고리</th>
-            <th>게임</th>
-            <th>아이디</th>
-            <th>등급</th>
-            <th>내용</th>
-            <th>인원</th>
-            <th>등록일시</th>
-
-
-        </tr>
-        <tr th:each="matching,a:${mList}" varStatus="status">
-            <td>[[${matching.mWriterEmail}]]</td>
-            <td>[[${matching.mGenre}]]</td>
-            <td>[[${matching.mTag}]]</td>
-            <td>[[${matching.mNickname}]]</td>
-            <td>[[${matching.mTierOrLevel}]]</td>
-
-			<td><a href="javascript:void(0)" th:onclick="showdetail([[${matching.mNo}]]);">[[${matching.mContent}]]</a></td>
-
-			<td th:id="'count'+${a.index}">[[${matching.mCurrentParty}]]/[[${matching.mMaxParty}]]</td>
-			<td>[[${matching.mCreatedDate}]]</td>
-
-
-        </tr>
-
-			<tr align="center">
-				<td colspan="8">
-                    <th:block th:if="${pn.endNavi}==0" >
-                        <a th:href="@{/api/matching/list(cp=${p})}" th:text="1"></a>
-                    </th:block>
-					<th:block th:if="${pn.endNavi}!=0" th:each="p : ${#numbers.sequence(pn.startNavi, pn.endNavi)}">
-                        <a th:href="@{/api/matching/list(cp=${p})}" th:text="${p}"></a>
-					</th:block>
-				</td>
-			</tr>
-
-        <tr>
-            <td colspan="8" style="text-align: center">
+            <div colspan="8" style="text-align: center">
                 <form action="/api/matching/search" method="post">
                     <select name="searchCondition">
-                        <option value="all">전체</option>
-                        <option value="catagory">게임</option>
-                        <option value="content">내용</option>
+                        <option value="all" th:selected="${searchCondition == 'all' }">전체</option>
+                        <option value="catagory" th:selected="${searchCondition == 'catagory' }" >게임</option>
+                        <option value="content" th:selected="${searchCondition == 'content' }" >내용</option>
                     </select>
-                    <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요">
+                    <input type="text" th:value="${searchKeyword}" name="searchKeyword" placeholder="검색어를 입력하세요">
                     <input type="submit" value="검색">
                 </form>
-            </td>
-        </tr>
+            </div>
 
-    </table>
+
+
+
+
     </div>
 
 

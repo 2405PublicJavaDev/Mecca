@@ -13,7 +13,7 @@
             <th></th>
         </tr>
         <tr th:each="match:${mList}">
-            <td th:if="${match.mTag}!=null">a</td>
+            <td th:if="${match.mTag}!=null">[[${match.mTag}]]</td>
             <td th:if="${match.mContent}!=null">[[${match.mContent}]]</td>
             <td><button th:onclick="gameend([[${match.mNo}]]);">등록취소</button></td>
         </tr>
