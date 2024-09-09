@@ -61,6 +61,7 @@ public class UserController {
             int comparisonResult = user.getUStatus().compareTo(currentTimestamp);
             System.out.println(comparisonResult);
             if (comparisonResult <= 0) {
+                // 마저 해야 함(ps. 양희준)
                 adminService.updateUserStatus(user.getUEmail(), null);
                 session.setAttribute("uEmail", user.getUEmail());
                 session.setAttribute("uNickname", user.getUNickname());
