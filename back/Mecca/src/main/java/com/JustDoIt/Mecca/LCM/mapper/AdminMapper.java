@@ -8,5 +8,5 @@ import java.sql.Timestamp;
 @Mapper
 public interface AdminMapper {
 
-    int reportid(String reportid, Timestamp reportdate);
+    int updateUserStatus(String reportid, Timestamp reportdate);
 }

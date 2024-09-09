@@ -21,9 +21,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public int reportid(String reportid, Timestamp reportdate) {
-
-        int result = mapper.reportid(reportid,reportdate);
+    public int updateUserStatus(String uEmail, Timestamp reportdate) {
+        int result = mapper.updateUserStatus(uEmail, reportdate);
         return result;
     }
 }

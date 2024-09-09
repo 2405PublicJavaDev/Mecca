@@ -5,7 +5,7 @@
 
 <mapper namespace="com.JustDoIt.Mecca.LCM.mapper.AdminMapper">
 
-    <update id="reportid">
-        UPDATE USER_TBL SET U_STATUS =#{reportdate} WHERE U_EMAIL = #{reportid}
+    <update id="updateUserStatus">
+        UPDATE USER_TBL SET U_STATUS =#{reportdate} WHERE U_EMAIL = #{uEmail}
     </update>
 </mapper>

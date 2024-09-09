@@ -44,7 +44,7 @@ public interface UserMapper {
      * @param uEmail
      * @return
      */
-//    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}")
+    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}")
     User getUser(String uEmail, String uNickname);
 
     /**
@@ -52,5 +52,5 @@ public interface UserMapper {
      * @param email 유저 이메일
      * @param password 새 비밀번호
      */
-    void updatePassword(@Param("uEmail") String email, @Param("uPassword") String password);
+    void tempPassword(@Param("uEmail") String email, @Param("uPassword") String password);
 }

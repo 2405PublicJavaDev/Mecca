@@ -16,13 +16,15 @@
         SET U_PASSWORD = #{uPassword}
         WHERE U_EMAIL = #{uEmail}
     </update>
+    <update id="tempPassword">
+        UPDATE USER_TBL
+        SET U_PASSWORD = #{uPassword}
+        WHERE U_EMAIL = #{uEmail}
+    </update>
     <delete id="deleteUser">
         DELETE FROM USER_TBL WHERE U_EMAIL = #{uEmail}
     </delete>
     <select id="signInUser">
         SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} AND U_PASSWORD = #{uPassword}
-    </select>
-    <select id="getUser">
-        SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}
     </select>
 </mapper>

@@ -6,22 +6,29 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
 public class MailServiceImpl implements MailService {
 
+    private final JavaMailSenderImpl mailSender;
     private JavaMailSender javaMailSender;
     private static final String senderEmail = "chaemin.office@gmail.com";
 
     private final UserMapper userMapper;
 
     @Autowired
-    public MailServiceImpl(JavaMailSender javaMailSender, UserMapper userMapper) {
+    public MailServiceImpl(JavaMailSender javaMailSender, UserMapper userMapper, JavaMailSenderImpl mailSender) {
         this.javaMailSender = javaMailSender;
         this.userMapper = userMapper;
+        this.mailSender = mailSender;
     }
 
     // 랜덤 숫자 생성
@@ -104,7 +111,33 @@ public class MailServiceImpl implements MailService {
 
     // DB에서 비밀번호 업데이트
     @Override
-    public void updatePassword(String email, String password) {
-        userMapper.updatePassword(email, password);
+    public void tempPassword(String email, String password) {
+        userMapper.tempPassword(email, password);
+    }
+
+    @Override
+    public void sendResponseEmail(String recipientEmail, String subject, String content) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("subject", subject);
+        model.put("content", content);
+
+        String text = "";
+        try {
+//            text = FreeMarkerTemplateUtils.processTemplateIntoString(
+//                    freemarkerConfigurer.getConfiguration().getTemplate("responseEmailTemplate.html"), model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(recipientEmail);
+            helper.setSubject(subject);
+            helper.setText(text, true);  // true indicates the content is HTML
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 }

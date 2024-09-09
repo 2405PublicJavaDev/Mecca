@@ -10,5 +10,5 @@ public interface AdminService {
      * return int
      */
 
-    int reportid(String reportid, Timestamp reportdate);
+    int updateUserStatus(String uEmail, Timestamp reportdate);
 }

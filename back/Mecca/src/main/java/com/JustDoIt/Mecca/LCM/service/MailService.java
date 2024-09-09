@@ -45,6 +45,18 @@ public interface MailService {
      */
     String sendTemporaryPassword(String email, String temporaryPassword) throws MessagingException;
 
-    // DB에서 비밀번호 업데이트
-    void updatePassword(String email, String password);
+    /**
+     * DB에서 비밀번호 업데이트
+     * @param email
+     * @param password
+     */
+    void tempPassword(String email, String password);
+
+    /**
+     *
+     * @param recipientEmail
+     * @param subject
+     * @param content
+     */
+    void sendResponseEmail(String recipientEmail, String subject, String content);
 }

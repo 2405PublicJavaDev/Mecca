@@ -29,7 +29,7 @@ public class MailController {
         String tempPassword = mailService.generateTemporaryPassword();
 
         // DB에 임시 비밀번호 저장
-        mailService.updatePassword(mail, tempPassword);
+        mailService.tempPassword(mail, tempPassword);
 
         String sentPassword = mailService.sendTemporaryPassword(mail, tempPassword);
         return sentPassword;
