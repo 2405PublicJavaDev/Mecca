@@ -6,6 +6,8 @@ import com.JustDoIt.Mecca.LCM.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -18,4 +20,10 @@ public class AdminServiceImpl implements AdminService {
         this.mapper=mapper;
     }
 
+    @Override
+    public int reportid(String reportid, Timestamp reportdate) {
+
+        int result = mapper.reportid(reportid,reportdate);
+        return result;
+    }
 }
