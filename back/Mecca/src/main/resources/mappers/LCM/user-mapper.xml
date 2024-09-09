@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JustDoIt.Mecca.LCM.mapper.UserMapper">
     <insert id="signUpUser">
-        INSERT INTO USER_TBL VALUES (#{uEmail}, #{uPassword}, #{uNickname}, '프로필 이미지', NULL, DEFAULT)
+        INSERT INTO USER_TBL VALUES (#{uEmail}, #{uPassword}, #{uNickname}, '프로필 이미지', NULL, DEFAULT, NULL)
     </insert>
     <update id="updateUser">
         UPDATE USER_TBL
