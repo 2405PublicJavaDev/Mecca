@@ -11,12 +11,6 @@ public interface UserService {
     int signUpUser(User user);
 
     /**
-     * 유저 존재 확인 Service
-     * @return
-     */
-    User getUser(String uEmail, String uNickname);
-
-    /**
      * 유저 로그인 Service
      * @return
      */
@@ -35,18 +29,15 @@ public interface UserService {
     int deleteUser(String uEmail);
 
     /**
-     * 유저 정보 조회 Service
-     * @return
-     */
-     User selectUserByEmail(String uEmail);
-
-    /**
      * 유저 비밀번호 변경 Service
      * @param user
      * @return
      */
     int updatePassword(User user);
 
-
-
+    /**
+     * 유저 정보 조회 Service
+     * @return
+     */
+    User getUser(String uEmail, String uNickname);
 }

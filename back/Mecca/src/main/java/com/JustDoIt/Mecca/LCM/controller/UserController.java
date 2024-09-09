@@ -66,7 +66,7 @@ public class UserController {
         String uEmail = (String) session.getAttribute("uEmail");
         if(uEmail != null) {
             // 이메일로 사용자 정보 조회
-            User user = service.selectUserByEmail(uEmail);
+            User user = service.getUser(uEmail, null);
             if(user != null) {
                 return "/update";
             }else {
@@ -84,7 +84,7 @@ public class UserController {
         String uIntroduce = requestBody.get("uIntroduce");
         if(uEmail != null) {
             // 사용자 정보 조회
-            User user = service.selectUserByEmail(uEmail);
+            User user = service.getUser(uEmail, null);
             if(user != null) {
                 // 업데이트 할 정보 설정
                 user.setUNickname(uNickname);
@@ -130,7 +130,7 @@ public class UserController {
             return ResponseEntity.badRequest().body("세션에 이메일이 없습니다.");
         }
         // 현재 비밀번호와 새 비밀번호 확인
-        User user = service.selectUserByEmail(uEmail);
+        User user = service.getUser(uEmail, null);
         if (user == null || !user.getUPassword().equals(currentPassword)) {
             return ResponseEntity.badRequest().body("현재 비밀번호가 일치하지 않습니다."); // 이거 필요 없죠져져죠져죠?? ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ 
         }

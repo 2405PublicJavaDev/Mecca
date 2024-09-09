@@ -20,11 +20,6 @@ public class UserServiceImpl implements UserService {
         int result = mapper.signUpUser(user);
         return result;
     }
-    @Override
-    public User getUser(String uEmail, String uNickname) {
-        User getUser = mapper.getUser(uEmail, uNickname);
-        return getUser;
-    }
 
     @Override
     public User signInUser(User user) {
@@ -45,17 +40,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectUserByEmail(String uEmail) {
-        User user = mapper.selectUserByEmail(uEmail);
-        return user;
-    }
-
-    @Override
     public int updatePassword(User user) {
         int result = mapper.updatePassword(user);
         return result;
     }
 
-
-
+    @Override
+    public User getUser(String uEmail, String uNickname) {
+        User getUser = mapper.getUser(uEmail, uNickname);
+        return getUser;
+    }
 }

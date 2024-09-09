@@ -13,27 +13,11 @@ public interface UserMapper {
      */
     int signUpUser(User user);
 
-
     /**
      * 유저 로그인 Mapper
      * @return
      */
     User signInUser(User user);
-
-    /**
-     * 유저 존재 여부 확인 Mapper
-     * @param uEmail
-     * @return
-     */
-    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}")
-    User getUser(String uEmail, String uNickname);
-
-    /**
-     * 유저 정보 조회 Mapper
-     * @return
-     */
-    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail}")
-    User selectUserByEmail(String uEmail);
 
     /**
      * 유저 수정(마이 페이지 정보 수정) Mapper
@@ -47,11 +31,18 @@ public interface UserMapper {
      */
     int deleteUser(String uEmail);
 
-
     /**
      * 유저 비밀번호 변경 Mapper
      * @param user
      * @return
      */
     int updatePassword(User user);
+
+    /**
+     * 유저 정보 조회 Mapper
+     * @param uEmail
+     * @return
+     */
+    @Select("SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} OR U_NICKNAME = #{uNickname}")
+    User getUser(String uEmail, String uNickname);
 }
