@@ -1,8 +1,10 @@
 package com.JustDoIt.Mecca.YHJ.service;
 
+import com.JustDoIt.Mecca.LCM.vo.User;
+
 import java.util.HashMap;
 
-public interface KakaoSignUpService {
+public interface KakaoService {
 
     /**
      * 카카오 AccessToken get

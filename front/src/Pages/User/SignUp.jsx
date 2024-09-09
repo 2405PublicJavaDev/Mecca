@@ -12,9 +12,9 @@ const SignUp = () => {
     const nav = useNavigate();
 
     const [values, setValues] = useState({
-        uNickname: '',
         uEmail: '',
         uPassword: '',
+        uNickname: '',
     });
 
     const handleKakao = () => {
@@ -30,9 +30,9 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         const response = await axios.post('/api/user/signup', {
-            uNickname: values.uNickname,
             uEmail: values.uEmail,
             uPassword: values.uPassword,
+            uNickname: values.uNickname,
         });
         if (response.data == '') {
             nav('/user/signin');

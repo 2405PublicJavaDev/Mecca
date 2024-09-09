@@ -35,7 +35,7 @@ const SignIn = () => {
             uPassword: values.uPassword,
         });
         if (response.data != '') {
-            handleUser(response.data.uemail, response.data.upassword)
+            handleUser(response.data.uemail, response.data.upassword, response.data.unickname);
             nav("/");
         } else {
             document.querySelector("#passwordError").textContent = "이메일 또는 비밀번호가 일치하지 않습니다.";

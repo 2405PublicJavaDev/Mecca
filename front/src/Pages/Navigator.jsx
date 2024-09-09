@@ -8,10 +8,11 @@ function Navigator() {
     const nav = useNavigate();
     const location = useLocation();
 
-    const { uEmail, uPassword } = useContext(UserContext); // UserContext에서 상태 가져오기
+    const { uEmail, uPassword, uNickname } = useContext(UserContext); // UserContext에서 상태 가져오기
 
     console.log(uEmail);
     console.log(uPassword);
+    console.log(uNickname);
 
     const indexPage = () => {
         nav("/");
@@ -43,7 +44,7 @@ function Navigator() {
 
             <button onClick={indexPage} className="absolute -translate-y-1/2 left-[75px] top-1/2 w-[110px] text-[32px] leading-[40px] font-['Roboto'] font-bold text-[#000] text-center">MeCCa</button>
 
-            {!location.pathname.startsWith('/user') && (
+            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao')) && (
                 <div className="absolute left-[305px] top-[25px] flex flex-row items-center justify-start gap-[30px]">
                     <button onClick={generalPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">자유</button>
                     <button onClick={matchingPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">매칭</button>
@@ -52,7 +53,7 @@ function Navigator() {
                 </div>
             )}
 
-            {!location.pathname.startsWith('/user') && (
+            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao')) && (
                 <div className="absolute -translate-x-1/2 -translate-y-1/2 left-[calc(50%+306px)] top-1/2 w-[218px] flex flex-row items-center justify-start gap-[5px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[30px]">
                     <img width="24" height="24" src="/assets/Index/Icon.png"></img>
                     <div className="flex-1 text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#00000040]">검색</div>

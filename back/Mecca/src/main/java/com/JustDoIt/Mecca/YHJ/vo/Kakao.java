@@ -9,8 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class KakaoSignUp {
-    private String id;
-    private String pw;
-    private String name;
+public class Kakao {
+    private String uEmail;
+    private String uNickname;
 }

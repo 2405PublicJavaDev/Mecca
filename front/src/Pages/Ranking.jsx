@@ -8,7 +8,7 @@ function Ranking() {
 
     return (
         <>
-            {!location.pathname.startsWith('/user') && (
+            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao')) && (
                 <div className="absolute left-[75px] top-[104px] w-[200px] flex flex-col items-start justify-start gap-[5px] p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
                     <div className="self-stretch text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#000] text-center">Top Players</div>
                     <img width="180" height="0" src="/assets/Index/Bar.png"></img>

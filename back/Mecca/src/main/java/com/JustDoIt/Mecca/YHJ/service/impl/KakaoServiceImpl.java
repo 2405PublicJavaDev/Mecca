@@ -1,7 +1,9 @@
 package com.JustDoIt.Mecca.YHJ.service.impl;
 
-import com.JustDoIt.Mecca.YHJ.mapper.KakaoSignUpMapper;
-import com.JustDoIt.Mecca.YHJ.service.KakaoSignUpService;
+import com.JustDoIt.Mecca.LCM.mapper.UserMapper;
+import com.JustDoIt.Mecca.LCM.vo.User;
+import com.JustDoIt.Mecca.YHJ.mapper.KakaoMapper;
+import com.JustDoIt.Mecca.YHJ.service.KakaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,15 +18,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class KakaoSignUpServiceImpl implements KakaoSignUpService {
-    private KakaoSignUpMapper mapper;
+public class KakaoServiceImpl implements KakaoService {
+    private KakaoMapper kakaoMapper;
     private RestTemplate restTemplate;
 
-    public KakaoSignUpServiceImpl() {}
+    public KakaoServiceImpl() {}
 
     @Autowired
-    public KakaoSignUpServiceImpl(KakaoSignUpMapper mapper, RestTemplate restTemplate) {
-        this.mapper = mapper;
+    public KakaoServiceImpl(KakaoMapper kakaoMapper, UserMapper userMapper, RestTemplate restTemplate) {
+        this.kakaoMapper = kakaoMapper;
         this.restTemplate = restTemplate;
     }
 
@@ -52,7 +54,7 @@ public class KakaoSignUpServiceImpl implements KakaoSignUpService {
 
     @Override
     public HashMap<String, Object> getUserInfo(String accessToken) {
-        HashMap<String, Object> userInfo = new HashMap<>();
+        HashMap<String, Object> kakaoInfo = new HashMap<>();
         String postURL = "https://kapi.kakao.com/v2/user/me";
 
         HttpHeaders headers = new HttpHeaders();
@@ -63,15 +65,15 @@ public class KakaoSignUpServiceImpl implements KakaoSignUpService {
 
         Map<String, Object> body = response.getBody();
         if (body != null) {
-//            Map<String, Object> properties = (Map<String, Object>) body.get("properties");
             Map<String, Object> kakaoAccount = (Map<String, Object>) body.get("kakao_account");
+//            Map<String, Object> properties = (Map<String, Object>) body.get("properties");
 
-//            String nickname = (String) properties.get("nickname");
             String email = (String) kakaoAccount.get("email");
+//            String nickname = (String) properties.get("nickname");
 
+            kakaoInfo.put("email", email);
 //            userInfo.put("nickname", nickname);
-            userInfo.put("email", email);
         }
-        return userInfo;
+        return kakaoInfo;
     }
 }

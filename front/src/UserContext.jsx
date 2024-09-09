@@ -3,17 +3,21 @@ import React, { createContext, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [uEmail, setUEmail] = useState('');
-    const [uPassword, setUPassword] = useState('');
+    const [values, setValues] = useState({
+        uEmail: '',
+        uPassword: '',
+        uNickname: '',
+    });
 
-    const handleUser = (email, password) => {
-        setUEmail(email);
-        setUPassword(password);
-    };
+    const handleUser = (email, password, nickname) => setValues({
+        uEmail: email,
+        uPassword: password,
+        uNickname: nickname,
+    });
 
     return (
-        <UserContext.Provider value={{ uEmail, uPassword, handleUser }}>
+        <UserContext.Provider value={{ ...values, handleUser }}>
             {children}
-        </UserContext.Provider>
+        </UserContext.Provider >
     );
 };
