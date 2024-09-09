@@ -1,6 +1,7 @@
 package com.JustDoIt.Mecca.KJH.controller;
 
 import com.JustDoIt.Mecca.KJH.service.GeneralService;
+import com.JustDoIt.Mecca.KJH.service.PageService;
 import com.JustDoIt.Mecca.KJH.vo.General;
 import com.JustDoIt.Mecca.OJS.service.MatchingService;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping("/general")
 public class GeneralController {
 
-    private PagingService pService;
+    private PageService pService;
     private GeneralService service;
 
     @Autowired
@@ -49,10 +50,10 @@ public class GeneralController {
     }
 
     @GetMapping("/list")
-    public String selectGeneralList(Model model) {
+    public String selectGeneralList(Model model, @PathVariable("currentPage") Integer currentPage) {
         List<General> generalList = service.selectGeneralList();
         model.addAttribute("generalList", generalList);
-        int totalCount=pService.getTotalCount();
+        int totalCount = pService.getTotalCount();
         Pagination pn = new Pagination(totalCount,currentPage);
         int limit=pn.getBoardLimit();
         int offset=(currentPage-1)*limit;

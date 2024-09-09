@@ -1,5 +1,11 @@
 package com.JustDoIt.Mecca.KJH.service;
 
+import com.JustDoIt.Mecca.OJS.vo.Matching;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
+import java.util.Map;
+
 public interface PageService {
     /**
      * 매칭등록
@@ -32,7 +38,7 @@ public interface PageService {
      * pram Map
      * return List<Matching
      */
-    List<Matching> searchList( RowBounds rowBounds, Map<String, String> paramMap);
+    List<Matching> searchList(RowBounds rowBounds, Map<String, String> paramMap);
     /**
      * 매칭 게시판 검색 갯수
      * pram Map
