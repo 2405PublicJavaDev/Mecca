@@ -1,6 +1,5 @@
 package com.JustDoIt.Mecca.LCM.service.impl;
 
-
 import com.JustDoIt.Mecca.LCM.mapper.AdminMapper;
 import com.JustDoIt.Mecca.LCM.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,11 @@ public class AdminServiceImpl implements AdminService {
     public AdminServiceImpl() {}
     @Autowired
     public AdminServiceImpl(AdminMapper mapper) {
-        this.mapper=mapper;
+        this.mapper = mapper;
     }
 
     @Override
-    public int updateUserStatus(String uEmail, Timestamp reportdate) {
-        int result = mapper.updateUserStatus(uEmail, reportdate);
-        return result;
+    public void updateUserStatus(String uEmail, Timestamp punishmentPeriod) {
+        mapper.updateUserStatus(uEmail, punishmentPeriod);
     }
 }

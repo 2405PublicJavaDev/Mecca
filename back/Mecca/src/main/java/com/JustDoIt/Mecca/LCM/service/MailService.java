@@ -1,62 +1,47 @@
 package com.JustDoIt.Mecca.LCM.service;
 
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface MailService {
 
     /**
-     * 랜덤 숫자 생성 Service
-     * @return
+     * 랜덤 문자 생성 Service
+     * @return String
      */
-    String createNumber();
+    String createString();
 
     /**
-     * 메일 생성 Service
-     * @param mail
-     * @param number
-     * @return
+     * 인증 메일 발송 Service
+     * @param uEmail
+     * @param verifyCode
      * @throws MessagingException
      */
-    MimeMessage createMail(String mail, String number) throws MessagingException;
+    void sendVerifyCode(String uEmail, String verifyCode) throws MessagingException;
 
     /**
-     * 메일 발송 Service
-     * @param sendEmail
-     * @return
+     * 임시 비밀번호 발송 Service
+     * @param uEmail
+     * @param temporaryPassword
      * @throws MessagingException
      */
-    String sendSimpleMessage(String sendEmail) throws MessagingException;
+    void sendTemporaryPassword(String uEmail, String temporaryPassword) throws MessagingException;
 
     /**
-     * 임시 비밀번호 생성
-     * @return 임시 비밀번호
-     */
-    String generateTemporaryPassword();
-
-    /**
-     * 임시 비밀번호를 생성하여 메일 발송
-     * @param email 수신자의 이메일
-     * @param temporaryPassword 임시 비밀번호
-     * @return 임시 비밀번호
-     * @throws MessagingException
-     */
-    String sendTemporaryPassword(String email, String temporaryPassword) throws MessagingException;
-
-    /**
-     * DB에서 비밀번호 업데이트
-     * @param email
-     * @param password
-     */
-    void tempPassword(String email, String password);
-
-    /**
-     *
-     * @param recipientEmail
+     * 문의 답변 메일 발송 Service
+     * @param uEmail
      * @param subject
      * @param content
+     * @throws MessagingException
      */
-    void sendResponseEmail(String recipientEmail, String subject, String content);
+    void sendResponseEmail(String uEmail, String subject, String content) throws MessagingException;
+
+    /**
+     * 제재 알림 메일 발송 Service
+     * @param uEmail
+     * @param punishmentPeriod
+     * @throws MessagingException
+     */
+    void sendPunishmentEmail(String uEmail, String punishmentPeriod) throws MessagingException;
 }

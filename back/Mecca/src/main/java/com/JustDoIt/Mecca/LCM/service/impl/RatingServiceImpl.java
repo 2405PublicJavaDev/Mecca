@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class RatingServiceImpl implements RatingService {
@@ -39,7 +38,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<Map<String, Object>> getTopRatedUsers() {
+    public List getTopRatedUsers() {
         return mapper.getTopRatedUsers();
     }
 }

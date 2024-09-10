@@ -6,38 +6,44 @@ public interface UserService {
 
     /**
      * 유저 가입 Service
-     * @return
+     * @param user
+     * @return int
      */
     int signUpUser(User user);
 
     /**
      * 유저 로그인 Service
-     * @return
+     * @param user
+     * @return int
      */
     User signInUser(User user);
 
     /**
      * 유저 수정 Service
-     * @return
+     * @param user
+     * @return int
      */
     int updateUser(User user);
 
     /**
      * 유저 탈퇴 Service
-     * @return
+     * @param uEmail
+     * @return int
      */
     int deleteUser(String uEmail);
 
     /**
      * 유저 비밀번호 변경 Service
      * @param user
-     * @return
+     * @return int
      */
     int updatePassword(User user);
 
     /**
      * 유저 정보 조회 Service
-     * @return
+     * @param uEmail
+     * @param uNickname
+     * @return User
      */
     User getUser(String uEmail, String uNickname);
 }

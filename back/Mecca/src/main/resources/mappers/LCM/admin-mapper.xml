@@ -6,6 +6,6 @@
 <mapper namespace="com.JustDoIt.Mecca.LCM.mapper.AdminMapper">
 
     <update id="updateUserStatus">
-        UPDATE USER_TBL SET U_STATUS =#{reportdate} WHERE U_EMAIL = #{uEmail}
+        UPDATE USER_TBL SET U_STATUS =#{punishmentPeriod} WHERE U_EMAIL = #{uEmail}
     </update>
 </mapper>

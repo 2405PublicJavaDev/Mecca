@@ -16,11 +16,6 @@
         SET U_PASSWORD = #{uPassword}
         WHERE U_EMAIL = #{uEmail}
     </update>
-    <update id="tempPassword">
-        UPDATE USER_TBL
-        SET U_PASSWORD = #{uPassword}
-        WHERE U_EMAIL = #{uEmail}
-    </update>
     <delete id="deleteUser">
         DELETE FROM USER_TBL WHERE U_EMAIL = #{uEmail}
     </delete>

@@ -5,10 +5,7 @@ import com.JustDoIt.Mecca.LCM.service.UserService;
 import com.JustDoIt.Mecca.LCM.vo.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -51,27 +48,27 @@ public class UserController {
         user.setUEmail(requestBody.get("uEmail"));
         user.setUPassword(requestBody.get("uPassword"));
         user = userService.signInUser(user);
-        if (user.getUStatus() == null) {
-            session.setAttribute("uEmail", user.getUEmail());
-            session.setAttribute("uNickname", user.getUNickname());
-            session.setAttribute("uPassword", user.getUPassword());
-            return user;
-        } else {
-            System.out.println(user.getUStatus());
-            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-            System.out.println(currentTimestamp);
-            int comparisonResult = user.getUStatus().compareTo(currentTimestamp);
-            System.out.println(comparisonResult);
-            if (comparisonResult <= 0) {
-                // 마저 해야 함(ps. 양희준)
-                adminService.updateUserStatus(user.getUEmail(), null);
-                user = userService.signInUser(user);
+        if (user != null) {
+            if (user.getUStatus() == null) {
                 session.setAttribute("uEmail", user.getUEmail());
                 session.setAttribute("uNickname", user.getUNickname());
+                session.setAttribute("uPassword", user.getUPassword());
                 return user;
             } else {
-                return null;
+                Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+                int comparisonResult = user.getUStatus().compareTo(currentTimestamp);
+                if (comparisonResult <= 0) {
+                    adminService.updateUserStatus(user.getUEmail(), null);
+                    user = userService.signInUser(user);
+                    session.setAttribute("uEmail", user.getUEmail());
+                    session.setAttribute("uNickname", user.getUNickname());
+                    return user;
+                } else {
+                    return null;
+                }
             }
+        } else {
+            return null;
         }
     }
 
@@ -136,30 +133,23 @@ public class UserController {
     }
 
     @PostMapping("/changePw")
-    public ResponseEntity<String> changePassword(HttpSession session, @RequestBody Map<String, String> requestBody) {
+    public String changePassword(HttpSession session, @RequestBody Map<String, String> requestBody) {
         // 세션에서 이메일을 가져옴
         String uEmail = (String) session.getAttribute("uEmail");
         String currentPassword = requestBody.get("currentPassword");
         String newPassword = requestBody.get("newPassword");
-        String newPasswordConfirm = requestBody.get("newPasswordConfirm");
-        if (uEmail == null) {
-            return ResponseEntity.badRequest().body("세션에 이메일이 없습니다.");
-        }
         // 현재 비밀번호와 새 비밀번호 확인
         User user = userService.getUser(uEmail, null);
-        if (user == null || !user.getUPassword().equals(currentPassword)) {
-            return ResponseEntity.badRequest().body("현재 비밀번호가 일치하지 않습니다."); // 이거 필요 없죠져져죠져죠?? ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ
-        }
-        if (!newPassword.equals(newPasswordConfirm)) {
-            return ResponseEntity.badRequest().body("새 비밀번호 확인이 일치하지 않습니다."); // 어차피 지워질 얘들
+        if (!user.getUPassword().equals(currentPassword)) {
+            return "현재 비밀번호가 일치하지 않습니다.";
         }
         // 비밀번호 업데이트
         user.setUPassword(newPassword);
         int result = userService.updatePassword(user);
         if (result > 0) {
-            return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다."); // 가여워라 ㅋ ㅋ ㅋ ㅋ  사실은
+            return "비밀번호가 성공적으로 변경되었습니다.";
         } else {
-            return ResponseEntity.status(500).body("비밀번호 변경에 실패했습니다."); // 하나도 안 가여움 ㅋ ㅋ ㅋ ㅋㅋ  내가 제일 가여움 ㅋ  ㅋ ㅋㅋ  ㅋㅋ
+            return "비밀번호 변경에 실패했습니다.";
         }
     }
 }
