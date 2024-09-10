@@ -12,14 +12,14 @@
     <p><strong>내용:</strong> <span th:text="${general.gContent}">내용</span></p>
     <p><strong>작성자 이메일:</strong> <span th:text="${general.gWriterEmail}">이메일</span></p>
   </div>
-  <form action="#" th:action="@{/general/delete/{generalNo}(generalNo=${general.gNo})}" method="post" style="display:inline;">
+  <form th:action="@{/general/delete/{generalNo}(generalNo=${general.gNo})}" method="post" style="display:inline;">
     <input type="hidden" name="gNo" th:value="${general.gNo}">
     <button type="submit">삭제</button>
   </form>
-  <form action="#" th:action="@{/general/update/{generalNo}(generalNo=${general.gNo})}" method="get" style="display:inline;">
+  <form th:action="@{/general/update/{generalNo}(generalNo=${general.gNo})}" method="get" style="display:inline;">
     <button type="submit">수정하기</button>
   </form>
-  <form action="#" th:action="@{/general/list}" method="get" style="display:inline;">
+  <form th:action="@{/general/list}" method="get" style="display:inline;">
     <button type="submit">목록으로 돌아가기</button>
   </form>
 </div>

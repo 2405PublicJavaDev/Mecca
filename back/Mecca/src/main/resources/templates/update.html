@@ -10,7 +10,7 @@
   <form th:action="@{/general/update}" method="post">
     <input type="hidden" name="gNo" th:value="${general.gNo}">
     <div class="form-group">
-      <label for="title">글 제목:</label>
+      <label for="title">제목:</label>
       <input type="text" id="title" name="gTitle" th:value="${general.gTitle}" required>
     </div>
     <div class="form-group">
@@ -21,15 +21,14 @@
       <label for="email">이메일:</label>
       <input type="email" id="email" name="gWriterEmail" th:value="${general.gWriterEmail}" required>
     </div>
-    <div class="form-group button-group">
-      <button type="submit">수정</button>
-    </div>
+    <button type="submit">수정</button>
   </form>
-  <div class="button-group">
-    <form action="#" th:action="@{/general/list}" method="get" style="display:inline;">
-      <button type="submit">목록으로 돌아가기</button>
-    </form>
-  </div>
+  <form th:action="@{/general/view/{generalNo}(generalNo=${general.gNo})}" method="get" style="display:inline;">
+    <button type="submit">상세보기로 돌아가기</button>
+  </form>
+  <form th:action="@{/general/list}" method="get" style="display:inline;">
+    <button type="submit">목록으로 돌아가기</button>
+  </form>
 </div>
 </body>
 </html>

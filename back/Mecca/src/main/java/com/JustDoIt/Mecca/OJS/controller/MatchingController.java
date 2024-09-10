@@ -3,7 +3,7 @@ package com.JustDoIt.Mecca.OJS.controller;
 import com.JustDoIt.Mecca.OJS.service.MatchingService;
 import com.JustDoIt.Mecca.OJS.service.RequestService;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
-import com.JustDoIt.Mecca.OJS.vo.Pagination;
+import com.JustDoIt.Mecca.common.Pagination;
 import com.JustDoIt.Mecca.OJS.vo.Request;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.RowBounds;
