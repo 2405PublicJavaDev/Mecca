@@ -34,6 +34,22 @@ function Navigator() {
         nav("/user/signup");
     }
 
+
+
+    const [toggle, setToggle] = useState({
+        chat: false,
+        notification: false,
+        image: false,
+    });
+
+    const handleButtonClick = (e) => {
+        const name = e.currentTarget.name;
+        setToggle({ ...toggle, [name]: !toggle[name] });
+        console.log(name + " - " + toggle[name]);
+    }
+
+
+
     return (
         <nav className="absolute left-0 top-0 w-[1440px] h-[74px] flex">
             <div className="absolute left-0 top-0 w-[1440px] h-[74px] bg-[#fff] border-[solid] border"></div>
@@ -69,15 +85,25 @@ function Navigator() {
 
             {(uEmail != null && uNickname != null) && (
                 <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
-                    <button>
+                    <button onClick={handleButtonClick} name='chat'>
                         <img width="35" height="35" src="/assets/Index/Chat.png"></img>
                     </button>
-                    <button>
+                    <button onClick={handleButtonClick} name='notification'>
                         <img width="35" height="35" src="/assets/Index/Notification.png"></img>
                     </button>
-                    <button>
+                    <button onClick={handleButtonClick} name='image'>
                         <img width="35" height="35" src="/assets/Index/Image.png"></img>
                     </button>
+                </div>
+            )}
+
+            {toggle.image && (
+                <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
+                    <div className="flex flex-col items-start justify-center gap-[10px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[10px]">
+                        <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">프로필</div>
+                        <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">활동내역</div>
+                        <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">로그아웃</div>
+                    </div>
                 </div>
             )}
 
