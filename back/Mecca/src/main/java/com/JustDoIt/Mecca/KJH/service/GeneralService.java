@@ -1,6 +1,7 @@
 package com.JustDoIt.Mecca.KJH.service;
 
 import com.JustDoIt.Mecca.KJH.vo.General;
+import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -24,4 +25,16 @@ public interface GeneralService {
     List<General> selectGeneralList(int currentPage, String sortBy, RowBounds rowBounds);
 
     void incrementViewCount(int generalNo);
+
+    void addComment(GeneralComment comment);
+
+    List<GeneralComment> getCommentsByGeneralNo(int gNo, RowBounds rowBounds);
+
+    void removeComment(int gcNo);
+
+    List<GeneralComment> getCommentsByGeneralNo(int generalNo);
+
+    void updateComment(GeneralComment comment);
+
+    void deleteComment(int gcNo);
 }

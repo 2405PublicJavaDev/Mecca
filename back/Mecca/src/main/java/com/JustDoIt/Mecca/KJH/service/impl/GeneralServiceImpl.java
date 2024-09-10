@@ -3,6 +3,7 @@ package com.JustDoIt.Mecca.KJH.service.impl;
 import com.JustDoIt.Mecca.KJH.mapper.GeneralMapper;
 import com.JustDoIt.Mecca.KJH.service.GeneralService;
 import com.JustDoIt.Mecca.KJH.vo.General;
+import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,5 +72,35 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public void incrementViewCount(int generalNo) {
         generalMapper.incrementViewCount(generalNo);
+    }
+
+    @Override
+    public void addComment(GeneralComment comment) {
+        generalMapper.insertComment(comment);
+    }
+
+    @Override
+    public List<GeneralComment> getCommentsByGeneralNo(int gNo, RowBounds rowBounds) {
+        return generalMapper.selectCommentsByGeneralNo(gNo, rowBounds);
+    }
+
+    @Override
+    public void removeComment(int gcNo) {
+        generalMapper.deleteComment(gcNo);
+    }
+
+    @Override
+    public List<GeneralComment> getCommentsByGeneralNo(int generalNo) {
+        return generalMapper.getCommentsByGeneralNo(generalNo);
+    }
+
+    @Override
+    public void updateComment(GeneralComment comment) {
+        generalMapper.updateComment(comment);
+    }
+
+    @Override
+    public void deleteComment(int gcNo) {
+        generalMapper.deleteComment(gcNo);
     }
 }

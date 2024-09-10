@@ -11,14 +11,13 @@
     <!-- 게시물 삽입 쿼리 -->
     <insert id="insertGeneral" parameterType="com.JustDoIt.Mecca.KJH.vo.General">
         INSERT INTO GENERAL_TBL
-        VALUES (SEQ_GENERAL_NO.NEXTVAL, #{gWriterEmail}, #{gNickname}, #{gTitle}, #{gContent}, SYSDATE, #{gView}, #{gLike})
+        VALUES (SEQ_GENERAL_NO.NEXTVAL, #{gWriterEmail}, #{gTitle}, #{gContent}, DEFAULT, #{gView}, #{gLike})
     </insert>
 
     <!-- 게시물 수정 쿼리 -->
     <update id="updateGeneral" parameterType="com.JustDoIt.Mecca.KJH.vo.General">
         UPDATE GENERAL_TBL
         SET G_WRITER_EMAIL = #{gWriterEmail},
-            G_NICKNAME = #{gNickname},
             G_TITLE = #{gTitle},
             G_CONTENT = #{gContent},
             G_VIEW = #{gView},
@@ -73,4 +72,28 @@
         WHERE G_NO = #{gNo}
     </update>
 
+    <!-- 댓글 삽입 쿼리 -->
+    <insert id="insertComment" parameterType="com.JustDoIt.Mecca.KJH.vo.GeneralComment">
+        INSERT INTO GENERAL_COMMENT_TBL
+        VALUES (SEQ_GENERAL_COMMENT_TBL.NEXTVAL, #{gcGNo}, #{gcWriterEmail}, #{gcContent}, DEFAULT)
+    </insert>
+
+    <!-- 댓글 조회 쿼리 -->
+    <select id="selectCommentsByGeneralNo" parameterType="int" resultType="com.JustDoIt.Mecca.KJH.vo.GeneralComment">
+        SELECT * FROM GENERAL_COMMENT_TBL
+        WHERE GC_G_NO = #{gNo}
+        ORDER BY GC_CREATED_DATE DESC
+    </select>
+
+    <!-- 댓글 삭제 쿼리 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM GENERAL_COMMENT_TBL
+        WHERE GC_NO = #{gcNo}
+    </delete>
+
+    <select id="getCommentsByGeneralNo" parameterType="int" resultType="com.JustDoIt.Mecca.KJH.vo.GeneralComment">
+        SELECT * FROM GENERAL_COMMENT_TBL
+        WHERE GC_G_NO = #{generalNo}
+        ORDER BY GC_CREATED_DATE DESC
+    </select>
 </mapper>

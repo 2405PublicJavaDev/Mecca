@@ -1,27 +1,173 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>게시글 상세보기</title>
+  <title>게시물 상세 보기</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+    }
+    .post-details {
+      margin-bottom: 20px;
+    }
+    .post-details h2 {
+      font-size: 24px;
+      color: #333;
+    }
+    .post-details p {
+      font-size: 16px;
+      color: #555;
+    }
+    .comment-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .comment-list li {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+    .comment-list .comment-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 10px;
+    }
+    .comment-list .comment-actions form {
+      display: inline;
+    }
+    .comment-actions button {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 2px 1px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .comment-actions button:hover {
+      background-color: #0056b3;
+    }
+    .comment-form {
+      border-top: 2px solid #ddd;
+      padding-top: 10px;
+      margin-top: 20px;
+    }
+    .comment-form input,
+    .comment-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .comment-form button {
+      background-color: #28a745;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .comment-form button:hover {
+      background-color: #218838;
+    }
+    .back-link,
+    .delete-post-button {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+    .back-link {
+      color: #007bff;
+      padding: 10px 20px;
+      background-color: #f8f9fa;
+      border: 1px solid #007bff;
+    }
+    .back-link:hover {
+      background-color: #e2e6ea;
+      color: #0056b3;
+    }
+    .delete-post-button {
+      background-color: #dc3545;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    .delete-post-button:hover {
+      background-color: #c82333;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1>게시글 상세보기</h1>
-  <div class="post-details">
-    <p><strong>제목:</strong> <span th:text="${general.gTitle}">제목</span></p>
-    <p><strong>내용:</strong> <span th:text="${general.gContent}">내용</span></p>
-    <p><strong>작성자 이메일:</strong> <span th:text="${general.gWriterEmail}">이메일</span></p>
-  </div>
-  <form th:action="@{/general/delete/{generalNo}(generalNo=${general.gNo})}" method="post" style="display:inline;">
-    <input type="hidden" name="gNo" th:value="${general.gNo}">
-    <button type="submit">삭제</button>
-  </form>
-  <form th:action="@{/general/update/{generalNo}(generalNo=${general.gNo})}" method="get" style="display:inline;">
-    <button type="submit">수정하기</button>
-  </form>
-  <form th:action="@{/general/list}" method="get" style="display:inline;">
-    <button type="submit">목록으로 돌아가기</button>
+<h1>게시물 상세 보기</h1>
+
+<!-- 게시물 상세 내용 -->
+<div class="post-details">
+  <h2 th:text="${general.gTitle}"></h2>
+  <p>작성자: <span th:text="${general.gNickname}"></span></p>
+  <p th:text="${general.gContent}"></p>
+  <p>조회수: <span th:text="${general.gView}"></span></p>
+  <p>좋아요: <span th:text="${general.gLike}"></span></p>
+
+  <!-- 게시글 삭제 버튼 -->
+  <form action="/general/delete/{gNo}" method="post" th:action="@{/general/delete/{gNo}(gNo=${general.gNo})}">
+    <button type="submit" class="delete-post-button">게시글 삭제</button>
   </form>
 </div>
+
+<!-- 댓글 목록 출력 -->
+<div>
+  <h3>댓글</h3>
+  <ul class="comment-list">
+    <li th:each="comment : ${comments}">
+      <div>
+        <strong th:text="${comment.gcNickname}"></strong>:
+        <span th:text="${comment.gcContent}"></span>
+        <span>작성 시간: <span th:text="${#dates.format(comment.gcCreatedDate, 'yyyy-MM-dd HH:mm:ss')}"></span></span>
+      </div>
+      <!-- 댓글 수정 및 삭제 버튼 -->
+      <div class="comment-actions">
+        <form action="/general/comment/update" method="post" th:action="@{/general/comment/update}">
+          <input type="hidden" name="gcNo" th:value="${comment.gcNo}" />
+          <input type="hidden" name="gcGNo" th:value="${comment.gcGNo}" />
+          <input type="text" name="gcContent" th:value="${comment.gcContent}" placeholder="수정할 댓글 내용" required />
+          <button type="submit">수정</button>
+        </form>
+        <form action="/general/comment/delete/{gcNo}" method="post" th:action="@{/general/comment/delete/{gcNo}(gcNo=${comment.gcNo})}">
+          <button type="submit">삭제</button>
+        </form>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- 댓글 작성 폼 -->
+<div class="comment-form">
+  <h3>댓글 작성</h3>
+  <form action="/general/comment/insert" method="post">
+    <input type="hidden" name="gcGNo" th:value="${general.gNo}" />
+    <textarea name="gcContent" placeholder="댓글 내용" required></textarea>
+    <button type="submit">댓글 작성</button>
+  </form>
+</div>
+
+<!-- 목록으로 돌아가기 버튼 -->
+<a href="/general/list" class="back-link">목록</a>
 </body>
 </html>
