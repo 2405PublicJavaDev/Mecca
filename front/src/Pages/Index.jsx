@@ -32,7 +32,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -65,7 +65,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -98,7 +98,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -131,7 +131,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -164,7 +164,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -326,7 +326,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -359,7 +359,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -392,7 +392,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -425,7 +425,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -458,7 +458,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -498,7 +498,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -531,7 +531,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -564,7 +564,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -597,7 +597,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
@@ -630,7 +630,7 @@ const Index = () => {
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">
-                                        <img width="14" height="14" src="/assets/Index/Chat.png"></img>
+                                        <img width="14" height="14" src="/assets/Index/Comment.png"></img>
                                         <div className="text-[16px] leading-[18px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">0</div>
                                     </div>
                                     <div className="flex flex-row items-center justify-end gap-[1px]">

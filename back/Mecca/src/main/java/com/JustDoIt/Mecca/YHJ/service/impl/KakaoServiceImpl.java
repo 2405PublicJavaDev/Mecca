@@ -1,8 +1,5 @@
 package com.JustDoIt.Mecca.YHJ.service.impl;
 
-import com.JustDoIt.Mecca.LCM.mapper.UserMapper;
-import com.JustDoIt.Mecca.LCM.vo.User;
-import com.JustDoIt.Mecca.YHJ.mapper.KakaoMapper;
 import com.JustDoIt.Mecca.YHJ.service.KakaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -19,14 +16,12 @@ import java.util.Map;
 
 @Service
 public class KakaoServiceImpl implements KakaoService {
-    private KakaoMapper kakaoMapper;
     private RestTemplate restTemplate;
 
     public KakaoServiceImpl() {}
 
     @Autowired
-    public KakaoServiceImpl(KakaoMapper kakaoMapper, UserMapper userMapper, RestTemplate restTemplate) {
-        this.kakaoMapper = kakaoMapper;
+    public KakaoServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

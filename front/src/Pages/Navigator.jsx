@@ -8,11 +8,7 @@ function Navigator() {
     const nav = useNavigate();
     const location = useLocation();
 
-    const { uEmail, uPassword, uNickname } = useContext(UserContext); // UserContext에서 상태 가져오기
-
-    console.log(uEmail);
-    console.log(uPassword);
-    console.log(uNickname);
+    const { uEmail, uNickname } = useContext(UserContext);
 
     const indexPage = () => {
         nav("/");
@@ -60,14 +56,30 @@ function Navigator() {
                 </div>
             )}
 
-            <div className="absolute left-[1145px] top-[13px] flex flex-row items-center justify-start gap-[20px]">
-                <button onClick={signInPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] border-[1px] border-solid border-[#00000080] rounded-[30px]">
-                    <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">로그인</div>
-                </button>
-                <button onClick={signUpPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] bg-[#0090f9] rounded-[30px]">
-                    <div className="text-[16px] leading-[25px] font-['Roboto'] font-semibold text-[#fff] text-center whitespace-nowrap">회원가입</div>
-                </button>
-            </div>
+            {(uEmail == null && uNickname == null) && (
+                <div className="absolute left-[1145px] top-[13px] flex flex-row items-center justify-start gap-[20px]">
+                    <button onClick={signInPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] border-[1px] border-solid border-[#00000080] rounded-[30px]">
+                        <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">로그인</div>
+                    </button>
+                    <button onClick={signUpPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] bg-[#0090f9] rounded-[30px]">
+                        <div className="text-[16px] leading-[25px] font-['Roboto'] font-semibold text-[#fff] text-center whitespace-nowrap">회원가입</div>
+                    </button>
+                </div>
+            )}
+
+            {(uEmail != null && uNickname != null) && (
+                <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
+                    <button>
+                        <img width="35" height="35" src="/assets/Index/Chat.png"></img>
+                    </button>
+                    <button>
+                        <img width="35" height="35" src="/assets/Index/Notification.png"></img>
+                    </button>
+                    <button>
+                        <img width="35" height="35" src="/assets/Index/Image.png"></img>
+                    </button>
+                </div>
+            )}
 
         </nav>
     );

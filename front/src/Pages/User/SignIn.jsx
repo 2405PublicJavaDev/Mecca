@@ -1,15 +1,11 @@
-import { useState, EventHandler, ReactNode, useContext } from 'react'
+import { useState, EventHandler, ReactNode } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
-
-import { UserContext } from '../../UserContext';
 
 let checkEmail = false;
 let checkPassword = false;
 
 const SignIn = () => {
-
-    const nav = useNavigate();
 
     const [values, setValues] = useState({
         uEmail: '',
@@ -26,8 +22,6 @@ const SignIn = () => {
         window.location.href = url;
     }
 
-    const { handleUser } = useContext(UserContext);
-
     const handleSignIn = async (e) => {
         e.preventDefault();
         const response = await axios.post('/api/user/signin', {
@@ -35,8 +29,7 @@ const SignIn = () => {
             uPassword: values.uPassword,
         });
         if (response.data != '') {
-            handleUser(response.data.uemail, response.data.upassword, response.data.unickname);
-            nav("/");
+            window.location.href = "/";
         } else {
             document.querySelector("#passwordError").textContent = "이메일 또는 비밀번호가 일치하지 않습니다.";
         }
@@ -107,8 +100,8 @@ const SignIn = () => {
                     <div className="absolute left-0 top-0 w-[466px] text-[32px] leading-[50px] font-['Roboto'] font-bold text-[#000] text-center">MeCCa에 오신것을 환영합니다!</div>
                 </div>
                 {/* 
-                로그인 폼
-            */}
+                    로그인 폼
+                */}
                 <form onSubmit={handleSignIn} id='form' autoComplete='off' className="self-stretch flex flex-col items-start justify-start gap-[30px]">
                     <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                         <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">이메일</div>
@@ -127,20 +120,20 @@ const SignIn = () => {
                 </form>
                 <div className="self-stretch h-[146px] shrink-0 flex flex-col items-start justify-start gap-[13px]">
                     {/* 
-                    일반 로그인
-                */}
+                        일반 로그인
+                    */}
                     <button disabled id='signIn' type='submit' form='form' className="self-stretch flex flex-row items-center justify-center p-[10px] bg-[#0090f9] rounded-[10px]">
                         <div className="text-[20px] leading-[20px] font-['Roboto'] font-bold text-[#fff] text-center whitespace-nowrap">로그인</div>
                     </button>
                     {/* 
-                    카카오 로그인
-                */}
+                        카카오 로그인
+                    */}
                     <button onClick={handleKakao} className="self-stretch flex-1 flex flex-col items-start justify-start">
                         <img width="466" height="40" src="/assets/User/Kakao.png"></img>
                     </button>
                     {/* 
-                    계정 찾기
-                */}
+                        계정 찾기
+                    */}
                     <button className="self-stretch flex flex-row items-center justify-center p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
                         <div className="text-[20px] leading-[20px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">계정 찾기</div>
                     </button>

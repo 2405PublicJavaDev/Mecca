@@ -1,14 +1,10 @@
-import { useEffect, useState, EventHandler, ReactNode, useContext } from 'react'
+import { useEffect, useState, EventHandler, ReactNode } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
-
-import { UserContext } from '../../UserContext';
 
 let checkNickname = false;
 
 const Kakao = () => {
-
-    const { handleUser } = useContext(UserContext);
 
     const nav = useNavigate();
 
@@ -23,17 +19,40 @@ const Kakao = () => {
             axios.post('/api/kakao', { code })
                 .then(response => {
                     if (response.data.unickname != null) {
-                        handleUser(response.data.uemail, null, response.data.unickname);
-                        nav("/");
+                        window.location.href = "/";
                     } else {
                         setValues({ uEmail: response.data.uemail });
                     }
                 })
                 .catch(error => {
-                    null
+                    console.log(error);
                 });
         }
-    }, []);
+
+        const handlePopState = (event) => {
+            // 브라우저 뒤로가기를 눌렀을 때 리다이렉트
+            window.history.pushState(null, '', window.location.href);  // 현재 페이지로 다시 push
+            event.preventDefault();  // 기본 동작 방지
+        };
+
+        // 페이지가 로드될 때 상태 저장
+        window.history.pushState(null, '', window.location.href);
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            event.returnValue = '';  // 경고 메시지를 띄워서 새로고침 방지
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [nav]);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -89,6 +108,7 @@ const Kakao = () => {
             signUp.disabled = true;
         }
     }
+
 
 
     return (
