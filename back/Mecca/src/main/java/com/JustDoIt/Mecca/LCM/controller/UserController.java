@@ -65,11 +65,11 @@ public class UserController {
             if (comparisonResult <= 0) {
                 // 마저 해야 함(ps. 양희준)
                 adminService.updateUserStatus(user.getUEmail(), null);
+                user = userService.signInUser(user);
                 session.setAttribute("uEmail", user.getUEmail());
                 session.setAttribute("uNickname", user.getUNickname());
-                return null;
+                return user;
             } else {
-
                 return null;
             }
         }
@@ -148,10 +148,10 @@ public class UserController {
         // 현재 비밀번호와 새 비밀번호 확인
         User user = userService.getUser(uEmail, null);
         if (user == null || !user.getUPassword().equals(currentPassword)) {
-            return ResponseEntity.badRequest().body("현재 비밀번호가 일치하지 않습니다."); // 이거 필요 없죠져져죠져죠?? ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ 
+            return ResponseEntity.badRequest().body("현재 비밀번호가 일치하지 않습니다."); // 이거 필요 없죠져져죠져죠?? ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ ㅋ
         }
         if (!newPassword.equals(newPasswordConfirm)) {
-            return ResponseEntity.badRequest().body("새 비밀번호 확인이 일치하지 않습니다."); // 어차피 지워질 얘들 
+            return ResponseEntity.badRequest().body("새 비밀번호 확인이 일치하지 않습니다."); // 어차피 지워질 얘들
         }
         // 비밀번호 업데이트
         user.setUPassword(newPassword);
