@@ -1,6 +1,5 @@
 package com.JustDoIt.Mecca.OJS.vo;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,7 +23,7 @@ public class Matching {
 	private int mCurrentParty;
 	private String mTierOrLevel;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd HH:mm", timezone="Asia/Seoul")
-	private Timestamp mCreatedDate;
+	private Date mCreatedDate;
 	private String mStatus;
 	
 }

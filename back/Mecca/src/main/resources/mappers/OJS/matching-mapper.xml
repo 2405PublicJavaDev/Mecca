@@ -50,7 +50,7 @@
     </select>
 
     <select id="selectList">
-        SELECT * FROM MATCHING_TBL
+        SELECT * FROM MATCHING_TBL ORDER BY M_NO DESC
     </select>
     <select id="selectOne">
         SELECT * FROM MATCHING_TBL WHERE M_NO=#{mNo}
