@@ -15,7 +15,7 @@ public interface GeneralService {
 
     void insertGeneral(General general);
 
-    void updateGeneral(General general);
+    int updateGeneral(General general);
 
     void deleteGeneral(int generalNo);
 

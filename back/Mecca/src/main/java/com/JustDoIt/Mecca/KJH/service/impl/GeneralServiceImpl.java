@@ -38,8 +38,9 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public void updateGeneral(General general) {
+    public int updateGeneral(General general) {
         generalMapper.updateGeneral(general);
+        return 0;
     }
 
     @Override
