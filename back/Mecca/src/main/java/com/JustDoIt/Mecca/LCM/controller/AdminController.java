@@ -7,12 +7,16 @@ import com.JustDoIt.Mecca.LCM.vo.Report;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/api/admin")
 public class AdminController {
 
@@ -64,7 +68,7 @@ public class AdminController {
     }
 
     // 뇌 빠진 코드 진자 멍 열받는다 신고글 삭제 만들엇ㅅ넹
-    @GetMapping("/report/delete")
+    @PostMapping("/report/delete")
     public String deleteReport(HttpSession session) {
         String rWriterEmail = (String) session.getAttribute("rWriterEmail");
         supportService.deleteReport(rWriterEmail);
@@ -91,5 +95,16 @@ public class AdminController {
         } else {
             return "신고 등록에 실패했습니다.";
         }
+    }
+
+    @GetMapping("/report/delete")
+    public String showdelete(Model model){
+
+
+        List<Report> rList=adminService.selectlist();
+
+        model.addAttribute("rList", rList);
+
+        return "LCM/delete";
     }
 }

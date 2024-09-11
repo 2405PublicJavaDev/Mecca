@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
@@ -17,5 +17,5 @@ public class Report {
     private String rNickname;
     private int rObjectNo;
     private String rOption;
-    private Timestamp rCreatedDate;
+    private Date rCreatedDate;
 }

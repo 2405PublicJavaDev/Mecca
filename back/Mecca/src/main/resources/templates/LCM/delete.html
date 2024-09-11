@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <table>
+        <tr>
+            <th>넘버</th>
+            <th>이메일</th>
+            <th>글,댓글</th>
+            <th>옵션</th>
+            <th>시간</th>
+
+        </tr>
+        <tr th:each="report:${rList}">
+            <td>[[${report.rNo}]]</td>
+            <td>[[${report.rWriterEmail}]]</td>
+            <td>[[${report.rObjectNo}]]</td>
+            <td>[[${report.rOption}]]</td>
+            <td>[[${report.rCreatedDate}]]</td>
+        </tr>
+    </table>
+    </body>
+</html>

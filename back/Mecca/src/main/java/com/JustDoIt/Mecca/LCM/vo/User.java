@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
@@ -18,5 +18,5 @@ public class User {
     private String uImage;
     private String uIntroduce;
     private int uStar;
-    private Timestamp uStatus;
+    private Date uStatus;
 }

@@ -8,4 +8,8 @@
     <update id="updateUserStatus">
         UPDATE USER_TBL SET U_STATUS =#{punishmentPeriod} WHERE U_EMAIL = #{uEmail}
     </update>
+
+    <select id="selectlist">
+        SELECT * FROM REPORT_TBL
+    </select>
 </mapper>
