@@ -33,7 +33,7 @@ public class MailController {
     @PostMapping("/temp")
     public String sendTemporaryPassword(@RequestBody Map<String, String> requestBody) throws MessagingException {
         String uEmail = requestBody.get("uEmail");
-        String tempPassword = mailService.createString();
+        String tempPassword = mailService.createString() + "1@";
 
         // DB에 임시 비밀번호 저장
         User user = new User();
