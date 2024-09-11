@@ -32,7 +32,7 @@ public class RatingController {
     }
 
     @GetMapping("/rank")
-    public List getTopRatedUsers() {
+    public List<Map<String, Object>> getTopRatedUsers() {
         return service.getTopRatedUsers();
     }
 }

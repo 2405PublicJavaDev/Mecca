@@ -1,4 +1,5 @@
-import { useState, EventHandler, ReactNode, useContext } from 'react'
+import { useEffect, useState, EventHandler, ReactNode, useContext } from 'react'
+import axios from "axios"
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { UserContext } from '../UserContext';
@@ -8,7 +9,7 @@ function Navigator() {
     const nav = useNavigate();
     const location = useLocation();
 
-    const { uEmail, uNickname } = useContext(UserContext);
+    const { uEmail } = useContext(UserContext);
 
     const indexPage = () => {
         nav("/");
@@ -42,10 +43,28 @@ function Navigator() {
         image: false,
     });
 
+    useEffect(() => {
+        setToggle({
+            chat: false,
+            notification: false,
+            image: false,
+        });
+    }, [location]);
+
     const handleButtonClick = (e) => {
         const name = e.currentTarget.name;
         setToggle({ ...toggle, [name]: !toggle[name] });
-        console.log(name + " - " + toggle[name]);
+    }
+
+    const handleMyPage = () => {
+        nav("/user/mypage");
+    }
+    const handleActivity = () => {
+        console.log("Activity");
+    }
+    const handleSignOut = async () => {
+        await axios.get('/api/user/signout');
+        window.location.href = "/";
     }
 
 
@@ -72,7 +91,7 @@ function Navigator() {
                 </div>
             )}
 
-            {(uEmail == null && uNickname == null) && (
+            {(uEmail == null) && (
                 <div className="absolute left-[1145px] top-[13px] flex flex-row items-center justify-start gap-[20px]">
                     <button onClick={signInPage} className="flex flex-row items-center justify-center py-[12px] px-[24px] border-[1px] border-solid border-[#00000080] rounded-[30px]">
                         <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">로그인</div>
@@ -83,7 +102,7 @@ function Navigator() {
                 </div>
             )}
 
-            {(uEmail != null && uNickname != null) && (
+            {(uEmail != null && location.pathname != '/user/changepassword' && location.pathname != '/user/delete') && (
                 <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
                     <button onClick={handleButtonClick} name='chat'>
                         <img width="35" height="35" src="/assets/Index/Chat.png"></img>
@@ -100,9 +119,9 @@ function Navigator() {
             {toggle.image && (
                 <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
                     <div className="flex flex-col items-start justify-center gap-[10px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                        <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">프로필</div>
-                        <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">활동내역</div>
-                        <div className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">로그아웃</div>
+                        <button onClick={handleMyPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">프로필</button>
+                        <button onClick={handleActivity} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">활동내역</button>
+                        <button onClick={handleSignOut} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">로그아웃</button>
                     </div>
                 </div>
             )}

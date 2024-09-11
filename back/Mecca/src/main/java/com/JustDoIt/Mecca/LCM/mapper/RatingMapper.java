@@ -3,6 +3,7 @@ package com.JustDoIt.Mecca.LCM.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface RatingMapper {
@@ -23,9 +24,9 @@ public interface RatingMapper {
 
     /**
      * 상위 랭킹 출력 Mapper
-     * @return List
+     * @return List<Map<String, Object>>
      */
-    List getTopRatedUsers();
+    List<Map<String, Object>> getTopRatedUsers();
 
     /**
      * 점수를 0으로 설정하는 메서드

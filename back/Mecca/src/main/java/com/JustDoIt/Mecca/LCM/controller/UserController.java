@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/user")
@@ -21,11 +22,10 @@ public class UserController {
     @Autowired
     public UserController(UserService userService, AdminService adminService) { this.userService = userService; this.adminService = adminService; }
 
-    @PostMapping("/signup")
-    public User signUpUser(@RequestBody Map<String, String> requestBody) {
-        String uNickname = requestBody.get("uNickname");
+    @PostMapping("/signup/check")
+    public User signUpUserCheck(@RequestBody Map<String, String> requestBody) {
         String uEmail = requestBody.get("uEmail");
-        String uPassword = requestBody.get("uPassword");
+        String uNickname = requestBody.get("uNickname");
 
         User getUser = userService.getUser(uEmail, uNickname);
         if (getUser != null) {
@@ -33,10 +33,18 @@ public class UserController {
                 return getUser;
             }
         }
+        return null;
+    }
+
+    @PostMapping("/signup/confirm")
+    public User signUpUserConfirm(@RequestBody Map<String, String> requestBody) {
+        String uEmail = requestBody.get("uEmail");
+        String uNickname = requestBody.get("uNickname");
+        String uPassword = requestBody.get("uPassword");
 
         User user = new User();
-        user.setUNickname(uNickname);
         user.setUEmail(uEmail);
+        user.setUNickname(uNickname);
         user.setUPassword(uPassword);
         userService.signUpUser(user);
         return null;
@@ -73,83 +81,52 @@ public class UserController {
     }
 
     @GetMapping("/update")
-    public String showUpdateForm(HttpSession session) {
+    public User showUpdateForm(HttpSession session) {
         // 세션에서 이메일을 가져옴
         String uEmail = (String) session.getAttribute("uEmail");
-        if(uEmail != null) {
-            // 이메일로 사용자 정보 조회
-            User user = userService.getUser(uEmail, null);
-            if(user != null) {
-                return "/update";
-            }else {
-                return ""; // 사용자 정보 없을 경우 에러
-            }
-        }else {
-            return ""; // 세션에 이메일 없을 경우 에러
-        }
+        User user = userService.getUser(uEmail, null);
+        return user;
     }
 
     @PostMapping("/update")
-    public String updateUser(HttpSession session, @RequestBody Map<String, String> requestBody) {
-        // 세션에서 이메일을 가져옴
+    public User updateUser(HttpSession session, @RequestBody Map<String, String> requestBody) {
         String uEmail = (String) session.getAttribute("uEmail");
         String uNickname= requestBody.get("uNickname");
         String uIntroduce = requestBody.get("uIntroduce");
-        if(uEmail != null) {
-            // 사용자 정보 조회
-            User user = userService.getUser(uEmail, null);
-            if(user != null) {
-                // 업데이트 할 정보 설정
-                user.setUNickname(uNickname);
-                user.setUIntroduce(uIntroduce);
-                // 사용자 정보 업데이트
-                int result = userService.updateUser(user);
-                if(result > 0) {
-                    return ""; //업데이트 성공 시 마이페이지 리다렉
-                }else {
-                    return ""; // 실패 시 에러
-                }
-            }else {
-                return ""; // 사용자 정보 없을 경우 에러
-            }
-        }else {
-            return ""; // 세션에 이메일 없으면 에러
+
+        User getUser = userService.getUser(null, uNickname);
+        if (getUser != null && !getUser.getUEmail().equals(uEmail)) {
+            return getUser;
         }
+
+        User user = new User();
+        user.setUEmail(uEmail);
+        user.setUNickname(uNickname);
+        user.setUIntroduce(uIntroduce);
+        userService.updateUser(user);
+        return null;
     }
 
     @GetMapping("/delete")
-    public String deleteUser(HttpSession session) {
+    public void deleteUser(HttpSession session) {
         String uEmail = (String) session.getAttribute("uEmail");
         userService.deleteUser(uEmail);
         session.invalidate();
-        return "redirect:http://localhost:3000/";
     }
 
     @GetMapping("/signout")
-    public String signOutUser(HttpSession session) {
-        String uEmail = (String) session.getAttribute("uEmail");
+    public void signOutUser(HttpSession session) {
         session.invalidate();
-        return "redirect:http://localhost:3000/";
     }
 
-    @PostMapping("/changePw")
-    public String changePassword(HttpSession session, @RequestBody Map<String, String> requestBody) {
-        // 세션에서 이메일을 가져옴
+    @PostMapping("/changepassword")
+    public void changePassword(HttpSession session, @RequestBody Map<String, String> requestBody) {
         String uEmail = (String) session.getAttribute("uEmail");
-        String currentPassword = requestBody.get("currentPassword");
-        String newPassword = requestBody.get("newPassword");
-        // 현재 비밀번호와 새 비밀번호 확인
-        User user = userService.getUser(uEmail, null);
-        if (!user.getUPassword().equals(currentPassword)) {
-            return "현재 비밀번호가 일치하지 않습니다.";
-        }
-        // 비밀번호 업데이트
-        user.setUPassword(newPassword);
-        int result = userService.updatePassword(user);
-        if (result > 0) {
-            return "비밀번호가 성공적으로 변경되었습니다.";
-        } else {
-            return "비밀번호 변경에 실패했습니다.";
-        }
+        String uPassword = requestBody.get("uPassword");
+
+        User user = new User();
+        user.setUEmail(uEmail);
+        user.setUPassword(uPassword);
+        userService.updatePassword(user);
     }
 }

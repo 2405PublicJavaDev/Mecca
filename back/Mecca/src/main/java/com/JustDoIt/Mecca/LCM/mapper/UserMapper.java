@@ -10,9 +10,8 @@ public interface UserMapper {
     /**
      * 유저 가입 Mapper
      * @param user
-     * @return int
      */
-    int signUpUser(User user);
+    void signUpUser(User user);
 
     /**
      * 유저 로그인 Mapper
@@ -24,16 +23,14 @@ public interface UserMapper {
     /**
      * 유저 수정(마이 페이지 정보 수정) Mapper
      * @param user
-     * @return int
      */
-    int updateUser(User user);
+    void updateUser(User user);
 
     /**
      * 유저 삭제(회원 탈퇴) Mapper
      * @param uEmail
-     * @return int
      */
-    int deleteUser(String uEmail);
+    void deleteUser(String uEmail);
 
     /**
      * 유저 비밀번호 변경 Mapper

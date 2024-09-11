@@ -16,38 +16,26 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserMapper mapper) { this.mapper = mapper; }
 
     @Override
-    public int signUpUser(User user) {
-        int result = mapper.signUpUser(user);
-        return result;
+    public void signUpUser(User user) { mapper.signUpUser(user); }
+
+    @Override
+    public User signInUser(User user) { return mapper.signInUser(user); }
+
+    @Override
+    public void updateUser(User user) {
+        mapper.updateUser(user);
     }
 
     @Override
-    public User signInUser(User user) {
-        User result = mapper.signInUser(user);
-        return result;
+    public void deleteUser(String uEmail) {
+        mapper.deleteUser(uEmail);
     }
 
     @Override
-    public int updateUser(User user) {
-        int result = mapper.updateUser(user);
-        return result;
+    public void updatePassword(User user) {
+        mapper.updatePassword(user);
     }
 
     @Override
-    public int deleteUser(String uEmail) {
-        int result = mapper.deleteUser(uEmail);
-        return result;
-    }
-
-    @Override
-    public int updatePassword(User user) {
-        int result = mapper.updatePassword(user);
-        return result;
-    }
-
-    @Override
-    public User getUser(String uEmail, String uNickname) {
-        User getUser = mapper.getUser(uEmail, uNickname);
-        return getUser;
-    }
+    public User getUser(String uEmail, String uNickname) { return mapper.getUser(uEmail, uNickname); }
 }

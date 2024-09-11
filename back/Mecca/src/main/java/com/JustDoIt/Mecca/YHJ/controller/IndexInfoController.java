@@ -24,4 +24,22 @@ public class IndexInfoController {
         List<Map<String, Object>> generalList = indexInfoService.selectGeneralList();
         return generalList;
     }
+
+    @GetMapping("/matching")
+    public List<Map<String, Object>> getMatchingInfo() {
+        List<Map<String, Object>> matchingList = indexInfoService.selectMatchingList();
+        return matchingList;
+    }
+
+    @GetMapping("/best")
+    public List<Map<String, Object>> getBestGeneralInfo() {
+        List<Map<String, Object>> bestGeneralList = indexInfoService.selectBestGeneralList();
+        return bestGeneralList;
+    }
+
+    @GetMapping("/announce")
+    public List<Map<String, Object>> getAnnounceInfo() {
+        List<Map<String, Object>> announceList = indexInfoService.selectAnnounceList();
+        return announceList;
+    }
 }

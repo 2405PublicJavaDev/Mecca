@@ -132,7 +132,7 @@
     <select id="selectGeneralListWithUserInfo" parameterType="map" resultType="com.JustDoIt.Mecca.KJH.vo.General">
         SELECT g.*, u.U_NICKNAME AS gNickname, u.U_STAR AS gStar
         FROM GENERAL_TBL g
-        JOIN USER_TBL u ON g.G_WRITER_EMAIL = u.U_EMAIL
+        JOIN USER_TBL_OLD u ON g.G_WRITER_EMAIL = u.U_EMAIL
         WHERE 1 = 1
         <if test="params.searchQuery != null and params.searchQuery != ''">
             AND g.G_TITLE LIKE '%' || #{params.searchQuery} || '%'

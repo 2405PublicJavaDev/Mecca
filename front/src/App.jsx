@@ -5,18 +5,17 @@ import { Session } from './Session';
 
 import Navigator from './Pages/Navigator';
 
-import Index from './Pages';
+import Index from './Pages/Index';
 
 import SignIn from './Pages/User/SignIn'
 import FindAccount from './Pages/User/FindAccount';
-import ChangePasswordForFindAccount from './Pages/User/ChangePasswordForFindAccount';
 
 import SignUp from './Pages/User/SignUp';
-import Verify from './Pages/User/Verify';
 import Kakao from './Pages/User/Kakao';
 
 import MyPage from './Pages/User/MyPage';
-import SignOut from './Pages/User/SignOut';
+import ChangePassword from './Pages/User/ChangePassword';
+import Delete from './Pages/User/Delete';
 
 import GeneralList from './Pages/General/GeneralList';
 import GeneralWrite from './Pages/General/GeneralWrite';
@@ -60,14 +59,13 @@ function App() {
 
         <Route path='/user/signin' element={<SignIn />} />
         <Route path='/user/findaccount' element={<FindAccount />} />
-        <Route path='/user/changepasswordforfindaccount' element={<ChangePasswordForFindAccount />} />
 
         <Route path='/user/signup' element={<SignUp />} />
-        <Route path='/user/signup/verify' element={<Verify />} />
         <Route path='/kakao/callback' element={<Kakao />} />
 
         <Route path='/user/mypage' element={<MyPage />} />
-        <Route path='/user/signout' element={<SignOut />} />
+        <Route path='/user/changepassword' element={<ChangePassword />} />
+        <Route path='/user/delete' element={<Delete />} />
 
         <Route path='/general/list' element={<GeneralList />} />
         <Route path='/general/write' element={<GeneralWrite />} />

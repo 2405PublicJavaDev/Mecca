@@ -7,10 +7,27 @@ let checkPassword = false;
 
 const SignIn = () => {
 
+    const nav = useNavigate();
+
     const [values, setValues] = useState({
         uEmail: '',
         uPassword: '',
     });
+
+    const handleSignIn = async (e) => {
+        e.preventDefault();
+        const response = await axios.post('/api/user/signin', {
+            uEmail: values.uEmail,
+            uPassword: values.uPassword,
+        });
+        if (response.data != '') {
+            window.location.href = "/";
+        } else {
+            document.querySelector("#signIn").disabled = true;
+            document.querySelector("#passwordError").textContent = "이메일 또는 비밀번호가 일치하지 않습니다.";
+            checkEmail = false;
+        }
+    }
 
     const handleKakao = () => {
         const authorizationUri = "https://kauth.kakao.com/oauth/authorize";
@@ -22,17 +39,8 @@ const SignIn = () => {
         window.location.href = url;
     }
 
-    const handleSignIn = async (e) => {
-        e.preventDefault();
-        const response = await axios.post('/api/user/signin', {
-            uEmail: values.uEmail,
-            uPassword: values.uPassword,
-        });
-        if (response.data != '') {
-            window.location.href = "/";
-        } else {
-            document.querySelector("#passwordError").textContent = "이메일 또는 비밀번호가 일치하지 않습니다.";
-        }
+    const findAccountPage = () => {
+        nav('/user/findaccount');
     }
 
 
@@ -41,8 +49,8 @@ const SignIn = () => {
     const validateEmail = () => {
         checkEmail = false;
 
-        const email = document.getElementById('email').value.trim();
-        const emailError = document.getElementById('emailError');
+        const email = document.querySelector('#email').value.trim();
+        const emailError = document.querySelector('#emailError');
 
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -62,8 +70,8 @@ const SignIn = () => {
     const validatePassword = () => {
         checkPassword = false;
 
-        const password = document.getElementById('password').value;
-        const passwordError = document.getElementById('passwordError');
+        const password = document.querySelector('#password').value;
+        const passwordError = document.querySelector('#passwordError');
 
         // (형식: 한글 안 되고, 영문, 숫자, 특수문자 포함)
         const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
@@ -91,6 +99,8 @@ const SignIn = () => {
             signIn.disabled = true;
         }
     }
+
+
 
     return (
         <>
@@ -134,7 +144,7 @@ const SignIn = () => {
                     {/* 
                         계정 찾기
                     */}
-                    <button className="self-stretch flex flex-row items-center justify-center p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
+                    <button onClick={findAccountPage} className="self-stretch flex flex-row items-center justify-center p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
                         <div className="text-[20px] leading-[20px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">계정 찾기</div>
                     </button>
                 </div>

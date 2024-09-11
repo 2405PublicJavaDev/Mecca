@@ -29,4 +29,37 @@ public class IndexInfoServiceImpl implements IndexInfoService {
         }
         return generalList;
     }
+
+    @Override
+    public List<Map<String, Object>> selectMatchingList() {
+        List<Map<String, Object>> generalList = indexInfoMapper.selectMatchingList();
+        for (Map<String, Object> map : generalList)  {
+            Date mCreatedDate = (Date) map.get("M_CREATED_DATE");
+            String time = TimeConfig.calculateTime(mCreatedDate);
+            map.replace("M_CREATED_DATE", time);
+        }
+        return generalList;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectBestGeneralList() {
+        List<Map<String, Object>> generalList = indexInfoMapper.selectBestGeneralList();
+        for (Map<String, Object> map : generalList)  {
+            Date gCreatedDate = (Date) map.get("G_CREATED_DATE");
+            String time = TimeConfig.calculateTime(gCreatedDate);
+            map.replace("G_CREATED_DATE", time);
+        }
+        return generalList;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectAnnounceList() {
+        List<Map<String, Object>> generalList = indexInfoMapper.selectAnnounceList();
+        for (Map<String, Object> map : generalList)  {
+            Date aCreatedDate = (Date) map.get("A_CREATED_DATE");
+            String time = TimeConfig.calculateTime(aCreatedDate);
+            map.replace("A_CREATED_DATE", time);
+        }
+        return generalList;
+    }
 }

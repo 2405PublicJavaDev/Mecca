@@ -7,9 +7,8 @@ public interface UserService {
     /**
      * 유저 가입 Service
      * @param user
-     * @return int
      */
-    int signUpUser(User user);
+    void signUpUser(User user);
 
     /**
      * 유저 로그인 Service
@@ -21,23 +20,20 @@ public interface UserService {
     /**
      * 유저 수정 Service
      * @param user
-     * @return int
      */
-    int updateUser(User user);
+    void updateUser(User user);
 
     /**
      * 유저 탈퇴 Service
      * @param uEmail
-     * @return int
      */
-    int deleteUser(String uEmail);
+    void deleteUser(String uEmail);
 
     /**
      * 유저 비밀번호 변경 Service
      * @param user
-     * @return int
      */
-    int updatePassword(User user);
+    void updatePassword(User user);
 
     /**
      * 유저 정보 조회 Service

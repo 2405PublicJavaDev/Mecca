@@ -1,8 +1,19 @@
-import { useState, EventHandler, ReactNode, useContext } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState, EventHandler, ReactNode } from 'react'
 import axios from "axios"
+import { useLocation } from 'react-router-dom';
 
 function Ranking() {
+
+    const [rankingList, setRankingList] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const rankingResponse = await axios.get('/api/rating/rank');
+            setRankingList(rankingResponse.data);
+        }
+
+        fetchData();
+    }, []);
 
     const location = useLocation();
 
@@ -13,56 +24,22 @@ function Ranking() {
                     <div className="self-stretch text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#000] text-center">Top Players</div>
                     <img width="180" height="0" src="/assets/Index/Bar.png"></img>
                     <div className="self-stretch flex flex-col items-end justify-start gap-[5px]">
-                        <div className="self-stretch flex flex-row items-center justify-between">
-                            <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
-                                <img width="20" height="20" src="/assets/Index/Image.png"></img>
-                                <div className="text-[14px] leading-[25px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">소드마스터</div>
-                            </div>
-                            <div className="self-stretch flex flex-row items-center justify-end">
-                                <img width="12" height="12" src="/assets/Index/Star.png"></img>
-                                <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">4.9</div>
-                            </div>
-                        </div>
-                        <div className="self-stretch flex flex-row items-center justify-between">
-                            <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
-                                <img width="20" height="20" src="/assets/Index/Image.png"></img>
-                                <div className="text-[14px] leading-[25px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">대마법사</div>
-                            </div>
-                            <div className="self-stretch flex flex-row items-center justify-end">
-                                <img width="12" height="12" src="/assets/Index/Star.png"></img>
-                                <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">4.8</div>
-                            </div>
-                        </div>
-                        <div className="self-stretch flex flex-row items-center justify-between">
-                            <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
-                                <img width="20" height="20" src="/assets/Index/Image.png"></img>
-                                <div className="text-[14px] leading-[25px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">대지의힘</div>
-                            </div>
-                            <div className="self-stretch flex flex-row items-center justify-end">
-                                <img width="12" height="12" src="/assets/Index/Star.png"></img>
-                                <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">4.7</div>
-                            </div>
-                        </div>
-                        <div className="self-stretch flex flex-row items-center justify-between">
-                            <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
-                                <img width="20" height="20" src="/assets/Index/Image.png"></img>
-                                <div className="text-[14px] leading-[25px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">킹콩</div>
-                            </div>
-                            <div className="self-stretch flex flex-row items-center justify-end">
-                                <img width="12" height="12" src="/assets/Index/Star.png"></img>
-                                <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">4.5</div>
-                            </div>
-                        </div>
-                        <div className="self-stretch flex flex-row items-center justify-between">
-                            <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
-                                <img width="20" height="20" src="/assets/Index/Image.png"></img>
-                                <div className="text-[14px] leading-[25px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">고수</div>
-                            </div>
-                            <div className="self-stretch flex flex-row items-center justify-end">
-                                <img width="12" height="12" src="/assets/Index/Star.png"></img>
-                                <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">4.3</div>
-                            </div>
-                        </div>
+                        {rankingList.length > 0 ? (
+                            rankingList.map((item, index) => (
+                                <div key={index} className="self-stretch flex flex-row items-center justify-between">
+                                    <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
+                                        <img width="20" height="20" src="/assets/Index/Image.png"></img>
+                                        <div className="text-[14px] leading-[25px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">{item.U_NICKNAME}</div>
+                                    </div>
+                                    <div className="self-stretch flex flex-row items-center justify-end">
+                                        <img width="12" height="12" src="/assets/Index/Star.png"></img>
+                                        <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">{item.U_STAR}</div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p>유저가 없습니다.</p>
+                        )}
                     </div>
                 </div>
             )}

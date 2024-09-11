@@ -1,6 +1,7 @@
 package com.JustDoIt.Mecca.LCM.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RatingService {
 
@@ -22,5 +23,5 @@ public interface RatingService {
      * 상위 랭킹 출력 Service
      * @return List
      */
-    List getTopRatedUsers();
+    List<Map<String, Object>> getTopRatedUsers();
 }

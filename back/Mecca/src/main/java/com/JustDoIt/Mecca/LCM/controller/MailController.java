@@ -20,9 +20,25 @@ public class MailController {
     @Autowired
     public MailController(MailService mailService, UserService userService) { this.mailService = mailService; this.userService = userService; };
 
-    @ResponseBody
-    @PostMapping("/verify")
-    public String sendVerifyCode(@RequestBody Map<String, String> requestBody) throws MessagingException {
+    @PostMapping("/verify/findaccount")
+    public String sendFindAccountVerifyCode(@RequestBody Map<String, String> requestBody) throws MessagingException {
+        String uEmail = requestBody.get("uEmail");
+        User user = userService.getUser(uEmail, null);
+        if (user != null) {
+            if (user.getUPassword() != null) {
+                String verifyCode = mailService.createString();
+                mailService.sendVerifyCode(uEmail, verifyCode);
+                return verifyCode;
+            } else {
+                return "kakao";
+            }
+        } else {
+            return "notUser";
+        }
+    }
+
+    @PostMapping("/verify/signup")
+    public String sendSignUpVerifyCode(@RequestBody Map<String, String> requestBody) throws MessagingException {
         String uEmail = requestBody.get("uEmail");
         String verifyCode = mailService.createString();
         mailService.sendVerifyCode(uEmail, verifyCode);
@@ -42,6 +58,6 @@ public class MailController {
         userService.updatePassword(user);
 
         mailService.sendTemporaryPassword(uEmail, tempPassword);
-        return "임시 비밀번호가 성공적으로 발급되었습니다.";
+        return uEmail;
     }
 }
