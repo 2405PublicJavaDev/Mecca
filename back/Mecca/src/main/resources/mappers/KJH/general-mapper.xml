@@ -91,9 +91,21 @@
         WHERE GC_NO = #{gcNo}
     </delete>
 
+    <update id="updateComment" parameterType="com.JustDoIt.Mecca.KJH.vo.GeneralComment">
+        UPDATE GENERAL_COMMENT_TBL
+        SET GC_CONTENT = #{gcContent}
+        WHERE GC_NO = #{gcNo}
+    </update>
+
     <select id="getCommentsByGeneralNo" parameterType="int" resultType="com.JustDoIt.Mecca.KJH.vo.GeneralComment">
         SELECT * FROM GENERAL_COMMENT_TBL
         WHERE GC_G_NO = #{generalNo}
         ORDER BY GC_CREATED_DATE DESC
     </select>
+
+    <update id="updateLikeCount">
+        UPDATE GENERAL_TBL
+        SET G_LIKE = #{likeCount}
+        WHERE G_NO = #{gNo}
+    </update>
 </mapper>

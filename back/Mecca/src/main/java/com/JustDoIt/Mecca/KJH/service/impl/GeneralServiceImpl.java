@@ -103,4 +103,9 @@ public class GeneralServiceImpl implements GeneralService {
     public void deleteComment(int gcNo) {
         generalMapper.deleteComment(gcNo);
     }
+
+    @Override
+    public void updateLikeCount(int gNo, int likeCount) {
+        generalMapper.updateLikeCount(gNo, likeCount);
+    }
 }

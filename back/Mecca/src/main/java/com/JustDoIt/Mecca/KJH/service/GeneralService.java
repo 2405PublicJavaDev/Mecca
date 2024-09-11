@@ -37,4 +37,6 @@ public interface GeneralService {
     void updateComment(GeneralComment comment);
 
     void deleteComment(int gcNo);
+
+    void updateLikeCount(int gNo, int likeCount);
 }

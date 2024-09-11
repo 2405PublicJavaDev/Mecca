@@ -130,4 +130,10 @@ public class GeneralController {
         generalService.updateComment(comment); // 댓글 수정
         return "redirect:/general/view/" + comment.getGcGNo();
     }
+    @PostMapping("/updateLike")
+    public String updateLike(@RequestParam("gNo") int gNo, @RequestParam("likeCount") int likeCount) {
+        generalService.updateLikeCount(gNo, likeCount);
+        return "redirect:/general/view/" + gNo; // 업데이트 후 게시물 상세 페이지로 리다이렉트
+    }
+
 }

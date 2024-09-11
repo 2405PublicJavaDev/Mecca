@@ -5,169 +5,230 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
     }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
     h1 {
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 10px;
+      text-align: center;
+      color: #007bff;
     }
+
     .post-details {
       margin-bottom: 20px;
     }
+
     .post-details h2 {
+      margin: 0 0 10px;
       font-size: 24px;
       color: #333;
     }
+
     .post-details p {
-      font-size: 16px;
-      color: #555;
+      margin: 5px 0;
+      font-size: 18px;
     }
-    .comment-list {
-      list-style-type: none;
-      padding: 0;
-    }
-    .comment-list li {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
+
+    .button-group {
       display: flex;
-      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
     }
-    .comment-list .comment-actions {
-      margin-left: auto;
-      display: flex;
-      gap: 10px;
-    }
-    .comment-list .comment-actions form {
-      display: inline;
-    }
-    .comment-actions button {
+
+    .button-group button, .button-group a {
       background-color: #007bff;
-      border: none;
       color: white;
-      padding: 5px 10px;
-      text-align: center;
       text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      margin: 2px 1px;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
-      border-radius: 4px;
+      transition: background-color 0.3s;
     }
-    .comment-actions button:hover {
+
+    .button-group button:hover, .button-group a:hover {
       background-color: #0056b3;
     }
-    .comment-form {
-      border-top: 2px solid #ddd;
-      padding-top: 10px;
-      margin-top: 20px;
-    }
-    .comment-form input,
-    .comment-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .comment-form button {
-      background-color: #28a745;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .comment-form button:hover {
-      background-color: #218838;
-    }
-    .back-link,
-    .delete-post-button {
-      display: inline-block;
-      margin-top: 20px;
-      text-decoration: none;
-      font-size: 16px;
-      border-radius: 4px;
-    }
-    .back-link {
-      color: #007bff;
-      padding: 10px 20px;
-      background-color: #f8f9fa;
-      border: 1px solid #007bff;
-    }
-    .back-link:hover {
-      background-color: #e2e6ea;
-      color: #0056b3;
-    }
-    .delete-post-button {
+
+    .button-group .delete-button {
       background-color: #dc3545;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
     }
-    .delete-post-button:hover {
+
+    .button-group .delete-button:hover {
       background-color: #c82333;
+    }
+
+    .like-button {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .like-button button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .like-button button:hover {
+      background-color: #0056b3;
+    }
+
+    .comment-list {
+      margin-bottom: 20px;
+    }
+
+    .comment-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .comment-list li {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #f1f1f1;
+      border-radius: 5px;
+    }
+
+    .comment-list p {
+      margin: 0;
+    }
+
+    .comment-list .comment-meta {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .form-container {
+      margin-bottom: 20px;
+    }
+
+    .form-container h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .form-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-container textarea {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-<h1>게시물 상세 보기</h1>
+<div class="container">
+  <h1>게시물 상세 보기</h1>
 
-<!-- 게시물 상세 내용 -->
-<div class="post-details">
-  <h2 th:text="${general.gTitle}"></h2>
-  <p>작성자: <span th:text="${general.gNickname}"></span></p>
-  <p th:text="${general.gContent}"></p>
-  <p>조회수: <span th:text="${general.gView}"></span></p>
-  <p>좋아요: <span th:text="${general.gLike}"></span></p>
+  <!-- 게시물 상세 내용 -->
+  <div class="post-details">
+    <h2 th:text="${general.gTitle}"></h2>
+    <p>작성자: <span th:text="${general.gNickname}"></span></p>
+    <p th:text="${general.gContent}"></p>
+    <p>조회수: <span th:text="${general.gView}"></span></p>
+    <p>좋아요: <span id="like-count" th:text="${general.gLike}"></span></p>
+  </div>
 
-  <!-- 게시글 삭제 버튼 -->
-  <form action="/general/delete/{gNo}" method="post" th:action="@{/general/delete/{gNo}(gNo=${general.gNo})}">
-    <button type="submit" class="delete-post-button">게시글 삭제</button>
-  </form>
+  <!-- 좋아요 버튼 -->
+  <div class="like-button">
+    <form action="/general/updateLike" method="post">
+      <input type="hidden" name="gNo" th:value="${general.gNo}" />
+      <input type="hidden" name="likeCount" id="like-count-hidden" th:value="${general.gLike}" />
+      <button type="submit" id="like-button">좋아요</button>
+    </form>
+  </div>
+
+  <!-- 댓글 목록 출력 -->
+  <div class="comment-list">
+    <h3>댓글</h3>
+    <ul>
+      <li th:each="comment : ${comments}">
+        <p>
+          <strong th:text="${comment.gcNickname}"></strong>:
+          <span th:text="${comment.gcContent}"></span>
+          <span class="comment-meta">작성 시간: <span th:text="${#dates.format(comment.gcCreatedDate, 'yyyy-MM-dd HH:mm:ss')}"></span></span>
+        <div class="button-group">
+          <form action="/general/comment/update" method="post">
+            <input type="hidden" name="gcNo" th:value="${comment.gcNo}" />
+            <input type="hidden" name="gcGNo" th:value="${comment.gcGNo}" />
+            <input type="text" name="gcContent" th:value="${comment.gcContent}" placeholder="수정할 댓글 내용" required />
+            <button type="submit">수정</button>
+          </form>
+          <form action="/general/comment/delete/{gcNo}" method="post" th:action="@{/general/comment/delete/{gcNo}(gcNo=${comment.gcNo})}">
+            <button type="submit" class="delete-button">삭제</button>
+          </form>
+        </div>
+        </p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 댓글 작성 폼 -->
+  <div class="form-container">
+    <h3>댓글 작성</h3>
+    <form action="/general/comment/insert" method="post">
+      <input type="hidden" name="gcGNo" th:value="${general.gNo}" />
+      <textarea name="gcContent" placeholder="댓글 내용" required></textarea>
+      <button type="submit">댓글 작성</button>
+    </form>
+  </div>
+
+  <!-- 게시물 수정 및 삭제 버튼 추가 -->
+  <div class="button-group">
+    <a href="/general/edit/{generalNo}" th:href="@{/general/edit/{generalNo}(generalNo=${general.gNo})}" class="button">수정</a>
+    <form action="/general/delete/{generalNo}" method="post" th:action="@{/general/delete/{generalNo}(generalNo=${general.gNo})}">
+      <button type="submit" class="delete-button">게시물 삭제</button>
+    </form>
+    <a href="/general/list">목록으로 돌아가기</a>
+  </div>
+
+  <!-- 자바스크립트 코드 추가 -->
+  <script>
+    document.getElementById('like-button').addEventListener('click', function(event) {
+      event.preventDefault(); // 기본 폼 제출 동작 방지
+
+      let likeCountSpan = document.getElementById('like-count');
+      let likeCountHidden = document.getElementById('like-count-hidden');
+      let currentLikeCount = parseInt(likeCountSpan.textContent);
+
+      // 클릭 횟수에 따라 좋아요 수 증가 또는 감소
+      if (currentLikeCount % 2 === 0) {
+        currentLikeCount++;
+      } else {
+        currentLikeCount--;
+      }
+
+      likeCountSpan.textContent = currentLikeCount;
+      likeCountHidden.value = currentLikeCount;
+
+      // 폼 제출
+      this.form.submit();
+    });
+  </script>
 </div>
-
-<!-- 댓글 목록 출력 -->
-<div>
-  <h3>댓글</h3>
-  <ul class="comment-list">
-    <li th:each="comment : ${comments}">
-      <div>
-        <strong th:text="${comment.gcNickname}"></strong>:
-        <span th:text="${comment.gcContent}"></span>
-        <span>작성 시간: <span th:text="${#dates.format(comment.gcCreatedDate, 'yyyy-MM-dd HH:mm:ss')}"></span></span>
-      </div>
-      <!-- 댓글 수정 및 삭제 버튼 -->
-      <div class="comment-actions">
-        <form action="/general/comment/update" method="post" th:action="@{/general/comment/update}">
-          <input type="hidden" name="gcNo" th:value="${comment.gcNo}" />
-          <input type="hidden" name="gcGNo" th:value="${comment.gcGNo}" />
-          <input type="text" name="gcContent" th:value="${comment.gcContent}" placeholder="수정할 댓글 내용" required />
-          <button type="submit">수정</button>
-        </form>
-        <form action="/general/comment/delete/{gcNo}" method="post" th:action="@{/general/comment/delete/{gcNo}(gcNo=${comment.gcNo})}">
-          <button type="submit">삭제</button>
-        </form>
-      </div>
-    </li>
-  </ul>
-</div>
-
-<!-- 댓글 작성 폼 -->
-<div class="comment-form">
-  <h3>댓글 작성</h3>
-  <form action="/general/comment/insert" method="post">
-    <input type="hidden" name="gcGNo" th:value="${general.gNo}" />
-    <textarea name="gcContent" placeholder="댓글 내용" required></textarea>
-    <button type="submit">댓글 작성</button>
-  </form>
-</div>
-
-<!-- 목록으로 돌아가기 버튼 -->
-<a href="/general/list" class="back-link">목록</a>
 </body>
 </html>

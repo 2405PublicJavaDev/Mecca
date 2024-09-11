@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
@@ -17,5 +17,5 @@ public class GeneralComment {
     private String gcWriterEmail;
     private String gcNickname;
     private String gcContent;
-    private Timestamp gcCreatedDate;
+    private Date gcCreatedDate;
 }

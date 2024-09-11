@@ -1,8 +1,10 @@
 package com.JustDoIt.Mecca.KJH.mapper;
 
+
 import com.JustDoIt.Mecca.KJH.vo.General;
 import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -53,4 +55,6 @@ public interface GeneralMapper {
     // 게시물에 대한 댓글 목록 조회 (페이지네이션을 제외한 전체 조회)
     // 이 메서드는 필요 없을 수 있으며, selectCommentsByGeneralNo 메서드가 페이지네이션을 지원하므로 제거 가능합니다.
     List<GeneralComment> getCommentsByGeneralNo(int generalNo);
+
+    void updateLikeCount(@Param("gNo") int gNo, @Param("likeCount") int likeCount);
 }

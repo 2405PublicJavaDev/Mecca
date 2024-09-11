@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
@@ -17,7 +17,7 @@ public class General {
     private String gNickname;
     private String gTitle;
     private String gContent;
-    private Timestamp gCreatedDate;
+    private Date gCreatedDate;
     private int gView;
     private int gLike;
 }
