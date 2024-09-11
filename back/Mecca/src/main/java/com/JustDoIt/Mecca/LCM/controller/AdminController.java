@@ -15,8 +15,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
-//@RestController
-@Controller
+@RestController
+//@Controller
 @RequestMapping("/api/admin")
 public class AdminController {
 

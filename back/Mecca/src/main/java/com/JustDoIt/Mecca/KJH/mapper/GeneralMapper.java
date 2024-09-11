@@ -17,7 +17,7 @@ public interface GeneralMapper {
     General selectGeneralOne(int gNo);
 
     // 게시물 삽입
-    void insertGeneral(General general);
+    void insertGeneral(String gWriterEmail, String gTitle, String gContent);
 
     // 게시물 업데이트
     void updateGeneral(General general);

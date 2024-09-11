@@ -14,24 +14,9 @@ import java.util.Date;
 public class General {
     private int gNo;
     private String gWriterEmail;
-    private String gNickname;
     private String gTitle;
     private String gContent;
     private Date gCreatedDate;
     private int gView;
     private int gLike;
-    private int gcCount;
-    private int gStar;
-
-    public void setGcCount(int commentCount) {
-        this.gcCount = commentCount;
-    }
-
-    public int getgNo() {
-        return gNo;
-    }
-
-    public String getGNo() {
-        return String.valueOf(gNo);
-    }
 }

@@ -33,8 +33,8 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public void insertGeneral(General general) {
-        generalMapper.insertGeneral(general);
+    public void insertGeneral(String gWriterEmail, String gTitle, String gContent) {
+        generalMapper.insertGeneral(gWriterEmail, gTitle, gContent);
     }
 
     @Override

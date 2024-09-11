@@ -58,13 +58,6 @@ public class GeneralApiController {
             generalList = generalService.selectGeneralListWithUserInfo(params, rowBounds); // 수정된 메서드 호출
         }
 
-        // 각 게시물의 댓글 수를 추가로 조회
-        for (General general : generalList) {
-            int commentCount = generalService.getCommentCountByGeneralNo(general.getgNo());
-            general.setGcCount(commentCount); // 게시물 객체에 댓글 수 설정
-        }
-        log.info(generalList.toString());
-
         Map<String, Object> response = new HashMap<>();
         response.put("generalList", generalList);
         response.put("pagination", pagination);
@@ -97,12 +90,11 @@ public class GeneralApiController {
     }
 
     @PostMapping("/insert")
-    public Map<String, Object> insert(@RequestBody General general) {
-        generalService.insertGeneral(general);
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("message", "General inserted successfully");
-        return response;
+    public void insert(@RequestBody Map<String, String> requestBody) {
+        String gWriterEmail = requestBody.get("gWriterEmail");
+        String gTitle = requestBody.get("gTitle");
+        String gContent = requestBody.get("gContent");
+        generalService.insertGeneral(gWriterEmail, gTitle, gContent);
     }
 
     @GetMapping("/update/{generalNo}")

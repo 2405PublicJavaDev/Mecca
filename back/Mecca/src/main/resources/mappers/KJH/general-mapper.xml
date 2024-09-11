@@ -11,7 +11,7 @@
     <!-- 게시물 삽입 쿼리 -->
     <insert id="insertGeneral" parameterType="com.JustDoIt.Mecca.KJH.vo.General">
         INSERT INTO GENERAL_TBL
-        VALUES (SEQ_GENERAL_NO.NEXTVAL, #{gWriterEmail}, #{gTitle}, #{gContent}, DEFAULT, #{gView}, #{gLike})
+        VALUES (SEQ_GENERAL_NO.NEXTVAL, #{gWriterEmail}, #{gTitle}, #{gContent}, DEFAULT, DEFAULT, DEFAULT)
     </insert>
 
     <!-- 게시물 수정 쿼리 -->

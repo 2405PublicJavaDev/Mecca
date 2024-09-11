@@ -13,7 +13,7 @@ public interface GeneralService {
 
     General selectGeneralOne(int generalNo);
 
-    void insertGeneral(General general);
+    void insertGeneral(String gWriterEmail, String gTitle, String gContent);
 
     int updateGeneral(General general);
 
