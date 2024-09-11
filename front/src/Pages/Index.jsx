@@ -8,7 +8,6 @@ const Index = () => {
     useEffect(() => {
         async function fetchData() {
             const generalResponse = await axios.get('/api/index/general');
-            console.log(generalResponse.data);
             setGeneralList(generalResponse.data);
         }
 
@@ -37,7 +36,7 @@ const Index = () => {
                                             <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">{item.U_STAR}</div>
                                         </div>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">•</div>
-                                        <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.gcreatedDate}</div>
+                                        <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.G_CREATED_DATE}</div>
                                     </div>
                                     <div className="self-stretch flex flex-row items-center justify-start gap-[10px]">
                                         <div className="flex-1 text-[16px] leading-[24px] font-['Roboto'] text-[#000]">{item.G_TITLE}</div>

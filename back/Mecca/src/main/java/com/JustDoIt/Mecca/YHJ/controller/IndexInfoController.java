@@ -22,8 +22,6 @@ public class IndexInfoController {
     @GetMapping("/general")
     public List<Map<String, Object>> getGeneralInfo() {
         List<Map<String, Object>> generalList = indexInfoService.selectGeneralList();
-//        generalList.
-        System.out.println(generalList);
         return generalList;
     }
 }
