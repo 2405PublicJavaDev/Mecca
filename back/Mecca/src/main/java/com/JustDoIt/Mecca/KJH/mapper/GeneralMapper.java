@@ -57,4 +57,7 @@ public interface GeneralMapper {
     List<GeneralComment> getCommentsByGeneralNo(int generalNo);
 
     void updateLikeCount(@Param("gNo") int gNo, @Param("likeCount") int likeCount);
-}
+
+    int getCommentCountByGeneralNo(int gNo);
+
+    List<General> selectGeneralListWithUserInfo(@Param("params") Map<String, Object> params, RowBounds rowBounds);}

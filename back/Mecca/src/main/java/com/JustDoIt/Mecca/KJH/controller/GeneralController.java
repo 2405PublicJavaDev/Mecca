@@ -1,20 +1,23 @@
 package com.JustDoIt.Mecca.KJH.controller;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import com.JustDoIt.Mecca.KJH.service.GeneralService;
 import com.JustDoIt.Mecca.KJH.vo.General;
 import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
 import com.JustDoIt.Mecca.common.Pagination;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/general")
+@Slf4j
 public class GeneralController {
 
     private final GeneralService generalService;
@@ -33,7 +36,7 @@ public class GeneralController {
         int totalCount;
         List<General> generalList;
 
-        // 검색어가 있는지 여부에 따라 갯수 계산
+        // 검색어가 있는지 여부에 따라 총 갯수 계산
         if (searchQuery != null && !searchQuery.isEmpty()) {
             totalCount = generalService.getSearchTotalCount(searchQuery);
         } else {
@@ -47,12 +50,21 @@ public class GeneralController {
         RowBounds rowBounds = new RowBounds(offset, limit);
 
         // 검색어에 따라 다른 메서드 호출
+        Map<String, Object> params = new HashMap<>();
+        params.put("searchQuery", searchQuery != null ? searchQuery : "");
+        params.put("sortBy", sortBy != null ? sortBy : "latest");
         if (searchQuery != null && !searchQuery.isEmpty()) {
             generalList = generalService.searchGeneralList(currentPage, sortBy, searchQuery, rowBounds);
         } else {
-            generalList = generalService.selectGeneralList(currentPage, sortBy, rowBounds);
+            generalList = generalService.selectGeneralListWithUserInfo(params, rowBounds); // 수정된 메서드 호출
         }
 
+        // 각 게시물의 댓글 수를 추가로 조회
+        for (General general : generalList) {
+            int commentCount = generalService.getCommentCountByGeneralNo(general.getgNo());
+            general.setGcCount(commentCount); // 게시물 객체에 댓글 수 설정
+        }
+        log.info(generalList.toString());
         // 모델에 데이터 추가
         model.addAttribute("generalList", generalList);
         model.addAttribute("pagination", pagination);
@@ -113,7 +125,7 @@ public class GeneralController {
     @PostMapping("/comment/insert")
     public String insertComment(GeneralComment comment) {
         comment.setGcWriterEmail("KHuser01@gmail.com");
-        //  입력시간이 defalt SYSDATE로 되어 있는데 작동안함
+        // 입력시간이 default SYSDATE로 되어 있는데 작동하지 않는 경우
         comment.setGcCreatedDate(new Timestamp(System.currentTimeMillis()));
         generalService.addComment(comment);
         return "redirect:/general/view/" + comment.getGcGNo();
@@ -130,10 +142,10 @@ public class GeneralController {
         generalService.updateComment(comment); // 댓글 수정
         return "redirect:/general/view/" + comment.getGcGNo();
     }
+
     @PostMapping("/updateLike")
     public String updateLike(@RequestParam("gNo") int gNo, @RequestParam("likeCount") int likeCount) {
         generalService.updateLikeCount(gNo, likeCount);
         return "redirect:/general/view/" + gNo; // 업데이트 후 게시물 상세 페이지로 리다이렉트
     }
-
 }

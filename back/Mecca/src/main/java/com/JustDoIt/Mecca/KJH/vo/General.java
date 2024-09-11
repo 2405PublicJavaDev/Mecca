@@ -20,4 +20,18 @@ public class General {
     private Date gCreatedDate;
     private int gView;
     private int gLike;
+    private int gcCount;
+    private int gStar;
+
+    public void setGcCount(int commentCount) {
+        this.gcCount = commentCount;
+    }
+
+    public int getgNo() {
+        return gNo;
+    }
+
+    public String getGNo() {
+        return String.valueOf(gNo);
+    }
 }

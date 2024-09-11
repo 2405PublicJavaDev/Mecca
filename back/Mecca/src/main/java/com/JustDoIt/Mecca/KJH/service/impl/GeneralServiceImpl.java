@@ -55,16 +55,14 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<General> searchGeneralList(int currentPage, String sortBy, String searchQuery, RowBounds rowBounds) {
         Map<String, Object> params = new HashMap<>();
-        params.put("currentPage", currentPage);
-        params.put("sortBy", sortBy);
         params.put("searchQuery", searchQuery);
+        params.put("sortBy", sortBy);
         return generalMapper.searchGeneralList(params, rowBounds);
     }
 
     @Override
     public List<General> selectGeneralList(int currentPage, String sortBy, RowBounds rowBounds) {
         Map<String, Object> params = new HashMap<>();
-        params.put("currentPage", currentPage);
         params.put("sortBy", sortBy);
         return generalMapper.selectGeneralList(params, rowBounds);
     }
@@ -107,5 +105,15 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public void updateLikeCount(int gNo, int likeCount) {
         generalMapper.updateLikeCount(gNo, likeCount);
+    }
+
+    @Override
+    public int getCommentCountByGeneralNo(int gNo) {
+        return generalMapper.getCommentCountByGeneralNo(gNo);
+    }
+
+    @Override
+    public List<General> selectGeneralListWithUserInfo(Map<String, Object> params, RowBounds rowBounds) {
+        return generalMapper.selectGeneralListWithUserInfo(params, rowBounds);
     }
 }

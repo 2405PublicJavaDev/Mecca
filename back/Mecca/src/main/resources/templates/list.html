@@ -2,6 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>List</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    .pagination ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+
+    .pagination ul li {
+      margin-right: 10px; /* 각 페이지 번호 사이의 간격 */
+    }
+
+    .pagination ul li a {
+      text-decoration: none;
+      padding: 5px 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      color: #333;
+    }
+
+    .pagination ul li a.active {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+  </style>
 </head>
 <body>
 <h1>게시물 목록</h1>
@@ -30,6 +75,8 @@
     <th>작성일</th>
     <th>조회수</th>
     <th>좋아요</th>
+    <th>댓글 수</th> <!-- 댓글 수 열 추가 -->
+    <th>별점</th> <!-- 별점 열 추가 -->
   </tr>
   </thead>
   <tbody>
@@ -42,42 +89,13 @@
     <td th:text="${#dates.format(general.gCreatedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
     <td th:text="${general.gView}"></td>
     <td th:text="${general.gLike}"></td>
+    <td th:text="${general.gcCount}"></td> <!-- 댓글 수 데이터 추가 -->
+    <td th:text="${general.gStar}"></td> <!-- 별점 데이터 추가 -->
   </tr>
   </tbody>
 </table>
 
 <!-- 페이지네이션 -->
-<style>
-  table {
-    text-align: center;
-  }
-
-  .pagination ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-  }
-
-  .pagination ul li {
-    margin-right: 10px; /* 각 페이지 번호 사이의 간격 */
-  }
-
-  .pagination ul li a {
-    text-decoration: none;
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    color: #333;
-  }
-
-  .pagination ul li a.active {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
-  }
-</style>
-
 <div class="pagination">
   <ul>
     <!-- 이전 페이지 링크 -->

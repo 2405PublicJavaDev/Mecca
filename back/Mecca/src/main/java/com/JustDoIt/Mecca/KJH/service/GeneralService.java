@@ -5,6 +5,7 @@ import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GeneralService {
 
@@ -19,7 +20,7 @@ public interface GeneralService {
     void deleteGeneral(int generalNo);
 
     int getSearchTotalCount(String searchQuery);
-    // 게시물 목록 조회 메서드 수정
+
     List<General> searchGeneralList(int currentPage, String sortBy, String searchQuery, RowBounds rowBounds);
 
     List<General> selectGeneralList(int currentPage, String sortBy, RowBounds rowBounds);
@@ -39,4 +40,8 @@ public interface GeneralService {
     void deleteComment(int gcNo);
 
     void updateLikeCount(int gNo, int likeCount);
+
+    int getCommentCountByGeneralNo(int gNo);
+
+    List<General> selectGeneralListWithUserInfo(Map<String, Object> params, RowBounds rowBounds);
 }

@@ -36,33 +36,47 @@
         FROM GENERAL_TBL
         WHERE G_TITLE LIKE '%' || #{searchQuery} || '%'
     </select>
+
     <!-- 페이지네이션 및 정렬 적용된 게시물 목록 조회 쿼리 -->
     <select id="searchGeneralList" parameterType="map" resultType="com.JustDoIt.Mecca.KJH.vo.General">
-        SELECT *
-        FROM GENERAL_TBL
-        WHERE G_TITLE LIKE '%' || #{searchQuery} || '%'
-        ORDER BY
+        SELECT * FROM (
+        SELECT g.*, u.U_NICKNAME AS gNickname, u.U_STAR AS gStar,
+        ROW_NUMBER() OVER (ORDER BY
         <choose>
-            <when test="sortBy == 'latest'">G_CREATED_DATE DESC</when>
-            <when test="sortBy == 'view'">G_VIEW DESC</when>
-            <when test="sortBy == 'like'">G_LIKE DESC</when>
-            <otherwise>G_NO DESC</otherwise>
+            <when test="sortBy == 'latest'">g.G_CREATED_DATE DESC</when>
+            <when test="sortBy == 'view'">g.G_VIEW DESC</when>
+            <when test="sortBy == 'like'">g.G_LIKE DESC</when>
+            <otherwise>g.G_NO DESC</otherwise>
         </choose>
+        ) AS rn
+        FROM GENERAL_TBL g
+        JOIN USER_TBL u ON g.G_WRITER_EMAIL = u.U_EMAIL
+        WHERE g.G_TITLE LIKE '%' || #{searchQuery} || '%'
+        )
+        WHERE rn BETWEEN #{offset + 1} AND #{offset + limit}
     </select>
 
     <!-- 전체 게시물 수를 조회하는 쿼리 -->
     <select id="getTotalCount" resultType="int">
         SELECT COUNT(*) FROM GENERAL_TBL
     </select>
+
     <!-- 페이지에 맞는 게시물 목록을 조회하는 쿼리 -->
-    <select id="selectGeneralList" parameterType="Map" resultType="com.JustDoIt.Mecca.KJH.vo.General">
-        SELECT * FROM GENERAL_TBL ORDER BY
+    <select id="selectGeneralList" parameterType="map" resultType="com.JustDoIt.Mecca.KJH.vo.General">
+        SELECT * FROM (
+        SELECT g.*, u.U_NICKNAME AS gNickname, u.U_STAR AS gStar,
+        ROW_NUMBER() OVER (ORDER BY
         <choose>
-            <when test="sortBy == 'latest'">G_CREATED_DATE DESC</when>
-            <when test="sortBy == 'view'">G_VIEW DESC</when>
-            <when test="sortBy == 'like'">G_LIKE DESC</when>
-            <otherwise>G_NO DESC</otherwise>
+            <when test="sortBy == 'latest'">g.G_CREATED_DATE DESC</when>
+            <when test="sortBy == 'view'">g.G_VIEW DESC</when>
+            <when test="sortBy == 'like'">g.G_LIKE DESC</when>
+            <otherwise>g.G_NO DESC</otherwise>
         </choose>
+        ) AS rn
+        FROM GENERAL_TBL g
+        JOIN USER_TBL u ON g.G_WRITER_EMAIL = u.U_EMAIL
+        )
+        WHERE rn BETWEEN #{offset + 1} AND #{offset + limit}
     </select>
 
     <!-- 게시물의 조회수를 1 증가시키는 쿼리 -->
@@ -103,9 +117,39 @@
         ORDER BY GC_CREATED_DATE DESC
     </select>
 
-    <update id="updateLikeCount">
+    <update id="updateLikeCount" parameterType="map">
         UPDATE GENERAL_TBL
         SET G_LIKE = #{likeCount}
         WHERE G_NO = #{gNo}
     </update>
+
+    <!-- 댓글 수를 조회하는 쿼리 -->
+    <select id="getCommentCountByGeneralNo" parameterType="int" resultType="int">
+        SELECT COUNT(GC_NO) AS gcCount
+        FROM GENERAL_COMMENT_TBL
+        WHERE GC_G_NO = #{gNo}
+    </select>
+    <select id="selectGeneralListWithUserInfo" parameterType="map" resultType="com.JustDoIt.Mecca.KJH.vo.General">
+        SELECT g.*, u.U_NICKNAME AS gNickname, u.U_STAR AS gStar
+        FROM GENERAL_TBL g
+        JOIN USER_TBL u ON g.G_WRITER_EMAIL = u.U_EMAIL
+        WHERE 1 = 1
+        <if test="params.searchQuery != null and params.searchQuery != ''">
+            AND g.G_TITLE LIKE '%' || #{params.searchQuery} || '%'
+        </if>
+        <choose>
+            <when test="params.sortBy == 'latest'">
+                ORDER BY g.G_CREATED_DATE DESC
+            </when>
+            <when test="params.sortBy == 'view'">
+                ORDER BY g.G_VIEW DESC
+            </when>
+            <when test="params.sortBy == 'like'">
+                ORDER BY g.G_LIKE DESC
+            </when>
+            <otherwise>
+                ORDER BY g.G_NO DESC
+            </otherwise>
+        </choose>
+    </select>
 </mapper>
