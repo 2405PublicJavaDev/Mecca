@@ -1,17 +1,24 @@
 package com.JustDoIt.Mecca.LCM.controller;
 
+import com.JustDoIt.Mecca.KJH.service.GeneralService;
+import com.JustDoIt.Mecca.KJH.vo.General;
+import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
 import com.JustDoIt.Mecca.LCM.service.AdminService;
 import com.JustDoIt.Mecca.LCM.service.MailService;
 import com.JustDoIt.Mecca.LCM.service.ReportService;
 import com.JustDoIt.Mecca.LCM.vo.Report;
+import com.JustDoIt.Mecca.OJS.vo.Matching;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +31,16 @@ public class AdminController {
     private MailService mailService;
     private ReportService supportService;
     private ReportService reportService;
+    private GeneralService generalService;
 
     public AdminController() {}
     @Autowired
-    public AdminController(AdminService adminService, MailService mailService, ReportService supportService, ReportService reportService) {
+    public AdminController(AdminService adminService, MailService mailService, ReportService supportService, ReportService reportService,GeneralService generalService) {
         this.adminService = adminService;
         this.mailService = mailService;
         this.supportService = supportService;
         this.reportService = reportService;
+        this.generalService = generalService;
     }
 
     @GetMapping("/report")
@@ -43,12 +52,30 @@ public class AdminController {
 //        System.out.println("comparisonResult: " + comparisonResult);
         return "LCM/report";
     }
+    @PostMapping("/report")
+    public String reportdate(@RequestParam("report") String report
+                            ,@RequestParam("reporttext") String reporttext,
+                             HttpSession session) {
+
+        if(report.equals("기타")){
+            report=reporttext;
+        }
+        String noticeimpo="자유:123";
+        Report redate =new Report();
+        redate.setROption(report);
+        redate.setRObjectNo(noticeimpo);
+        redate.setRWriterEmail((String) session.getAttribute("uEmail"));
+        int result=adminService.insertreport(redate);
+        return "LCM/report";
+    }
+
+
 //    @RequestParam("uEmail") String uEmail, @RequestParam("punishmentPeriod")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME
     @PostMapping("/punishment")
     public String updateUserStatus(@RequestBody Map<String, String> requestBody) throws MessagingException {
         String uEmail = requestBody.get("uEmail");
         String punishmentPeriod = requestBody.get("punishmentPeriod");
-        adminService.updateUserStatus(uEmail, Timestamp.valueOf(punishmentPeriod));
+        adminService.updateUserStatus(uEmail, Date.valueOf(punishmentPeriod));
         mailService.sendPunishmentEmail(uEmail, punishmentPeriod);
         return "LCM/report";
     }
@@ -81,7 +108,7 @@ public class AdminController {
 
         Report report = new Report();
         report.setRWriterEmail((String) reportData.get("rWriterEmail"));
-        report.setRObjectNo(Integer.parseInt(reportData.get("rObjectNo").toString()));
+        report.setRObjectNo((reportData.get("rObjectNo").toString()));
         report.setROption((String) reportData.get("rOption"));
 
         // 이메일이 null인 경우에 대한 체크
@@ -106,5 +133,75 @@ public class AdminController {
         model.addAttribute("rList", rList);
 
         return "LCM/delete";
+    }
+    @GetMapping("/report/detail/{reportno}")
+    public String showdetail(Model model,@PathVariable("reportno") int reportno){
+        Report rdate=adminService.selectOne(reportno);
+        String noticeim[]=rdate.getRObjectNo().split(":");
+
+        int noticeNo= Integer.parseInt(noticeim[1]);
+        String notice = "";
+        String writer ="";
+        //게시판 조회
+        if(noticeim[0].equals("자유")){
+            General general=adminService.selectnotice(noticeNo);
+            if(general==null){
+                notice="";
+                writer="";
+            }else {
+                notice = general.getGContent();
+                writer = general.getGWriterEmail();
+            }
+        }else if(noticeim[0].equals("매칭")){
+            Matching matching=adminService.selectmatching(noticeNo);
+            if(matching==null){
+                notice="";
+                writer="";
+            }else {
+                notice=matching.getMContent();
+                writer=matching.getMWriterEmail();
+            }
+
+        }else if(noticeim[0]=="댓글"){
+            GeneralComment comment=adminService.selectcomment(noticeNo);
+            if(comment==null){
+                notice="";
+                writer="";
+            }else {
+                notice=comment.getGcContent();
+                writer=comment.getGcWriterEmail();
+            }
+
+        }
+
+        model.addAttribute("rdate", rdate);
+        model.addAttribute("notice", notice);
+        model.addAttribute("writer", writer);
+        return "LCM/detail";
+    }
+    @GetMapping("/punishment/{email}/{datetime}/{status}/{reportno}")
+    public String punishmentuser(@PathVariable("datetime") LocalDate datetime,
+                                   @PathVariable("email") String email,
+                                 @PathVariable("status") int status,
+                                 @PathVariable("reportno")int reportno) throws MessagingException {
+        String uEmail = email;
+        Date punishmentPeriod = Date.valueOf(datetime);
+        adminService.updateUserStatus(uEmail, punishmentPeriod);
+
+        if(status==1) {
+            Report rdate = adminService.selectOne(reportno);
+            String noticeim[] = rdate.getRObjectNo().split(":");
+            int noticeNo = Integer.parseInt(noticeim[1]);
+            //삭제
+            if (noticeim[0].equals("자유")) {
+                generalService.deleteGeneral(noticeNo);
+            } else if (noticeim[0].equals("매칭")) {
+                adminService.deleteMatching(noticeNo);
+            }else if(noticeim[0]=="댓글"){
+                generalService.deleteComment(noticeNo);
+            }
+        }
+        adminService.updatereportstatus(reportno);
+        return "redirect:/api/admin/report/delete";
     }
 }

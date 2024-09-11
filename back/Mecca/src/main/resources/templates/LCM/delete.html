@@ -3,24 +3,45 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
+        <style>
+            #dibody{
+                /* 				background-color: green; */
+                text-align: center;
+
+            }
+            #main{
+                display: inline-block;
+                width: 60%;
+
+            }
+            #di1{
+                float: left;
+
+            }
+            #di2{
+                float: left;
+            }
+        </style>
     </head>
     <body>
-    <table>
-        <tr>
-            <th>넘버</th>
-            <th>이메일</th>
-            <th>글,댓글</th>
-            <th>옵션</th>
-            <th>시간</th>
+    <div id="dibody">
+        <h1>신고</h1>
+    <div id="main" th:each="report:${rList}">
+        <div id="di1">[[${report.rWriterEmail}]] [[${report.rCreatedDate}]]</div>
+        <br>
+        <div id="di2"><a href="javascript:void(0)" th:onclick="showdetail([[${report.rNo}]]);">[[${report.rOption}]]</a></div>
 
-        </tr>
-        <tr th:each="report:${rList}">
-            <td>[[${report.rNo}]]</td>
-            <td>[[${report.rWriterEmail}]]</td>
-            <td>[[${report.rObjectNo}]]</td>
-            <td>[[${report.rOption}]]</td>
-            <td>[[${report.rCreatedDate}]]</td>
-        </tr>
-    </table>
+        <br>
+        <hr>
+    </div>
+
+    </div>
+    <script>
+        function showdetail(a){
+            location.href="/api/admin/report/detail/"+a
+
+        }
+
+    </script>
     </body>
 </html>

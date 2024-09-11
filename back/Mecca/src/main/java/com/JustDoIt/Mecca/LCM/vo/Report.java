@@ -15,7 +15,7 @@ public class Report {
     private int rNo;
     private String rWriterEmail;
     private String rNickname;
-    private int rObjectNo;
+    private String rObjectNo;
     private String rOption;
     private Date rCreatedDate;
 }
