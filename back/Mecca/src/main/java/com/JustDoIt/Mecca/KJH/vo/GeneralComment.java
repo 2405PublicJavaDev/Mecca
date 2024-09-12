@@ -18,4 +18,5 @@ public class GeneralComment {
     private String gcNickname;
     private String gcContent;
     private Date gcCreatedDate;
+    private Integer gcParentNo; // 부모 댓글 번호 추가
 }

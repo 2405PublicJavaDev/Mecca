@@ -13,29 +13,22 @@ public interface GeneralService {
 
     General selectGeneralOne(int generalNo);
 
-    void insertGeneral(String gWriterEmail, String gTitle, String gContent);
-
     int updateGeneral(General general);
 
     void deleteGeneral(int generalNo);
 
     int getSearchTotalCount(String searchQuery);
 
-    List<General> searchGeneralList(int currentPage, String sortBy, String searchQuery, RowBounds rowBounds);
-
-    List<General> selectGeneralList(int currentPage, String sortBy, RowBounds rowBounds);
-
+    List<General> searchGeneralList(Map<String, Object> params);
     void incrementViewCount(int generalNo);
 
     void addComment(GeneralComment comment);
 
     List<GeneralComment> getCommentsByGeneralNo(int gNo, RowBounds rowBounds);
 
-    void removeComment(int gcNo);
+    void updateComment(GeneralComment comment);
 
     List<GeneralComment> getCommentsByGeneralNo(int generalNo);
-
-    void updateComment(GeneralComment comment);
 
     void deleteComment(int gcNo);
 
@@ -44,4 +37,9 @@ public interface GeneralService {
     int getCommentCountByGeneralNo(int gNo);
 
     List<General> selectGeneralListWithUserInfo(Map<String, Object> params, RowBounds rowBounds);
+
+    void insertGeneral(General general);
+
+    List<General> selectGeneralList(Map<String, Object> params);
+
 }

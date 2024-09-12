@@ -1,18 +1,19 @@
 package com.JustDoIt.Mecca.KJH.controller;
 
-import com.JustDoIt.Mecca.KJH.service.GeneralService;
-import com.JustDoIt.Mecca.KJH.vo.General;
-import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
-import com.JustDoIt.Mecca.common.Pagination;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.RowBounds;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.JustDoIt.Mecca.KJH.service.GeneralService;
+import com.JustDoIt.Mecca.KJH.vo.General;
+import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
+import com.JustDoIt.Mecca.common.Pagination;
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/general")
@@ -55,7 +56,13 @@ public class GeneralApiController {
         if (searchQuery != null && !searchQuery.isEmpty()) {
             generalList = generalService.searchGeneralList(currentPage, sortBy, searchQuery, rowBounds);
         } else {
-            generalList = generalService.selectGeneralListWithUserInfo(params, rowBounds); // 수정된 메서드 호출
+            generalList = generalService.selectGeneralListWithUserInfo(params, rowBounds);
+        }
+
+        // 각 게시물의 댓글 수를 추가로 조회
+        for (General general : generalList) {
+            int commentCount = generalService.getCommentCountByGeneralNo(general.getGNo());
+            general.setGcCount(commentCount); // 게시물 객체에 댓글 수 설정
         }
 
         Map<String, Object> response = new HashMap<>();
@@ -69,7 +76,6 @@ public class GeneralApiController {
 
     @GetMapping("/view/{generalNo}")
     public Map<String, Object> view(@PathVariable("generalNo") int generalNo) {
-
         generalService.incrementViewCount(generalNo);
 
         General general = generalService.selectGeneralOne(generalNo);
@@ -80,7 +86,12 @@ public class GeneralApiController {
             return response;
         }
 
-        List<GeneralComment> comments = generalService.getCommentsByGeneralNo(generalNo); // 댓글 조회 추가
+        // 페이지네이션 설정 (댓글의 경우 페이지네이션을 적용할 수도 있습니다)
+        int limit = 10; // 예시로 10개 댓글씩 페이지네이션
+        int offset = 0; // 첫 페이지의 경우 0
+        RowBounds rowBounds = new RowBounds(offset, limit);
+
+        List<GeneralComment> comments = generalService.getCommentsByGeneralNo(generalNo, rowBounds); // 댓글 조회
 
         response.put("status", "success");
         response.put("general", general);
@@ -90,11 +101,12 @@ public class GeneralApiController {
     }
 
     @PostMapping("/insert")
-    public void insert(@RequestBody Map<String, String> requestBody) {
-        String gWriterEmail = requestBody.get("gWriterEmail");
-        String gTitle = requestBody.get("gTitle");
-        String gContent = requestBody.get("gContent");
-        generalService.insertGeneral(gWriterEmail, gTitle, gContent);
+    public Map<String, Object> insert(@RequestBody General general) {
+        generalService.insertGeneral(general);
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "General inserted successfully");
+        return response;
     }
 
     @GetMapping("/update/{generalNo}")

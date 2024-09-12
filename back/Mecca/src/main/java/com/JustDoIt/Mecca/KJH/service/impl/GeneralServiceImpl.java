@@ -8,7 +8,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +31,14 @@ public class GeneralServiceImpl implements GeneralService {
         return generalMapper.selectGeneralOne(generalNo);
     }
 
-    @Override
-    public void insertGeneral(String gWriterEmail, String gTitle, String gContent) {
-        generalMapper.insertGeneral(gWriterEmail, gTitle, gContent);
-    }
+//    @Override
+//    public void insertGeneral(String gWriterEmail, String gTitle, String gContent) {
+//        generalMapper.insertGeneral(gWriterEmail, gTitle, gContent);
+//    }
 
     @Override
     public int updateGeneral(General general) {
-        generalMapper.updateGeneral(general);
-        return 0;
+        return generalMapper.updateGeneral(general);
     }
 
     @Override
@@ -54,18 +52,14 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<General> searchGeneralList(int currentPage, String sortBy, String searchQuery, RowBounds rowBounds) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("searchQuery", searchQuery);
-        params.put("sortBy", sortBy);
-        return generalMapper.searchGeneralList(params, rowBounds);
+    public List<General> searchGeneralList(Map<String, Object> params) {
+        return generalMapper.searchGeneralList(params);
     }
 
+
     @Override
-    public List<General> selectGeneralList(int currentPage, String sortBy, RowBounds rowBounds) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("sortBy", sortBy);
-        return generalMapper.selectGeneralList(params, rowBounds);
+    public List<General> selectGeneralList(Map<String, Object> params) {
+        return generalMapper.selectGeneralList(params);
     }
 
     @Override
@@ -79,28 +73,22 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<GeneralComment> getCommentsByGeneralNo(int gNo, RowBounds rowBounds) {
-        return generalMapper.selectCommentsByGeneralNo(gNo, rowBounds);
-    }
-
-    @Override
-    public void removeComment(int gcNo) {
-        generalMapper.deleteComment(gcNo);
+    public List<GeneralComment> getCommentsByGeneralNo(int generalNo, RowBounds rowBounds) {
+        return generalMapper.selectCommentsByGeneralNo(generalNo, rowBounds);
     }
 
     @Override
     public List<GeneralComment> getCommentsByGeneralNo(int generalNo) {
-        return generalMapper.getCommentsByGeneralNo(generalNo);
-    }
-
-    @Override
-    public void updateComment(GeneralComment comment) {
-        generalMapper.updateComment(comment);
+        return List.of(); // 또는 적절한 구현 추가
     }
 
     @Override
     public void deleteComment(int gcNo) {
         generalMapper.deleteComment(gcNo);
+    }
+    @Override
+    public void updateComment(GeneralComment comment) {
+        generalMapper.updateComment(comment);
     }
 
     @Override
@@ -116,5 +104,10 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<General> selectGeneralListWithUserInfo(Map<String, Object> params, RowBounds rowBounds) {
         return generalMapper.selectGeneralListWithUserInfo(params, rowBounds);
+    }
+
+    @Override
+    public void insertGeneral(General general) {
+        generalMapper.insertGeneral(general.getGWriterEmail(), general.getGTitle(), general.getGContent());
     }
 }

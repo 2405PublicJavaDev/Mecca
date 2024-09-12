@@ -4,10 +4,12 @@
 //import java.util.HashMap;
 //import java.util.List;
 //import java.util.Map;
+//
 //import com.JustDoIt.Mecca.KJH.service.GeneralService;
 //import com.JustDoIt.Mecca.KJH.vo.General;
 //import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
 //import com.JustDoIt.Mecca.common.Pagination;
+//
 //import lombok.extern.slf4j.Slf4j;
 //import org.apache.ibatis.session.RowBounds;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +49,25 @@
 //        Pagination pagination = new Pagination(totalCount, currentPage);
 //        int limit = pagination.getBoardLimit();
 //        int offset = (currentPage - 1) * limit;
-//        RowBounds rowBounds = new RowBounds(offset, limit);
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("offset", offset);
+//        params.put("limit", limit);
+//        params.put("searchQuery", searchQuery);
+//        params.put("sortBy", sortBy);
 //
 //        // 검색어에 따라 다른 메서드 호출
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("searchQuery", searchQuery != null ? searchQuery : "");
-//        params.put("sortBy", sortBy != null ? sortBy : "latest");
 //        if (searchQuery != null && !searchQuery.isEmpty()) {
-//            generalList = generalService.searchGeneralList(currentPage, sortBy, searchQuery, rowBounds);
+//            generalList = generalService.searchGeneralList(params);
 //        } else {
-//            generalList = generalService.selectGeneralListWithUserInfo(params, rowBounds); // 수정된 메서드 호출
+//            generalList = generalService.selectGeneralList(params);
 //        }
 //
 //        // 각 게시물의 댓글 수를 추가로 조회
 //        for (General general : generalList) {
-//            int commentCount = generalService.getCommentCountByGeneralNo(general.getgNo());
+//            int commentCount = generalService.getCommentCountByGeneralNo(general.getGNo());
 //            general.setGcCount(commentCount); // 게시물 객체에 댓글 수 설정
 //        }
-//        log.info(generalList.toString());
+//
 //        // 모델에 데이터 추가
 //        model.addAttribute("generalList", generalList);
 //        model.addAttribute("pagination", pagination);
@@ -76,7 +79,6 @@
 //
 //    @GetMapping("/view/{generalNo}")
 //    public String view(@PathVariable("generalNo") int generalNo, Model model) {
-//
 //        generalService.incrementViewCount(generalNo);
 //
 //        General general = generalService.selectGeneralOne(generalNo);
@@ -84,7 +86,13 @@
 //            // 적절한 오류 처리를 할 수 있도록 설정
 //            return "error"; // 예를 들어, 에러 페이지로 리다이렉션
 //        }
-//        List<GeneralComment> comments = generalService.getCommentsByGeneralNo(generalNo); // 댓글 조회 추가
+//
+//        // 페이지네이션 설정 (댓글의 경우 페이지네이션을 적용할 수도 있습니다)
+//        int limit = 10; // 예시로 10개 댓글씩 페이지네이션
+//        int offset = 0; // 첫 페이지의 경우 0
+//        RowBounds rowBounds = new RowBounds(offset, limit);
+//
+//        List<GeneralComment> comments = generalService.getCommentsByGeneralNo(generalNo, rowBounds); // 댓글 조회
 //
 //        model.addAttribute("general", general);
 //        model.addAttribute("comments", comments); // 댓글 목록 모델에 추가
@@ -123,12 +131,18 @@
 //    }
 //
 //    @PostMapping("/comment/insert")
-//    public String insertComment(GeneralComment comment) {
+//    public String insertComment(@RequestParam("gcContent") String gcContent,
+//                                @RequestParam("gcGNo") int gcGNo,
+//                                @RequestParam(value = "gcParentNo", required = false) Integer gcParentNo) {
+//        GeneralComment comment = new GeneralComment();
 //        comment.setGcWriterEmail("KHuser01@gmail.com");
-//        // 입력시간이 default SYSDATE로 되어 있는데 작동하지 않는 경우
+//        comment.setGcContent(gcContent);
+//        comment.setGcGNo(gcGNo);
 //        comment.setGcCreatedDate(new Timestamp(System.currentTimeMillis()));
+//        comment.setGcParentNo(gcParentNo); // 부모 댓글 번호 설정
+//
 //        generalService.addComment(comment);
-//        return "redirect:/general/view/" + comment.getGcGNo();
+//        return "redirect:/general/view/" + gcGNo;
 //    }
 //
 //    @PostMapping("/comment/delete/{gcNo}")
