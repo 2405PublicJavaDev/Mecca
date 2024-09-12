@@ -99,4 +99,20 @@ public interface MatchingService {
      * @return
      */
     UserProfile getprofile(String id) throws IOException;
+    /**
+     * 매칭 수정 
+     * memberId
+     * matching
+     *
+     * @return
+     */
+    void updatematch(Matching updatematch);
+    /**
+     * 매칭 삭제
+     * memberId
+     * matching
+     *
+     * @return
+     */
+    void matchdelete(Integer matchingNo);
 }

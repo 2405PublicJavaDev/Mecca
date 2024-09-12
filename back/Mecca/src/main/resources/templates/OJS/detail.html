@@ -47,7 +47,9 @@
 		}
 	</style>
 	</head>
+
 	<body>
+	<form action="/api/matching/update" method="get">
 		<div id="di1"><img id="im1"th:src="@{/profile/{email}/image(email=${profile.email})}" alt="Profile Image" /></div>
 		<h3>[[${match.mNickname}]]</h3>
 		<br><br><br><br><br><hr>
@@ -62,8 +64,21 @@
 		<h3>내용</h3>
 		<div>[[${match.mContent}]]</div>
 		<hr>
-		<button th:onclick="together([[${match.mCurrentParty}]],[[${match.mMaxParty}]],[[${match.mNo}]],[[${match.mWriterEmail}]],[[${mainId}]],[[${sum}]]);">같이게임하기</button>
-		<input type="hidden" id="endcheck" th:value="${match.mStatus}">
+		<button type="button" th:onclick="together([[${match.mCurrentParty}]],[[${match.mMaxParty}]],[[${match.mNo}]],[[${match.mWriterEmail}]],[[${mainId}]],[[${sum}]]);">같이게임하기</button>
+		<br><br>
+		<div th:if="${match.mWriterEmail}==${mainId}">
+			<button type="submit">수정하기</button>
+			<button type="button" th:onclick="deletematch([[${match.mNo}]])">삭제하기</button>
+		</div>
+			<input type="hidden" id="endcheck" th:value="${match.mStatus}">
+		<input type="hidden" name="mNo" th:value="${match.mNo}"/>
+		<input type="hidden" name="mNickname" th:value="${match.mNickname}"/>
+		<input type="hidden" name="mGenre" th:value="${match.mGenre}"/>
+		<input type="hidden" name="mTag" th:value="${match.mTag}"/>
+		<input type="hidden" name="mTierOrLevel" th:value="${match.mTierOrLevel}"/>
+		<input type="hidden" name="mMaxParty" th:value="${match.mMaxParty}"/>
+		<input type="hidden" name="mContent" th:value="${match.mContent}"/>
+	</form>
 
 	<script>
 
@@ -95,6 +110,9 @@
 
 			}
 			}
+		}
+		function deletematch(a){
+			location.href="/api/matching/delete?matchingNo="+a
 		}
 
 	</script>

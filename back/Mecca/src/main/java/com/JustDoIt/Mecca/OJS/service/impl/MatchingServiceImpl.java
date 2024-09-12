@@ -110,4 +110,14 @@ public class MatchingServiceImpl implements MatchingService {
         UserProfile user=mapper.getprofile(id);
         return user;
     }
+
+    @Override
+    public void updatematch(Matching updatematch) {
+        mapper.updatematch(updatematch);
+    }
+
+    @Override
+    public void matchdelete(Integer matchingNo) {
+        mapper.matchdelete(matchingNo);
+    }
 }

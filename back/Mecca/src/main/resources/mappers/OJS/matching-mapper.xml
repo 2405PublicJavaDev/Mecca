@@ -81,4 +81,12 @@
     <select id="getprofile">
         SELECT * FROM USER_PROFILE WHERE EMAIL=#{id}
     </select>
+    <update id="updatematch">
+        UPDATE MATCHING_TBL SET M_NICKNAME=#{mNickname}, M_GENRE=#{mGenre},M_TAG=#{mTag},M_TIER_OR_LEVEL=#{mTierOrLevel},M_MAX_PARTY=#{mMaxParty},M_CONTENT=#{mContent} WHERE M_NO=#{mNo}
+    </update>
+    <delete id="matchdelete">
+        DELETE MATCHING_TBL WHERE M_NO=#{matchingNo}
+    </delete>
+
+
 </mapper>

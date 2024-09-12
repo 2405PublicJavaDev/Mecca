@@ -43,6 +43,7 @@ public class MatchingController {
         int count2=sService.checkgame((String)session.getAttribute("uEmail"));
         int sum=count+count2;
         model.addAttribute("sum",sum);
+        model.addAttribute("mainid",session.getAttribute("uEmail"));
         return "OJS/matchingWrite";
     }
     @ResponseBody
@@ -228,6 +229,38 @@ public class MatchingController {
 
         return "redirect:/api/matching/requestlist?MemberId="+(String)session.getAttribute("uEmail");
     }
+    @GetMapping("/update")
+    public String showmatchupdate(@ModelAttribute Matching matching,
+                              Model model){
+        System.out.println("matching:"+matching.toString());
+        model.addAttribute("matching",matching);
+        return "/OJS/update";
+    }
+    @PostMapping("/update")
+    public String matchupdate(@RequestParam(value="matching") String[] matching,
+                              Model model,
+                              Matching updatematch,HttpSession session){
+        System.out.println(matching.toString());
+        updatematch.setMWriterEmail((String) session.getAttribute("uEmail"));
+        updatematch.setMGenre(matching[0]);
+        updatematch.setMTag(matching[1]);
+        updatematch.setMNickname(matching[2]);
+        updatematch.setMTierOrLevel(matching[3]);
+        updatematch.setMMaxParty(Integer.parseInt(matching[4]));
+        updatematch.setMContent(matching[5]);
+        updatematch.setMNo(Integer.parseInt(matching[6]));
+        mService.updatematch(updatematch);
+
+        return "/OJS/update";
+    }
+    @GetMapping("/delete")
+    public String matchdelete(@RequestParam("matchingNo") Integer matchingNo){
+        System.out.println("matchingNo:"+matchingNo);
+        mService.matchdelete(matchingNo);
+        return "OJS/close";
+    }
+
+
 
 
 

@@ -39,4 +39,8 @@ public interface MatchingMapper {
     void updateprofile(byte[] profileImage,String email);
 
     UserProfile getprofile(String id);
+
+    void updatematch(Matching updatematch);
+
+    void matchdelete(Integer matchingNo);
 }

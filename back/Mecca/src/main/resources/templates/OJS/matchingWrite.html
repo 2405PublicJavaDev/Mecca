@@ -1,127 +1,151 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://thymeleaf.org">
-	<head>
+<head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>게임 매칭 등록</title>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-		<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/main.css">
 	<style type="text/css">
-		body{
-			width:500px;
-			height:400px;
-			background-repeat: no-repeat;
-			background-size: cover;
+		body {
+			font-family: 'Arial', sans-serif;
+			width: 100%;
+			max-width: 500px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #f0f0f0;
+			color: #333;
+			box-sizing: border-box;
+		}
+		h1 {
+			color: #2c3e50;
 			text-align: center;
-			
+			margin-bottom: 30px;
 		}
-		div{
-			margin: 10px;
-
-
+		form {
+			background-color: white;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 		}
-		input{
-			width: 300px;
+		div {
+			margin: 15px 0;
+			text-align: left;
 		}
-		small{
-			float: left;
-			margin-left: 90px;
-			font-size: x-small;
-			color: red;
-
+		input, select {
+			width: 100%;
+			padding: 10px;
+			margin-top: 5px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			box-sizing: border-box;
 		}
-		
-	
+		small {
+			display: block;
+			color: #e74c3c;
+			font-size: 12px;
+			margin-top: 5px;
+		}
+		button {
+			width: 100%;
+			padding: 10px;
+			background-color: #3498db;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+			margin-top: 20px;
+		}
+		button:hover {
+			background-color: #2980b9;
+		}
 	</style>
-	</head>
-	<body>
+</head>
+<body>
+<input type="hidden" th:value="${sum}" class="co">
+<input type="hidden" th:value="${mainid}" id="mainid">
+
+<div th:if="${sum}==0">
+	<h1>함께 즐기수록 재밌는 게임</h1>
+	<form>
+		<div>
+			<label for="matchingCatagory">장르</label>
+			<input type="text" name="matchingCatagory" id="matchingCatagory" placeholder="장르를 선택해주세요">
+			<small>장르를 필수로 선택해야 합니다.</small>
+		</div>
+		<div>
+			<label for="matchingGame">게임</label>
+			<input type="text" name="matchingGame" id="matchingGame" placeholder="태그를 입력해주세요.">
+			<small>최소 1개가 필요합니다.</small>
+		</div>
+		<div>
+			<label for="matchingId">게임닉네임</label>
+			<input type="text" name="matchingId" id="matchingId" placeholder="게임 닉네임을 입력해주세요">
+			<small>실제게임 닉네임을 입력하세요</small>
+		</div>
+		<div>
+			<label for="matchingGrade">게임 등급</label>
+			<input type="text" name="matchingGrade" id="matchingGrade" placeholder="레벨 또는 티어를 입력해주세요.">
+			<small>티어, 또는 레벨을 입력하세요</small>
+		</div>
+		<div>
+			<label for="matchingCount">인원수</label>
+			<input type="number" name="matchingCount" id="matchingCount" placeholder="인원을 선택해주세요">
+			<small>인원수는 필수로 선택해야 합니다.</small>
+		</div>
+		<div>
+			<label for="matchingContent">내용</label>
+			<input name="matchingContent" id="matchingContent" placeholder="내용을 입력해주세요">
+		</div>
+		<input type="hidden" name="memberId">
+		<button type="button" onclick="register();">등록</button>
+	</form>
+</div>
+<div th:if="${sum}>0">
 	<input type="hidden" th:value="${sum}" class="co">
-		<div th:if="${sum}==0">
-		<h1>함께 즐기수록 재밌는 게임</h1>
-<!--        method="post" action="register" name="write"-->
-		<form >
-			<div>장  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    르</div><input type="text" name="matchingCatagory" id="matchingCatagory" placeholder="장르를 선택해주세요">
-			<br><small>장르를 필수로 선택해야 합니다.</small><br>
-			<div>게  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    임</div>				<input type="text" name="matchingGame" id="matchingGame" placeholder="태그를 입력해주세요.">
-			<br><small>최소 1개가 필요합니다.</small><br>
-			<div>게임닉네임</div>	 		<input type="text" name="matchingId" id="matchingId" placeholder="게임 닉네임을 입력해주세요"><br>
-			<small>실제게임 닉네임을 입력하세요</small><br>
-			<div>게임&nbsp;&nbsp; 등급</div>	 		<input type="text" name="matchingGrade" id="matchingGrade" placeholder="레벨 또는 티어를 입력해주세요."><br>
-			<small>티어, 또는 레벨을 입력하세요</small><br>
-			<div>인&nbsp;&nbsp;&nbsp;원&nbsp;&nbsp;&nbsp;수</div>		<input type="number" name="matchingCount" id="matchingCount" placeholder="인원을 선택해주세요"><br>
-			<small>인원수는 필수로 선택해야 합니다.</small><br>
-			<div>내  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    용</div>	<input name="matchingContent" id="matchingContent" placeholder="내용을 입력해주세요"><br>
-			<br>
-			<input type="hidden" name="memberId">
-<!--			<input type=hidden name=doclose value=1>-->
+</div>
 
+<script>
+	window.onload = function() {
+		var a = document.querySelector(".co").value;
+		var b = document.querySelector("#mainid").value;
+		console.log(a);
+		console.log(b);
+		if(b==null){
+			console.log(b);
+			alert("로그인하고 이용해주세요");
+			window.close();
+		}
+		if(a > 0) {
+			alert("진행중인 게임이 있습니다.");
+			window.close();
+		}
+	}
 
-            <button onclick="register();">등록</button>
-
-			<!--			if(isset($_POST['doclose']) && $_POST['doclose'] == 1)echo-->
-		</form>
-		</div>
-		<div th:if="${sum}>0">
-			<input type="hidden" th:value="${sum}" class="co">
-		</div>
-<!-- 		onsubmit="okwrite()" -->
-		<script >
-
-			window.onload = function() {
-				var a=document.querySelector(".co").value
-				console.log(a);
-				if(a>0) {
-					alert("진행중인 게임이 있습니다.");
-					window.close();
-				}
+	function register() {
+		var matching = [
+			document.querySelector("#matchingCatagory").value,
+			document.querySelector("#matchingGame").value,
+			document.querySelector("#matchingId").value,
+			document.querySelector("#matchingGrade").value,
+			document.querySelector("#matchingCount").value,
+			document.querySelector("#matchingContent").value
+		];
+		$.ajax({
+			url: "/api/matching/register",
+			data: {"matching": matching},
+			dataType: "json",
+			type: "POST",
+			success: function() {
+				opener.parent.location.reload();
+				window.close();
+			},
+			error: function() {
+				opener.parent.location.reload();
+				window.close();
 			}
-			function register(){
-
-				var matching=[document.querySelector("#matchingCatagory").value
-						,document.querySelector("#matchingGame").value
-					,document.querySelector("#matchingId").value
-					,document.querySelector("#matchingGrade").value
-					,document.querySelector("#matchingCount").value
-					,document.querySelector("#matchingContent").value]
-				$.ajax({
-					url:"/api/matching/register",
-					data:{"matching":matching},
-					dataType:"json",
-					type:"POST",
-					success : function() {
-						opener.parent.location.reload();
-						window.close();
-
-					},
-					error : function(){
-
-						opener.parent.location.reload();
-						window.close();
-					}
-				})
-
-			};
-
-
-
-			// function register(){
-			//     alert("야");
-			//     setTimeout(function register() {
-			//         self.close();
-			//     }, 2500);
-			// }
-
-			// setTimeout(() => {
-			// document.form_write.action="register";
-			//     document.form_write.method="post";
-			//     document.form_write.submit();
-			//
-			//
-
-			//
-			// }, "3000");
-
-		</script>
-	</body>
-
+		});
+	}
+</script>
+</body>
 </html>

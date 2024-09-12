@@ -15,12 +15,12 @@
 			#dibody{
 /* 				background-color: green; */
                 text-align: center;
-				
+
 			}
 			table{
 				margin: 0 auto;
 				border: 1px solid black;
-				
+
 			}
 			body{
 				background-color: aliceblue;
@@ -72,8 +72,8 @@
 
 
         </style>
-        
-        
+
+
     </head>
     <body>
     <div id="dibody">
@@ -85,7 +85,7 @@
             <button th:onclick="situation([[${memberId}]]);">매칭상황</button>
         </div>
         <div id="main" th:each="matching,a:${mList}">
-            <div id="di1">[[${matching.mNickname}]] [[${matching.mCreatedDate}]]</div>
+            <div id="di1"><img>[[${matching.mNickname}]] [[${matching.mCreatedDate}]]</div>
             <br>
             <div id="di2"><a href="javascript:void(0)" th:onclick="showdetail([[${matching.mNo}]]);">[게임] [[${matching.mTag}]] ([[${matching.mTierOrLevel}]]) [[${matching.mContent}]]</a></div>
             <div id="count">인원 [[${matching.mCurrentParty}]]/[[${matching.mMaxParty}]]</div>
@@ -119,36 +119,36 @@
     </div>
 
 
-   
+
     <script>
     	var writeWindow;
     	var a=50;
-    	
+
     	function showdetail(a){
     		var popupW = 500;
     		var popupH = 750;
     		var left = Math.ceil((window.screen.width - popupW)/2);
     		var top = Math.ceil((window.screen.height - popupH)/2);
     		myWindow=window.open("/api/matching/detail/"+a,"pop","width=500,height=750,left="+left+",top="+top+"");
-    		
+
     	}
     	function register(){
     		var popupW = 600;
-    		var popupH = 750;
+    		var popupH = 900;
     		var left = Math.ceil((window.screen.width - popupW)/2);
     		var top = Math.ceil((window.screen.height - popupH)/2);
-    		writeWindow=window.open("/api/matching/register","pop","width=600,height=750,left="+left+",top="+top+"");
+    		writeWindow=window.open("/api/matching/register","pop","width=600,height=900,left="+left+",top="+top+"");
     		console.log(writeWindow);
     	}
         function situation(a){
-            var popupW = 500;
-            var popupH = 600;
+            var popupW = 700;
+            var popupH = 800;
             var left = Math.ceil((window.screen.width - popupW)/2);
             var top = Math.ceil((window.screen.height - popupH)/2);
-            myWindow=window.open("/api/matching/requestlist?MemberId="+a,"pop","width=500,height=700,left="+left+",top="+top+"");
+            myWindow=window.open("/api/matching/requestlist?MemberId="+a,"pop","width=700,height=800,left="+left+",top="+top+"");
 
         }
-    	
+
 
 
     </script>
