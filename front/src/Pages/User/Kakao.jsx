@@ -32,15 +32,19 @@ const Kakao = () => {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-        const response = await axios.post('/api/user/signup', {
+        const check = await axios.post('/api/user/signup/check', {
             uEmail: values.uEmail,
             uNickname: values.uNickname,
         });
-        if (response.data == '') {
+        if (check.data == '') {
+            await axios.post('/api/user/signup/confirm', {
+                uEmail: values.uEmail,
+                uNickname: values.uNickname,
+            });
             nav('/user/signin');
         } else {
             document.querySelector("#signUp").disabled = true;
-            if (response.data.unickname == document.querySelector("#nickname").value) {
+            if (check.data.unickname == document.querySelector("#nickname").value) {
                 document.querySelector("#nicknameError").textContent = "이미 존재하는 닉네임입니다."
                 checkNickname = false;
             }

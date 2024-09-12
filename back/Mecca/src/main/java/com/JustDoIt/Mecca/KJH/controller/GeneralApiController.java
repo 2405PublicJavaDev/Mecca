@@ -51,10 +51,12 @@ public class GeneralApiController {
 
         // 검색어에 따라 다른 메서드 호출
         Map<String, Object> params = new HashMap<>();
-        params.put("searchQuery", searchQuery != null ? searchQuery : "");
-        params.put("sortBy", sortBy != null ? sortBy : "latest");
+        params.put("currentPage", currentPage);
+        params.put("sortBy", sortBy);
+        params.put("searchQuery", searchQuery);
+        params.put("rowBounds", rowBounds);
         if (searchQuery != null && !searchQuery.isEmpty()) {
-            generalList = generalService.searchGeneralList(currentPage, sortBy, searchQuery, rowBounds);
+            generalList = generalService.searchGeneralList(params);
         } else {
             generalList = generalService.selectGeneralListWithUserInfo(params, rowBounds);
         }

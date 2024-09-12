@@ -5,6 +5,7 @@ const MatchingWrite = () => {
         <>
             <div className="absolute left-[487px] top-[146px] w-[466px] flex flex-col items-end justify-start gap-[31px]">
                 <div className="self-stretch text-[32px] leading-[50px] font-['Roboto'] font-bold text-[#000] text-center">함께 즐길수록 재밌는 게임</div>
+
                 <div className="self-stretch flex flex-col items-center justify-center gap-[30px]">
                     <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                         <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">장르</div>
@@ -40,7 +41,7 @@ const MatchingWrite = () => {
                     <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                         <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">내용</div>
                         <div className="self-stretch h-[300px] shrink-0 flex flex-row items-start justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                            <div className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#00000040]">내용을 입력해주세요.</div>
+                            <div className="flex-1 self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#00000040]">내용을 입력해주세요.</div>
                         </div>
                         <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]">최소 5자 이상이어야 합니다.</div>
                     </div>

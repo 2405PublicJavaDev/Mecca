@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 let checkTitle = false;
 let checkContent = false;
 
-const GeneralWrite = () => {
+const SupportWrite = () => {
 
     const nav = useNavigate();
 
@@ -14,9 +14,9 @@ const GeneralWrite = () => {
         uContent: '',
     });
 
-    const handleGeneral = async (e) => {
+    const handleSupport = async (e) => {
         e.preventDefault();
-        await axios.post('/api/general/write', {
+        await axios.post('/api/support/write', {
             uTitle: values.uTitle,
             uContent: values.uContent,
         });
@@ -62,12 +62,12 @@ const GeneralWrite = () => {
     }
 
     function formButtonCheck() {
-        const general = document.querySelector("#general");
+        const support = document.querySelector("#support");
 
         if (checkTitle === true && checkContent === true) {
-            general.disabled = false;
+            support.disabled = false;
         } else {
-            general.disabled = true;
+            support.disabled = true;
         }
     }
 
@@ -76,9 +76,9 @@ const GeneralWrite = () => {
     return (
         <>
             <div className="absolute left-[487px] top-[146px] w-[466px] flex flex-col items-end justify-start gap-[31px]">
-                <div className="self-stretch text-[32px] leading-[50px] font-['Roboto'] font-bold text-[#000] text-center">함께 할 때 더 즐거운 순간</div>
+                <div className="self-stretch text-[32px] leading-[50px] font-['Roboto'] font-bold text-[#000] text-center">MeCCa 문의</div>
 
-                <form onSubmit={handleGeneral} id='form' autoComplete='off' className="self-stretch flex flex-col items-center justify-center gap-[30px]">
+                <form onSubmit={handleSupport} id='form' autoComplete='off' className="self-stretch flex flex-col items-center justify-center gap-[30px]">
                     <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                         <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">제목</div>
                         <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
@@ -95,7 +95,7 @@ const GeneralWrite = () => {
                     </div>
                 </form>
 
-                <button disabled id='general' type='submit' form='form' className="flex flex-row items-center justify-center py-[12px] px-[24px] bg-[#0090f9] rounded-[10px]">
+                <button disabled id='support' type='submit' form='form' className="flex flex-row items-center justify-center py-[12px] px-[24px] bg-[#0090f9] rounded-[10px]">
                     <div className="text-[20px] leading-[20px] font-['Roboto'] font-bold text-[#fff] whitespace-nowrap">등록</div>
                 </button>
             </div>
@@ -103,4 +103,4 @@ const GeneralWrite = () => {
     )
 }
 
-export default GeneralWrite
+export default SupportWrite

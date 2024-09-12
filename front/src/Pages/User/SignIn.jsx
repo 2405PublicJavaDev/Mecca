@@ -25,7 +25,7 @@ const SignIn = () => {
         } else {
             document.querySelector("#signIn").disabled = true;
             document.querySelector("#passwordError").textContent = "이메일 또는 비밀번호가 일치하지 않습니다.";
-            checkEmail = false;
+            checkPassword = false;
         }
     }
 

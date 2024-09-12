@@ -1,7 +1,10 @@
 import { useEffect, useState, EventHandler, ReactNode } from 'react'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
+
+    const nav = useNavigate();
 
     const [generalList, setGeneralList] = useState([]);
     const [matchingList, setMatchingList] = useState([]);
@@ -26,6 +29,12 @@ const Index = () => {
         fetchData();
     }, []);
 
+    const userInfoPage = () => {
+        nav("/user/info");
+    }
+
+
+
     return (
         <>
             <div className="absolute left-[305px] top-[214px] w-[830px] flex flex-wrap items-start justify-start gap-[30px]">
@@ -38,10 +47,10 @@ const Index = () => {
                             generalList.map((item, index) => (
                                 <div key={index} className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                                     <div className="self-stretch flex flex-row items-center justify-start">
-                                        <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
+                                        <button onClick={userInfoPage} className="self-stretch flex flex-row items-center justify-start gap-[5px]">
                                             <img width="20" height="20" src="/assets/Index/Image.png"></img>
                                             <div className="text-[14px] leading-[12px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.U_NICKNAME}</div>
-                                        </div>
+                                        </button>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">&nbsp;•&nbsp;</div>
                                         <div className="self-stretch flex flex-row items-center justify-end">
                                             <img width="12" height="12" src="/assets/Index/Star.png"></img>
@@ -84,10 +93,10 @@ const Index = () => {
                             matchingList.map((item, index) => (
                                 <div key={index} className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                                     <div className="self-stretch flex flex-row items-center justify-start">
-                                        <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
+                                        <button onClick={userInfoPage} className="self-stretch flex flex-row items-center justify-start gap-[5px]">
                                             <img width="20" height="20" src="/assets/Index/Image.png"></img>
                                             <div className="text-[14px] leading-[12px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.U_NICKNAME}</div>
-                                        </div>
+                                        </button>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">&nbsp;•&nbsp;</div>
                                         <div className="self-stretch flex flex-row items-center justify-end">
                                             <img width="12" height="12" src="/assets/Index/Star.png"></img>
@@ -120,10 +129,10 @@ const Index = () => {
                             bestGeneralList.map((item, index) => (
                                 <div key={index} className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                                     <div className="self-stretch flex flex-row items-center justify-start">
-                                        <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
+                                        <button onClick={userInfoPage} className="self-stretch flex flex-row items-center justify-start gap-[5px]">
                                             <img width="20" height="20" src="/assets/Index/Image.png"></img>
                                             <div className="text-[14px] leading-[12px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.U_NICKNAME}</div>
-                                        </div>
+                                        </button>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">&nbsp;•&nbsp;</div>
                                         <div className="self-stretch flex flex-row items-center justify-end">
                                             <img width="12" height="12" src="/assets/Index/Star.png"></img>
@@ -166,10 +175,10 @@ const Index = () => {
                             announceList.map((item, index) => (
                                 <div key={index} className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                                     <div className="self-stretch flex flex-row items-center justify-start">
-                                        <div className="self-stretch flex flex-row items-center justify-start gap-[5px]">
+                                        <button onClick={userInfoPage} className="self-stretch flex flex-row items-center justify-start gap-[5px]">
                                             <img width="20" height="20" src="/assets/Index/Image.png"></img>
                                             <div className="text-[14px] leading-[12px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.U_NICKNAME}</div>
-                                        </div>
+                                        </button>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">&nbsp;•&nbsp;</div>
                                         <div className="self-stretch flex flex-row items-center justify-end">
                                             <img width="12" height="12" src="/assets/Index/Star.png"></img>

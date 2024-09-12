@@ -56,11 +56,14 @@ function Navigator() {
         setToggle({ ...toggle, [name]: !toggle[name] });
     }
 
+    const handleAdminPage = () => {
+        nav("/admin");
+    }
     const handleMyPage = () => {
         nav("/user/mypage");
     }
     const handleActivity = () => {
-        console.log("Activity");
+        nav("/user/info");
     }
     const handleSignOut = async () => {
         await axios.get('/api/user/signout');
@@ -75,7 +78,7 @@ function Navigator() {
 
             <button onClick={indexPage} className="absolute -translate-y-1/2 left-[75px] top-1/2 w-[110px] text-[32px] leading-[40px] font-['Roboto'] font-bold text-[#000] text-center">MeCCa</button>
 
-            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao')) && (
+            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao') && location.pathname != '/support/write') && (
                 <div className="absolute left-[305px] top-[25px] flex flex-row items-center justify-start gap-[30px]">
                     <button onClick={generalPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">자유</button>
                     <button onClick={matchingPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] text-center whitespace-nowrap">매칭</button>
@@ -84,10 +87,10 @@ function Navigator() {
                 </div>
             )}
 
-            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao')) && (
+            {(location.pathname != '/' && !location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao') && location.pathname != '/report/write' && location.pathname != '/general/write' && location.pathname != '/matching/write' && location.pathname != '/announce/write' && location.pathname != '/support/write') && (
                 <div className="absolute -translate-x-1/2 -translate-y-1/2 left-[calc(50%+306px)] top-1/2 w-[218px] flex flex-row items-center justify-start gap-[5px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[30px]">
                     <img width="24" height="24" src="/assets/Index/Icon.png"></img>
-                    <div className="flex-1 text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#00000040]">검색</div>
+                    <input type='text' placeholder='검색' className="flex-1 text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#000] outline-none bg-transparent"></input>
                 </div>
             )}
 
@@ -102,7 +105,7 @@ function Navigator() {
                 </div>
             )}
 
-            {(uEmail != null && location.pathname != '/user/changepassword' && location.pathname != '/user/delete') && (
+            {(uEmail != null && location.pathname != '/user/changepassword' && location.pathname != '/user/delete' && location.pathname != '/support/write') && (
                 <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
                     <button onClick={handleButtonClick} name='chat'>
                         <img width="35" height="35" src="/assets/Index/Chat.png"></img>
@@ -116,11 +119,39 @@ function Navigator() {
                 </div>
             )}
 
-            {toggle.image && (
+            {(toggle.notification) && (
+                <div className="absolute -translate-y-1/2 left-[1235px] top-[115px] flex flex-row items-center justify-start gap-[7px]">
+                    <div className="flex flex-col items-start justify-center gap-[5px] p-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[10px]">
+                        <div className="flex flex-row items-center justify-start gap-[5px]">
+                            <img width="20" height="20" src="/assets/Index/Image.png"></img>
+                            <div className="w-[28px] h-[21px] text-[10px] leading-[18px] font-['Roboto'] text-[#000] flex flex-col justify-center">닉네임</div>
+                            <div className="flex flex-row items-center justify-start gap-[3px]">
+                                <div className="w-[34px] h-[20px] shrink-0 flex flex-row items-center justify-center p-[10px] bg-[#0090f9] border-[1px] border-solid border-[#0090f980] rounded-[10px]">
+                                    <div className="text-[10px] leading-[25px] font-['Roboto'] font-semibold text-[#fff] whitespace-nowrap">수락</div>
+                                </div>
+                                <div className="w-[34px] h-[20px] shrink-0 flex flex-row items-center justify-center p-[10px] bg-[#fff] border-[1px] border-solid border-[#000] rounded-[10px]">
+                                    <div className="text-[10px] leading-[25px] font-['Roboto'] font-medium text-[#000] whitespace-nowrap">거절</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {(toggle.image && uEmail != 'mecca@gmail.com') && (
                 <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
                     <div className="flex flex-col items-start justify-center gap-[10px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[10px]">
                         <button onClick={handleMyPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">프로필</button>
                         <button onClick={handleActivity} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">활동내역</button>
+                        <button onClick={handleSignOut} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">로그아웃</button>
+                    </div>
+                </div>
+            )}
+
+            {(toggle.image && uEmail == 'mecca@gmail.com') && (
+                <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
+                    <div className="flex flex-col items-start justify-center gap-[10px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[10px]">
+                        <button onClick={handleAdminPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">관리</button>
                         <button onClick={handleSignOut} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">로그아웃</button>
                     </div>
                 </div>
