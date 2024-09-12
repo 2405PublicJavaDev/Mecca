@@ -1,10 +1,14 @@
 package com.JustDoIt.Mecca.OJS.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.JustDoIt.Mecca.LCM.vo.User;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
+import com.JustDoIt.Mecca.OJS.vo.UserProfile;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MatchingService {
     /**
@@ -81,4 +85,18 @@ public interface MatchingService {
      * matching
      */
     List<Matching> searchOne(String memberId);
+    /**
+     * 업로드 프로필
+     * memberId
+     * matching
+     */
+    void updateprofile(MultipartFile file,String email) throws IOException;
+    /**
+     * 프로필 가져오기
+     * memberId
+     * matching
+     *
+     * @return
+     */
+    UserProfile getprofile(String id) throws IOException;
 }

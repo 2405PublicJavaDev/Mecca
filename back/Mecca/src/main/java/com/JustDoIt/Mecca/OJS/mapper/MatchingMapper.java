@@ -2,7 +2,9 @@ package com.JustDoIt.Mecca.OJS.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.JustDoIt.Mecca.LCM.vo.User;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
+import com.JustDoIt.Mecca.OJS.vo.UserProfile;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 import org.thymeleaf.exceptions.TemplateInputException;
@@ -33,4 +35,8 @@ public interface MatchingMapper {
     int checkgame(String memberId);
 
     List<Matching> searchOne(String memberId);
+
+    void updateprofile(byte[] profileImage,String email);
+
+    UserProfile getprofile(String id);
 }

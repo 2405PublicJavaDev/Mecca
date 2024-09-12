@@ -3,12 +3,17 @@ package com.JustDoIt.Mecca.OJS.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import com.JustDoIt.Mecca.LCM.vo.User;
 import com.JustDoIt.Mecca.OJS.mapper.MatchingMapper;
 import com.JustDoIt.Mecca.OJS.service.MatchingService;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
+import com.JustDoIt.Mecca.OJS.vo.UserProfile;
+import jakarta.persistence.Lob;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 @Service
 public class MatchingServiceImpl implements MatchingService {
@@ -91,5 +96,18 @@ public class MatchingServiceImpl implements MatchingService {
     public List<Matching> searchOne(String memberId) {
         List<Matching> mList=mapper.searchOne(memberId);
         return mList;
+    }
+
+    @Override
+    public void updateprofile(MultipartFile file,String email) throws IOException {
+        UserProfile profile = new UserProfile();
+        profile.setProfileImage(file.getBytes());
+        mapper.updateprofile(profile.getProfileImage(),email);
+    }
+
+    @Override
+    public UserProfile getprofile(String id) throws IOException {
+        UserProfile user=mapper.getprofile(id);
+        return user;
     }
 }

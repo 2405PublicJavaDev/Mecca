@@ -13,6 +13,10 @@
 			background-size: cover;
 			
 		}
+		#im1{
+			width:150px;
+			height:150px;
+		}
 		button {
 			border-radius: 20px;
 			border: 1px solid deepskyblue;
@@ -44,7 +48,7 @@
 	</style>
 	</head>
 	<body>
-		<div id="di1"></div>
+		<div id="di1"><img id="im1"th:src="@{/profile/{email}/image(email=${profile.email})}" alt="Profile Image" /></div>
 		<h3>[[${match.mNickname}]]</h3>
 		<br><br><br><br><br><hr>
 		<h3>장르</h3>

@@ -75,5 +75,10 @@
         SELECT * FROM MATCHING_TBL WHERE M_WRITER_EMAIL=#{memberId} AND M_STATUS!='END'
     </select>
 
-
+    <insert id="updateprofile">
+        INSERT INTO USER_PROFILE VALUES(#{email},#{profileImage})
+    </insert>
+    <select id="getprofile">
+        SELECT * FROM USER_PROFILE WHERE EMAIL=#{id}
+    </select>
 </mapper>

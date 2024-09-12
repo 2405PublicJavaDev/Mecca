@@ -3,6 +3,7 @@ package com.JustDoIt.Mecca.OJS.controller;
 import com.JustDoIt.Mecca.OJS.service.MatchingService;
 import com.JustDoIt.Mecca.OJS.service.RequestService;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
+import com.JustDoIt.Mecca.OJS.vo.UserProfile;
 import com.JustDoIt.Mecca.common.Pagination;
 import com.JustDoIt.Mecca.OJS.vo.Request;
 import jakarta.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -116,12 +118,18 @@ public class MatchingController {
     @GetMapping("/detail/{matchingNo}")
     public String showDetailForm(@PathVariable("matchingNo") Integer matchingNo,
                                  Model model,
-                                 HttpSession session) {
+                                 HttpSession session) throws IOException {
         int count=mService.checkgame((String)session.getAttribute("uEmail"));
         int count2=sService.checkgame((String)session.getAttribute("uEmail"));
         int sum=count+count2;
 
         Matching match=mService.selectOne(matchingNo);
+        UserProfile profile=mService.getprofile(match.getMWriterEmail());
+        if(profile==null){
+            profile=mService.getprofile("admin");
+        }
+        model.addAttribute("profile", profile);
+
         model.addAttribute("match",match);
         model.addAttribute("mainId",session.getAttribute("uEmail"));
         model.addAttribute("sum",sum);
