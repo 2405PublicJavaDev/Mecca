@@ -14,7 +14,7 @@ const MatchingList = () => {
         nav("/matching/write")
     }
     const matchingDetailPage = () => {
-        nav("/general/detail");
+        nav("/matching/detail");
     }
 
 

@@ -27,6 +27,7 @@ import GeneralDetail from './Pages/General/GeneralDetail';
 
 import MatchingList from './Pages/Matching/MatchingList';
 import MatchingWrite from './Pages/Matching/MatchingWrite';
+import MatchingDetail from './Pages/Matching/MatchingDetail';
 
 import AnnounceList from './Pages/Announce/AnnounceList';
 import AnnounceWrite from './Pages/Announce/AnnounceWrite';
@@ -85,6 +86,7 @@ function App() {
 
         <Route path='/matching/list' element={<MatchingList />} />
         <Route path='/matching/write' element={<MatchingWrite />} />
+        <Route path='/matching/detail' element={<MatchingDetail />} />
 
         <Route path='/announce/list' element={<AnnounceList />} />
         <Route path='/announce/write' element={<AnnounceWrite />} />
