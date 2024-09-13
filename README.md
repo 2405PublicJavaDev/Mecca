@@ -136,10 +136,10 @@ Password-Check를 통하여 입력했던 Password를 다시 한 번 입력하여
 이 때, 최종적으로 확정된 점수를 토대로  상위 5명을 뽑아매칭 게시판 좌측 상단 우수 플레이어에 반영될 수 있도록 합니다. 
 
 # 개발 환경
-+프론트엔드: Reactjs
-+백엔드: Spring Boot
-+개발도구(IDEA): IntelliJ, Visual Studio code
-+형업도구: Git Hub, Git Hub Desktop 
++ 프론트엔드: Reactjs
++ 백엔드: Spring Boot
++ 개발도구(IDEA): IntelliJ, Visual Studio code
++ 형업도구: Git Hub, Git Hub Desktop 
 
 # 작업 일정
 1주차: 기획 회의
