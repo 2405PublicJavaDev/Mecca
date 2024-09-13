@@ -7,18 +7,138 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <style>
         /* 채팅 UI 스타일 */
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        #chat-page {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #ececec;
+        }
+
+        #chat-room {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        #messageArea {
+            flex-grow: 1;
+            padding: 10px;
+            width:440px;
+            height:400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 20px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .message.received {
+            background-color: #f1f0f0;
+            align-self: flex-start;
+        }
+
+        .message .nickname {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        #inputArea {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background-color: #fafafa;
+        }
+
+        #inputArea input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        #inputArea button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        #inputArea button:hover {
+            background-color: #45a049;
+        }
+
+        /* 사용자 입력 폼 */
+        #name-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #name-page input {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        #name-page button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #name-page button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
 <div id="chat-page">
     <div id="chat-room" style="display: none;">
         <div id="messageArea"></div>
-        <input type="text" id="message" placeholder="Enter your message" />
-        <button onclick="sendMessage()">Send</button>
+        <div id="inputArea">
+            <input type="text" id="message" onkeyup="ent(this)" placeholder="메세지를 입력해주세요" />
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </div>
     <div id="name-page">
         <input type="text" id="name" placeholder="Enter your name" th:value="${memberId}"/>
-        <input type="text" id="room-id" placeholder="Enter room ID" th:value="${memberId}" />
+        <input type="text" id="room-id" placeholder="Enter room ID" th:value="${chatid}" />
         <button onclick="connect()">가입</button>
     </div>
 </div>
@@ -39,6 +159,14 @@
             stompClient.connect({}, onConnected, onError);
 
 
+    function ent(){
+        var keycode=event.keyCode;
+        if(keycode==13){
+            sendMessage();
+        }
+    }
+
+
     function onConnected() {
         // 특정 채팅방에 가입
         stompClient.subscribe('/topic/' + roomId, onMessageReceived);
@@ -53,7 +181,7 @@
     }
 
     function onError(error) {
-        // 에러 처리
+        console.log('Could not connect to WebSocket server. Please refresh this page to try again!');
     }
 
     function sendMessage() {
@@ -74,7 +202,8 @@
 
     function onMessageReceived(payload) {
         var message = JSON.parse(payload.body);
-        var messageElement = document.createElement('li');
+        var messageElement = document.createElement('div');
+        messageElement.classList.add('message');
 
         if(message.type === 'JOIN') {
             messageElement.classList.add('event-message');
@@ -89,12 +218,19 @@
             messageElement.appendChild(usernameElement);
         }
 
+        if(message.sender === username) {
+            messageElement.classList.add('sent');
+        } else {
+            messageElement.classList.add('received');
+        }
+
         var textElement = document.createElement('span');
         var messageText = document.createTextNode(message.content);
         textElement.appendChild(messageText);
         messageElement.appendChild(textElement);
 
         document.getElementById("messageArea").appendChild(messageElement);
+        document.getElementById("messageArea").scrollTop = document.getElementById("messageArea").scrollHeight;
     }
 </script>
 </body>

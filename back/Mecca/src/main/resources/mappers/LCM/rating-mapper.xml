@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.JustDoIt.Mecca.LCM.mapper.RatingMapper">
+    <update id="plusRate">
+        UPDATE USER_TBL SET U_STAR = U_STAR + 1 WHERE U_EMAIL = #{uEmail}
+    </update>
+    <update id="minusRate">
+        UPDATE USER_TBL SET U_STAR = U_STAR - 1 WHERE U_EMAIL = #{uEmail} AND U_STAR > 0
+    </update>
+    <update id="resetRate">
+        UPDATE USER_TBL
+        SET U_STAR = 0
+        WHERE U_EMAIL = #{uEmail}
+    </update>
+    <select id="getTopRatedUsers" resultType="map">
+        SELECT * FROM (
+            SELECT *
+            FROM USER_TBL
+            ORDER BY U_STAR DESC
+        )
+        WHERE ROWNUM &lt;= 5
+    </select>
+</mapper>

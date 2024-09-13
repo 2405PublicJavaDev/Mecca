@@ -13,15 +13,109 @@
 			background-size: cover;
 			
 		}
+		#im1{
+			width:150px;
+			height:150px;
+		}
+		button {
+			border-radius: 20px;
+			border: 1px solid deepskyblue;
+			background-color: deepskyblue;
+			color: #FFFFFF;
+			font-size: 12px;
+			font-weight: bold;
+			padding: 12px 45px;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			transition: transform 80ms ease-in;
+		}
+
+		button:active {
+			transform: scale(0.95);
+		}
+
+		button:focus {
+			outline: none;
+		}
+
+		button.ghost {
+			background-color: transparent;
+			border-color: #FFFFFF;
+		}
+		#di1{
+			float: left;
+		}
 	</style>
 	</head>
+
 	<body>
-		<div id="di1"></div>
-		<div>[[${match.matchingCatagory}]]</div>
-		<div>[[${match.matchingId}]]</div>
-		<div>[[${match.matchingGrade}]]</div>
-		<div>[[${match.matchingContent}]]</div>
-		
+	<form action="/api/matching/update" method="get">
+		<div id="di1"><img id="im1"th:src="@{/profile/{email}/image(email=${profile.email})}" alt="Profile Image" /></div>
+		<h3>[[${match.mNickname}]]</h3>
+		<br><br><br><br><br><hr>
+		<h3>장르</h3>
+		<div>[[${match.mGenre}]]</div>
+		<h3>태그(게임명)</h3>
+		<div>[[${match.mTag}]]</div>
+		<h3>티어or레벨</h3>
+		<div>[[${match.mTierOrLevel}]]</div>
+		<h3>인원</h3>
+		<div>[[${match.mCurrentParty}]]/[[${match.mMaxParty}]]</div>
+		<h3>내용</h3>
+		<div>[[${match.mContent}]]</div>
+		<hr>
+		<button type="button" th:onclick="together([[${match.mCurrentParty}]],[[${match.mMaxParty}]],[[${match.mNo}]],[[${match.mWriterEmail}]],[[${mainId}]],[[${sum}]]);">같이게임하기</button>
+		<br><br>
+		<div th:if="${match.mWriterEmail}==${mainId}">
+			<button type="submit">수정하기</button>
+			<button type="button" th:onclick="deletematch([[${match.mNo}]])">삭제하기</button>
+		</div>
+			<input type="hidden" id="endcheck" th:value="${match.mStatus}">
+		<input type="hidden" name="mNo" th:value="${match.mNo}"/>
+		<input type="hidden" name="mNickname" th:value="${match.mNickname}"/>
+		<input type="hidden" name="mGenre" th:value="${match.mGenre}"/>
+		<input type="hidden" name="mTag" th:value="${match.mTag}"/>
+		<input type="hidden" name="mTierOrLevel" th:value="${match.mTierOrLevel}"/>
+		<input type="hidden" name="mMaxParty" th:value="${match.mMaxParty}"/>
+		<input type="hidden" name="mContent" th:value="${match.mContent}"/>
+	</form>
+
+	<script>
+
+		window.onload = function() {
+			var a=document.querySelector("#endcheck").value
+			var b=document.querySelector("#endcheck").value
+			console.log(a);
+			if(a=='END') {
+				alert("종료된 게임입니다.");
+				window.close();
+			}
+		}
+
+		function together(a,b,c,d,e,f) {
+			if(e==null){
+				alert("로그인을 해주세요");
+			}
+			else if(d==e){
+				alert("자기글에 신청할수 없습니다.");
+			}else if(f>0){
+				alert("진행중인게임이있습니다");
+			}else{
+			a++;
+			if (a > b) {
+				alert("인원이 꽉찼습니다.");
+			} else {
+				var mes=window.prompt('신청 메세지를 입력하세요');
+				location.href="/api/matching/application?matchingNo="+c+"&message="+mes;
+
+			}
+			}
+		}
+		function deletematch(a){
+			location.href="/api/matching/delete?matchingNo="+a
+		}
+
+	</script>
 		
 	</body>
 </html>

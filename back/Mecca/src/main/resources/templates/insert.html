@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 style="text-align: center;">게시글 작성</h1>
+    <form id="postForm" action="/general/insert" method="post">
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" id="title" name="gTitle" required>
+        </div>
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="gWriterEmail" required>
+        </div>
+        <div class="form-group">
+            <label for="editor">내용</label>
+            <div id="editor"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit">입력</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            previewStyle: 'vertical',
+            height: '500px',
+            initialValue: '내용을 입력해 주세요.'
+        });
+
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+            let existingHidden = document.getElementById('contentInput');
+            if (existingHidden) {
+                existingHidden.remove();
+            }
+
+            const contentInput = document.createElement('input');
+            contentInput.type = 'hidden';
+            contentInput.name = 'gContent'; // 서버와 매핑되는 필드명
+            contentInput.id = 'contentInput';
+            contentInput.value = editor.getHTML(); // 또는 editor.getMarkdown() 사용 가능
+            this.appendChild(contentInput);
+        });
+    });
+</script>
+</body>
+</html>

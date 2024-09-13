@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            #dibody{
+                /* 				background-color: green; */
+                text-align: center;
+
+            }
+            #main{
+                display: inline-block;
+                width: 60%;
+
+            }
+            #di1{
+                float: left;
+
+            }
+            #di2{
+                float: left;
+            }
+        </style>
+    </head>
+    <body>
+    <div id="dibody">
+        <h1>신고</h1>
+    <div id="main" th:each="report:${rList}">
+        <div id="di1">[[${report.rWriterEmail}]] [[${report.rCreatedDate}]]</div>
+        <br>
+        <div id="di2"><a href="javascript:void(0)" th:onclick="showdetail([[${report.rNo}]]);">[[${report.rOption}]]</a></div>
+
+        <br>
+        <hr>
+    </div>
+
+    </div>
+    <script>
+        function showdetail(a){
+            location.href="/api/admin/report/detail/"+a
+
+        }
+
+    </script>
+    </body>
+</html>

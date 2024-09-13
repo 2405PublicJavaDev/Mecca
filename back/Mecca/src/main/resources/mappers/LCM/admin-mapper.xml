@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.JustDoIt.Mecca.LCM.mapper.AdminMapper">
+
+    <update id="updateUserStatus">
+        UPDATE USER_TBL SET U_STATUS =#{punishmentPeriod} WHERE U_EMAIL = #{uEmail}
+    </update>
+
+    <select id="selectlist">
+        SELECT * FROM REPORT_TBL WHERE R_STATUS=0
+    </select>
+
+    <insert id="insertreport">
+        INSERT INTO REPORT_TBL VALUES(SEQ_REPORT_NO.NEXTVAL,#{rWriterEmail},#{rObjectNo},#{rOption},DEFAULT,DEFAULT)
+    </insert>
+    <select id="selectOne">
+        SELECT * FROM REPORT_TBL WHERE R_NO=#{reportno}
+    </select>
+    <select id="selectnotice">
+        SELECT * FROM GENERAL_TBL WHERE G_NO=#{noticeNo}
+
+    </select>
+    <select id="selectmatching">
+        SELECT * FROM GENERAL_TBL WHERE M_NO=#{noticeNo}
+    </select>
+    <select id="selectcomment">
+        SELECT * FROM GENERAL_COMMENT_TBL WHERE GC_NO=#{noticeNo}
+    </select>
+    <update id="updatereportstatus">
+        UPDATE REPORT_TBL SET R_STATUS=1 WHERE R_NO=#{reportno}
+    </update>
+    <delete id="deleteMatching">
+        DELETE TABLE MATCHING_TBL WHERE M_NO=#{noticeno}
+    </delete>
+
+
+</mapper>

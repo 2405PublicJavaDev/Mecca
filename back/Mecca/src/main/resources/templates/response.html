@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>JSON Response Example</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <!-- jQuery CDN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // AJAX 요청을 보낼 URL과 파라미터
+      const url = '/getFileData';
+      const params = {
+        url: 'https://example.com/image.png',
+        filename: 'image.png'
+      };
+
+      // AJAX GET 요청
+      $.get(url, params, function(data) {
+        // JSON 데이터를 파싱
+        const jsonData = JSON.parse(data);
+
+        // JSON 데이터 출력
+        $('#response').html(
+                `<p>URL: ${jsonData.url}</p>
+                     <p>Filename: ${jsonData.filename}</p>`
+        );
+      });
+    });
+  </script>
+</head>
+<body>
+<h1>서버 응답 데이터</h1>
+<div id="response"></div>
+</body>
+</html>

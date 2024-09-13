@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.JustDoIt.Mecca.OJS.mapper.RequestMapper">
+    <insert id="applicationgame">
+        INSERT INTO MATCHING_REQUEST_TBL
+        VALUES(SEQ_REQUEST_NO.NEXTVAL,#{mrMNo},#{mrWriterEmail},#{mrRequesterEmail},#{mrRequesterNickname},DEFAULT)
+    </insert>
+    <select id="registersearch">
+        SELECT * FROM MATCHING_REQUEST_TBL A JOIN MATCHING_TBL B ON A.MR_M_NO=B.M_NO WHERE MR_WRITER_EMAIL=#{mrWriterEmail}
+    </select>
+    <select id="applicationsearch">
+        SELECT * FROM MATCHING_REQUEST_TBL A JOIN MATCHING_TBL B ON A.MR_M_NO=B.M_NO WHERE MR_REQUESTER_EMAIL=#{mrWriterEmail}
+    </select>
+
+    <update id="accep">
+        UPDATE MATCHING_REQUEST_TBL SET MR_STATUS='ACCEPT' WHERE MR_NO=#{mrNo}
+    </update>
+    <update id="refusal">
+        UPDATE MATCHING_REQUEST_TBL SET MR_STATUS='REJECT' WHERE MR_NO=#{mrNo}
+    </update>
+    <select id="checkgame" resultType="_int">
+        SELECT COUNT(*) FROM MATCHING_REQUEST_TBL A JOIN MATCHING_TBL B on A.MR_M_NO=B.M_NO WHERE MR_REQUESTER_EMAIL=#{memberId} AND M_STATUS!='END'
+    </select>
+    <update id="gamecancel">
+        UPDATE MATCHING_REQUEST_TBL SET MR_STATUS='CANCEL' WHERE MR_NO=#{mNo}
+    </update>
+
+</mapper>

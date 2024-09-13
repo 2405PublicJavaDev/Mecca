@@ -1,6 +1,5 @@
 package com.JustDoIt.Mecca.OJS.vo;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,19 +13,17 @@ import lombok.ToString;
 @Setter 
 @ToString
 public class Matching {
-	private int matchingNo;
-	private String matchingCatagory;
-	private String matchingGame;
-	private String matchingId;
-	private String memberId;
-	private String matchingGrade;
-	private String matchingContent;
-	private int matchingmaxCount;
-	private int matchingminCount;
+	private int mNo;
+	private String mWriterEmail;
+	private String mNickname;
+	private String mGenre;
+	private String mTag;
+	private String mContent;
+	private int mMaxParty;
+	private int mCurrentParty;
+	private String mTierOrLevel;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd HH:mm", timezone="Asia/Seoul")
-	private Timestamp matchingDate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="MM-dd HH:mm", timezone="Asia/Seoul")
-	private Timestamp updateDate;
-	
+	private Date mCreatedDate;
+	private String mStatus;
 	
 }

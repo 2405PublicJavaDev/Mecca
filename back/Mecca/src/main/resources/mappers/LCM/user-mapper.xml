@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.JustDoIt.Mecca.LCM.mapper.UserMapper">
+    <insert id="signUpUser">
+        INSERT INTO USER_TBL VALUES (#{uEmail}, #{uPassword}, #{uNickname}, '프로필 이미지', NULL, DEFAULT, NULL)
+    </insert>
+    <update id="updateUser">
+        UPDATE USER_TBL
+        SET U_NICKNAME = #{uNickname}, U_INTRODUCE = #{uIntroduce}
+        WHERE U_EMAIL = #{uEmail}
+    </update>
+    <update id="updatePassword">
+        UPDATE USER_TBL
+        SET U_PASSWORD = #{uPassword}
+        WHERE U_EMAIL = #{uEmail}
+    </update>
+    <delete id="deleteUser">
+        DELETE FROM USER_TBL WHERE U_EMAIL = #{uEmail}
+    </delete>
+    <select id="signInUser">
+        SELECT * FROM USER_TBL WHERE U_EMAIL = #{uEmail} AND U_PASSWORD = #{uPassword}
+    </select>
+</mapper>

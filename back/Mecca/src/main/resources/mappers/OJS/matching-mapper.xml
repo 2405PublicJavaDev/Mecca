@@ -6,18 +6,87 @@
 <mapper namespace="com.JustDoIt.Mecca.OJS.mapper.MatchingMapper">
     <insert id="insertMatching">
         INSERT INTO MATCHING_TBL
-        VALUES(SEQ_MATCHING_NO.NEXTVAL,#{matchingCatagory},#{matchingGame},#{matchingId},#{memberId},#{matchingGrade},
-               #{matchingContent},#{matchingmaxCount},DEFAULT,DEFAULT,DEFAULT)
+        VALUES(SEQ_MATCHING_NO.NEXTVAL,#{mWriterEmail},#{mNickname},#{mGenre},#{mTag},#{mTierOrLevel},
+               #{mMaxParty},#{mCurrentParty},#{mContent},DEFAULT,DEFAULT)
     </insert>
     <select id="getTotalCount" resultType="_int">
         SELECT COUNT(*) FROM MATCHING_TBL
     </select>
+    <select id="searchList">
+        SELECT * FROM MATCHING_TBL
+        <where>
+            <if test="searchCondition=='all'">
+                M_TAG LIKE '%'||#{searchKeyword}||'%' OR M_CONTENT LIKE '%'||#{searchKeyword}||'%'
+            </if>
+            <if test="searchCondition=='catagory'">
+                M_TAG LIKE '%'||#{searchKeyword}||'%'
+            </if>
+            <if test="searchCondition=='content'">
+                M_CONTENT LIKE '%'||#{searchKeyword}||'%'
+            </if>
+
+        </where>
+            ORDER BY M_NO DESC
+
+
+    </select>
+    <select id="getsearchTotalCount" resultType="_int">
+        SELECT COUNT(*) FROM MATCHING_TBL
+        <where>
+            <if test="searchCondition=='all'">
+                M_TAG LIKE '%'||#{searchKeyword}||'%' OR M_CONTENT LIKE '%'||#{searchKeyword}||'%'
+            </if>
+            <if test="searchCondition=='catagory'">
+                M_TAG LIKE '%'||#{searchKeyword}||'%'
+            </if>
+            <if test="searchCondition=='content'">
+                M_CONTENT LIKE '%'||#{searchKeyword}||'%'
+            </if>
+
+        </where>
+        ORDER BY M_NO DESC
+
+
+    </select>
 
     <select id="selectList">
-        SELECT * FROM MATCHING_TBL
+        SELECT * FROM MATCHING_TBL ORDER BY M_NO DESC
     </select>
     <select id="selectOne">
-        SELECT * FROM MATCHING_TBL WHERE MATCHING_NO=${matchingNo}
+        SELECT * FROM MATCHING_TBL WHERE M_NO=#{mNo}
     </select>
+    <update id="minplus">
+        UPDATE MATCHING_TBL SET M_CURRENT_PARTY=M_CURRENT_PARTY+1 WHERE M_NO=#{mrMNo}
+    </update>
+    <update id="minsub">
+        UPDATE MATCHING_TBL SET M_CURRENT_PARTY=M_CURRENT_PARTY+1 WHERE M_NO=#{mrMNo}
+    </update>
+    <update id="gamestart">
+        UPDATE MATCHING_TBL SET M_STATUS='START' WHERE M_NO=#{mNo}
+    </update>
+    <update id="gameend">
+        UPDATE MATCHING_TBL SET M_STATUS='END' WHERE M_NO=#{mNo}
+    </update>
+    <select id="checkgame" resultType="_int">
+        SELECT COUNT(*) FROM MATCHING_TBL WHERE M_WRITER_EMAIL=#{memberId} AND M_STATUS!='END'
+    </select>
+
+    <select id="searchOne">
+        SELECT * FROM MATCHING_TBL WHERE M_WRITER_EMAIL=#{memberId} AND M_STATUS!='END'
+    </select>
+
+    <insert id="updateprofile">
+        INSERT INTO USER_PROFILE VALUES(#{email},#{profileImage})
+    </insert>
+    <select id="getprofile">
+        SELECT * FROM USER_PROFILE WHERE EMAIL=#{id}
+    </select>
+    <update id="updatematch">
+        UPDATE MATCHING_TBL SET M_NICKNAME=#{mNickname}, M_GENRE=#{mGenre},M_TAG=#{mTag},M_TIER_OR_LEVEL=#{mTierOrLevel},M_MAX_PARTY=#{mMaxParty},M_CONTENT=#{mContent} WHERE M_NO=#{mNo}
+    </update>
+    <delete id="matchdelete">
+        DELETE MATCHING_TBL WHERE M_NO=#{matchingNo}
+    </delete>
+
 
 </mapper>

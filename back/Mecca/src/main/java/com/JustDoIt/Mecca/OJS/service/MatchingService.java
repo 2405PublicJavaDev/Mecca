@@ -1,10 +1,14 @@
 package com.JustDoIt.Mecca.OJS.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.JustDoIt.Mecca.LCM.vo.User;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
+import com.JustDoIt.Mecca.OJS.vo.UserProfile;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MatchingService {
     /**
@@ -50,11 +54,65 @@ public interface MatchingService {
      * matchingNo,minCount
      * return int
      */
-    int minplus(Integer matchingNo, int matchingminCount);
+    int minplus(Integer mrMNo);
     /**
      * 최소인원수 -
      * matchingNo,minCount
      * return int
      */
-    int minsub(Integer matchingNo);
+    int minsub(Integer mrMNo);
+    /**
+     * 게임시작 -
+     * mNo
+     * return int
+     */
+    int gamestart(Integer mNo);
+    /**
+     * 게임종료 -
+     * mNo
+     * return int
+     */
+    int gameend(Integer mNo);
+    /**
+     * 매칭등록전 게임상태 검사
+     * memberId
+     * return int
+     */
+    int checkgame(String memberId);
+    /**
+     * 매칭등록상태
+     * memberId
+     * matching
+     */
+    List<Matching> searchOne(String memberId);
+    /**
+     * 업로드 프로필
+     * memberId
+     * matching
+     */
+    void updateprofile(MultipartFile file,String email) throws IOException;
+    /**
+     * 프로필 가져오기
+     * memberId
+     * matching
+     *
+     * @return
+     */
+    UserProfile getprofile(String id) throws IOException;
+    /**
+     * 매칭 수정 
+     * memberId
+     * matching
+     *
+     * @return
+     */
+    void updatematch(Matching updatematch);
+    /**
+     * 매칭 삭제
+     * memberId
+     * matching
+     *
+     * @return
+     */
+    void matchdelete(Integer matchingNo);
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		#di1{
+			background-image: url('https://i.namu.wiki/i/Bge3xnYd4kRe_IKbm2uqxlhQJij2SngwNssjpjaOyOqoRhQlNwLrR2ZiK-JWJ2b99RGcSxDaZ2UCI7fiv4IDDQ.webp');
+			width:150px;
+			height:150px;
+			background-repeat: no-repeat;
+			
+			background-size: cover;
+			
+		}
+		button {
+			border-radius: 20px;
+			border: 1px solid deepskyblue;
+			background-color: deepskyblue;
+			color: #FFFFFF;
+			font-size: 12px;
+			font-weight: bold;
+			padding: 12px 45px;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			transition: transform 80ms ease-in;
+		}
+
+		button:active {
+			transform: scale(0.95);
+		}
+
+		button:focus {
+			outline: none;
+		}
+
+		button.ghost {
+			background-color: transparent;
+			border-color: #FFFFFF;
+		}
+		#di1{
+			float: left;
+		}
+	</style>
+	</head>
+	<body>
+	<div id="dibody">
+		<div id="di1"></div>
+		<h3>이메일</h3>
+		<br><br><br><br><br><hr>
+		<h4>내용</h4>
+		<div>[[${notice}]]</div>
+		<h4>신고내용</h4>
+		<div>[[${rdate.rOption}]]</div>
+		<input type="hidden" th:value=${writer}>
+		<input type="hidden" th:value="${rdate.rWriterEmail}">
+		<hr>
+
+		<button onclick="sanctions();">신고자,작성자제재</button>
+		<br><br>
+		<input id="datetime" name="datetime" type="date" style="display: none">
+		<br><br>
+		<button id="datetime1" th:onclick="sanctions1([[${rdate.rWriterEmail}]],[[${rdate.rNo}]]);" style="display: none">신고자제재</button>
+		<button id="datetime2" th:onclick="sanctions2([[${writer}]],[[${rdate.rNo}]]);" style="display: none">작성자제재</button>
+	</div>
+	<script>
+		function sanctions(){
+			document.querySelector("#datetime").style.display="";
+			document.querySelector("#datetime1").style.display="";
+			document.querySelector("#datetime2").style.display="";
+
+		}
+		function sanctions1(a,b){
+			const selectDate=document.getElementById('datetime').value;
+			location.href="/api/admin/punishment/"+a+"/"+selectDate+"/0/"+b;
+		}
+		function sanctions2(a,b){
+			const selectDate=document.getElementById('datetime').value;
+			location.href="/api/admin/punishment/"+a+"/"+selectDate+"/1/"+b;
+		}
+
+
+
+	</script>
+
+	</body>
+</html>
