@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/user")

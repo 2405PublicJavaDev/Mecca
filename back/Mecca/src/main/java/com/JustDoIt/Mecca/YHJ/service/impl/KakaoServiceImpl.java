@@ -26,7 +26,7 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     private static final String clientId = "25431136bde1cd0a177ed0354aca3557";
-    private static final String redirectUri = "http://localhost:3000/kakao/callback";
+    private static final String redirectUri = "http://127.0.0.1:3000/kakao/callback";
     private static final String tokenUri = "https://kauth.kakao.com/oauth/token";
 
     @Override

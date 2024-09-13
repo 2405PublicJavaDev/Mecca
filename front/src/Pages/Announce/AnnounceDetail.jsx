@@ -2,7 +2,7 @@ import { useState, EventHandler, ReactNode } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 
-const GeneralDetail = () => {
+const AnnounceDetail = () => {
 
     const nav = useNavigate();
 
@@ -42,4 +42,4 @@ const GeneralDetail = () => {
     )
 }
 
-export default GeneralDetail
+export default AnnounceDetail

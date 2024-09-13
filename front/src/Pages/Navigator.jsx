@@ -87,7 +87,7 @@ function Navigator() {
                 </div>
             )}
 
-            {(location.pathname != '/' && !location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao') && location.pathname != '/report/write' && location.pathname != '/general/write' && location.pathname != '/matching/write' && location.pathname != '/announce/write' && location.pathname != '/support/write') && (
+            {(location.pathname != '/' && !location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao') && location.pathname != '/report/write' && location.pathname != '/general/write' && location.pathname != '/matching/write' && location.pathname != '/announce/write' && location.pathname != '/support/write' && location.pathname != '/report/detail' && location.pathname != '/general/detail' && location.pathname != '/matching/detail' && location.pathname != '/announce/detail' && location.pathname != '/support/detail' && location.pathname != '/admin/response') && (
                 <div className="absolute -translate-x-1/2 -translate-y-1/2 left-[calc(50%+306px)] top-1/2 w-[218px] flex flex-row items-center justify-start gap-[5px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[30px]">
                     <img width="24" height="24" src="/assets/Index/Icon.png"></img>
                     <input type='text' placeholder='검색' className="flex-1 text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#000] outline-none bg-transparent"></input>
@@ -139,7 +139,7 @@ function Navigator() {
             )}
 
             {(toggle.image && uEmail != 'mecca@gmail.com') && (
-                <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
+                <div className="absolute -translate-y-1/2 left-[1305px] top-[145px] flex flex-row items-center justify-start gap-[7px]">
                     <div className="flex flex-col items-start justify-center gap-[10px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[10px]">
                         <button onClick={handleMyPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">프로필</button>
                         <button onClick={handleActivity} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">활동내역</button>
@@ -149,7 +149,7 @@ function Navigator() {
             )}
 
             {(toggle.image && uEmail == 'mecca@gmail.com') && (
-                <div className="absolute -translate-y-1/2 left-[1244px] top-1/2 flex flex-row items-center justify-start gap-[7px]">
+                <div className="absolute -translate-y-1/2 left-[1305px] top-[129px] flex flex-row items-center justify-start gap-[7px]">
                     <div className="flex flex-col items-start justify-center gap-[10px] py-[5px] px-[10px] bg-[#fff] border-[1px] border-solid border-[#00000080] rounded-[10px]">
                         <button onClick={handleAdminPage} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">관리</button>
                         <button onClick={handleSignOut} className="text-[16px] leading-[25px] font-['Roboto'] text-[#000] whitespace-nowrap">로그아웃</button>

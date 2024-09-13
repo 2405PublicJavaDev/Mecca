@@ -25,8 +25,8 @@ public class AnnounceController {
     public void insertAnnounce(@RequestBody Map<String, String> requestBody, HttpSession session) {
         Announce announce = new Announce();
         announce.setAWriterEmail((String) session.getAttribute("uEmail"));
-        announce.setATitle(requestBody.get("uTitle"));
-        announce.setAContent(requestBody.get("uContent"));
+        announce.setATitle(requestBody.get("aTitle"));
+        announce.setAContent(requestBody.get("aContent"));
 
         announceService.insertAnnounce(announce);
     }

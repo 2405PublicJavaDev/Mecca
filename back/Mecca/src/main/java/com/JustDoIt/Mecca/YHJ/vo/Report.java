@@ -1,4 +1,4 @@
-package com.JustDoIt.Mecca.LCM.vo;
+package com.JustDoIt.Mecca.YHJ.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +12,12 @@ import java.util.Date;
 @Setter
 @ToString
 public class Report {
+
     private int rNo;
     private String rWriterEmail;
-    private String rNickname;
+    private String sTitle;
     private String rObjectNo;
     private String rOption;
     private Date rCreatedDate;
+    private int sStatus;
 }

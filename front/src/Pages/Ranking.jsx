@@ -26,7 +26,7 @@ function Ranking() {
 
     return (
         <>
-            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao') && location.pathname != '/general/write' && location.pathname != '/matching/write' && location.pathname != '/announce/write' && location.pathname != '/support/write') && (
+            {(!location.pathname.startsWith('/user') && !location.pathname.startsWith('/kakao') && location.pathname != '/report/write' && location.pathname != '/general/write' && location.pathname != '/matching/write' && location.pathname != '/announce/write' && location.pathname != '/support/write' && location.pathname != '/report/detail' && location.pathname != '/general/detail' && location.pathname != '/matching/detail' && location.pathname != '/announce/detail' && location.pathname != '/support/detail' && location.pathname != '/admin/response') && (
                 <div className="absolute left-[75px] top-[104px] w-[200px] flex flex-col items-start justify-start gap-[5px] p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
                     <div className="self-stretch text-[14px] leading-[14px] font-['Roboto'] font-semibold text-[#000] text-center">Top Players</div>
                     <img width="180" height="0" src="/assets/Index/Bar.png"></img>

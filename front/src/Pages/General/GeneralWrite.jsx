@@ -10,15 +10,15 @@ const GeneralWrite = () => {
     const nav = useNavigate();
 
     const [values, setValues] = useState({
-        uTitle: '',
-        uContent: '',
+        gTitle: '',
+        gContent: '',
     });
 
     const handleGeneral = async (e) => {
         e.preventDefault();
         await axios.post('/api/general/write', {
-            uTitle: values.uTitle,
-            uContent: values.uContent,
+            gTitle: values.gTitle,
+            gContent: values.gContent,
         });
         nav("/");
     }
@@ -82,14 +82,14 @@ const GeneralWrite = () => {
                     <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                         <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">제목</div>
                         <div className="self-stretch h-[44px] shrink-0 flex flex-row items-center justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                            <input onInput={validateTitle} id='title' placeholder='제목을 입력해주세요.' type='text' name='uTitle' onChange={(e) => setValues({ ...values, uTitle: e.target.value })} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
+                            <input onInput={validateTitle} id='title' placeholder='제목을 입력해주세요.' type='text' name='gTitle' onChange={(e) => setValues({ ...values, gTitle: e.target.value })} className="flex-1 text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none"></input>
                         </div>
                         <div id='titleError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                     </div>
                     <div className="self-stretch flex flex-col items-start justify-start gap-[5px]">
                         <div className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000]">내용</div>
                         <div className="self-stretch h-[300px] shrink-0 flex flex-row items-start justify-start p-[10px] border-[1px] border-solid border-[#00000080] rounded-[10px]">
-                            <textarea onInput={validateContent} id='content' placeholder='내용을 입력해주세요.' type='text' name='uContent' onChange={(e) => setValues({ ...values, uContent: e.target.value })} className="flex-1 self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none resize-none"></textarea>
+                            <textarea onInput={validateContent} id='content' placeholder='내용을 입력해주세요.' type='text' name='gContent' onChange={(e) => setValues({ ...values, gContent: e.target.value })} className="flex-1 self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#000] outline-none resize-none"></textarea>
                         </div>
                         <div id='contentError' className="self-stretch text-[16px] leading-[25px] font-['Roboto'] text-[#f00]"></div>
                     </div>

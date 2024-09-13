@@ -33,9 +33,13 @@ import AnnounceList from './Pages/Announce/AnnounceList';
 import AnnounceWrite from './Pages/Announce/AnnounceWrite';
 import AnnounceDetail from './Pages/Announce/AnnounceDetail';
 
+import ReportDetail from './Pages/Admin/ReportDetail';
+
 import SupportWrite from './Pages/SupportWrite';
+import SupportDetail from './Pages/Admin/SupportDetail';
 
 import AdminPanel from './Pages/Admin/AdminPanel';
+import SupportResponseWrite from './Pages/Admin/SupportResponseWrite';
 
 function App() {
 
@@ -92,9 +96,13 @@ function App() {
         <Route path='/announce/write' element={<AnnounceWrite />} />
         <Route path='/announce/detail' element={<AnnounceDetail />} />
 
+        <Route path='/report/detail' element={<ReportDetail />} />
+
         <Route path='/support/write' element={<SupportWrite />} />
+        <Route path='/support/detail' element={<SupportDetail />} />
 
         <Route path='/admin' element={<AdminPanel />} />
+        <Route path='/admin/response' element={<SupportResponseWrite />} />
 
         {/* 404 페이지 처리 */}
         <Route path='*' element={<PageNotFound />} />

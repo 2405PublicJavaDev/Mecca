@@ -2,7 +2,7 @@ package com.JustDoIt.Mecca.LCM.mapper;
 
 import com.JustDoIt.Mecca.KJH.vo.General;
 import com.JustDoIt.Mecca.KJH.vo.GeneralComment;
-import com.JustDoIt.Mecca.LCM.vo.Report;
+import com.JustDoIt.Mecca.YHJ.vo.Report;
 import com.JustDoIt.Mecca.OJS.vo.Matching;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,11 +21,11 @@ public interface AdminMapper {
      */
     int updateUserStatus(String uEmail, Date punishmentPeriod);
 
-    List<Report> selectlist();
+//    List<Report> selectlist();
 
-    int insertreport(Report redate);
+//    int insertreport(Report redate);
 
-    Report selectOne(int reportno);
+//    Report selectOne(int reportno);
 
     General selectnotice(int noticeNo) throws NullPointerException;
 

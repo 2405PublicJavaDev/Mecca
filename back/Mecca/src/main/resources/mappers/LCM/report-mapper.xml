@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JustDoIt.Mecca.LCM.mapper.ReportMapper">
-    <insert id="insertReport" parameterType="com.JustDoIt.Mecca.LCM.vo.Report">
+    <insert id="insertReport" parameterType="com.JustDoIt.Mecca.YHJ.vo.Report">
         INSERT INTO REPORT_TBL (
             R_NO, R_WRITER_EMAIL, R_OBJECT_NO, R_OPTION, R_CREATED_DATE
         ) VALUES (

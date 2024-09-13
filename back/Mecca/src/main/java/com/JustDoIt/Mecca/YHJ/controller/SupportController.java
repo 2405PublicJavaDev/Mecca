@@ -23,8 +23,8 @@ public class SupportController {
     public void insertSupport(@RequestBody Map<String, String> requestBody, HttpSession session) {
         Support support = new Support();
         support.setSWriterEmail((String) session.getAttribute("uEmail"));
-        support.setSTitle(requestBody.get("uTitle"));
-        support.setSContent(requestBody.get("uContent"));
+        support.setSTitle(requestBody.get("sTitle"));
+        support.setSContent(requestBody.get("sContent"));
 
         supportService.insertSupport(support);
     }

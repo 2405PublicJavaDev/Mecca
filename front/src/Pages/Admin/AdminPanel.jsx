@@ -12,11 +12,10 @@ const AdminPanel = () => {
 
     useEffect(() => {
         async function fetchData() {
-            // const reportResponse = await axios.get('/api/report/list');
-            // setReportList(reportResponse.data);
+            const reportResponse = await axios.get('/api/report/list');
+            setReportList(reportResponse.data);
 
             const supportResponse = await axios.get('/api/support/list');
-            console.log(supportResponse.data);
             setSupportList(supportResponse.data);
         }
 
@@ -33,6 +32,13 @@ const AdminPanel = () => {
 
     const handleSupport = () => {
         setStatus('문의');
+    }
+
+    const reportDetailPage = () => {
+        nav("/report/detail");
+    }
+    const supportDetailPage = () => {
+        nav("/support/detail");
     }
 
     return (
@@ -58,19 +64,17 @@ const AdminPanel = () => {
                                     <div className="self-stretch flex flex-row items-center justify-start gap-[8px]">
                                         <button onClick={userInfoPage} className="self-stretch flex flex-row items-center justify-start gap-[5px]">
                                             <img width="20" height="20" src="/assets/Index/Image.png"></img>
-                                            <div className="text-[14px] leading-[12px] font-['Roboto'] text-[#000] whitespace-nowrap">닉네임</div>
+                                            <div className="text-[14px] leading-[12px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.U_NICKNAME}</div>
                                         </button>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">&nbsp;•&nbsp;</div>
                                         <div className="self-stretch flex flex-row items-center justify-end">
                                             <img width="12" height="12" src="/assets/Index/Star.png"></img>
-                                            <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">0</div>
+                                            <div className="text-[14px] leading-[18px] font-['Roboto'] text-[#000] text-right whitespace-nowrap">{item.U_STAR}</div>
                                         </div>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">&nbsp;•&nbsp;</div>
-                                        <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">1일 전</div>
+                                        <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.R_CREATED_DATE}</div>
                                     </div>
-                                    <div className="self-stretch flex flex-row items-center justify-start">
-                                        <div className="flex-1 text-[16px] leading-[24px] font-['Roboto'] text-[#000]">글 제목</div>
-                                    </div>
+                                    <button onClick={reportDetailPage} className="w-[830px] h-[24px] text-[16px] leading-[24px] font-['Roboto'] text-[#000] text-left">{item.R_OPTION}</button>
                                     <div className="self-stretch h-0 shrink-0 border-[1px] border-solid border-[#00000080]"></div>
                                 </div>
                             ))
@@ -97,9 +101,7 @@ const AdminPanel = () => {
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">&nbsp;•&nbsp;</div>
                                         <div className="text-[14px] leading-[24px] font-['Roboto'] text-[#000] whitespace-nowrap">{item.S_CREATED_DATE}</div>
                                     </div>
-                                    <div className="self-stretch flex flex-row items-center justify-start">
-                                        <div className="flex-1 text-[16px] leading-[24px] font-['Roboto'] text-[#000]">{item.S_TITLE}</div>
-                                    </div>
+                                    <button onClick={supportDetailPage} className="w-[830px] h-[24px] text-[16px] leading-[24px] font-['Roboto'] text-[#000] text-left">{item.S_TITLE}</button>
                                     <div className="self-stretch h-0 shrink-0 border-[1px] border-solid border-[#00000080]"></div>
                                 </div>
                             ))
