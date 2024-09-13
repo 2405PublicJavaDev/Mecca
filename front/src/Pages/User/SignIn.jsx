@@ -33,6 +33,7 @@ const SignIn = () => {
         const authorizationUri = "https://kauth.kakao.com/oauth/authorize";
         const client_id = "25431136bde1cd0a177ed0354aca3557";
         const redirectUri = "http://127.0.0.1:3000/kakao/callback";
+        // const redirectUri = "http://192.168.60.205/kakao/callback";
 
         const url = `${authorizationUri}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`
 
