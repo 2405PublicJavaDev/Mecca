@@ -113,10 +113,10 @@ JustDoIt은 오늘도 ‘그냥 해보자’로 시작! 시도하고, 배우고,
    - 이 때, 최종적으로 확정된 점수를 토대로 상위 5명을 뽑아 매칭 게시판 좌측 상단 우수 플레이어에 반영될 수 있도록 합니다. 
 
 # 개발 환경
-![image](https://github.com/user-attachments/assets/ad6caed7-8e32-46d8-9121-fa31e5744d70)
+![image](https://github.com/user-attachments/assets/4e5f1da6-3fd6-4c61-97fb-8850d92c9780)
 
 # 개발 일정
-![image](https://github.com/user-attachments/assets/612cd728-2eb7-4d7b-9a81-0d93a4b42ce8)
+![image](https://github.com/user-attachments/assets/9e7271e8-7317-405f-b11d-f81ebeb28a57)
 
 # Demo Video
 [Demo Video](https://youtu.be/APIdnWsIC0k)
