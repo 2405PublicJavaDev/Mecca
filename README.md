@@ -121,8 +121,5 @@ JustDoIt은 오늘도 ‘그냥 해보자’로 시작! 시도하고, 배우고,
 - **개발도구(IDE)**: IntelliJ, Visual Studio Code
 - **형상 관리 도구**: GitHub, GitHub Desktop 
 
-# 작업 일정
-1주차: 기획 회의  
-2주차: UI/DB 설계  
-3주차: 클래스 설계 및 프로젝트 구현  
-4주차: 오류 수정 및 제출
+# 개발 일정
+![image](https://github.com/user-attachments/assets/612cd728-2eb7-4d7b-9a81-0d93a4b42ce8)
